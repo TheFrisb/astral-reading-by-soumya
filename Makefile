@@ -5,10 +5,9 @@ down:
 	sudo docker-compose down
 
 clean-postgres:
-	sudo docker volume rm backend_produp-postgres_data
-
-clean-redis:
-	sudo docker volume rm backend_produp-redis_data
+	@echo "Stopping containers and removing the PostgreSQL volume..."
+	-docker-compose down
+	sudo docker volume rm astral-reading-by-soumya_astral-reading-by-soumya-postgres_data || echo "Volume already removed or does not exist."
 
 clean:
 	sudo docker stop $(sudo docker ps -aq)

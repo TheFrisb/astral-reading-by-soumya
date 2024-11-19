@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "adminsortable2",
     # Internal apps
     "core",
+    "blog",
 ]
 
 MIDDLEWARE = [
