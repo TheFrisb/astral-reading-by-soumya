@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <div class="bg-white py-24 sm:py-32 relative overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute inset-0 pointer-events-none bg-[url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80')] bg-cover bg-fixed opacity-5 mix-blend-luminosity"></div>
+            <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.05)_0%,transparent_70%)]"></div>
+        </div>
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="mx-auto max-w-2xl text-center  " data-aos="fade-down">
+                <h2 class="text-6xl sm:text-5xl mystical-header bg-clip-text text-transparent bg-gradient-to-r from-yellow-600 to-yellow-500">
+                    Book Your Reading</h2>
+                <p class="mt-4 text-lg leading-8 text-gray-600">Choose from our range of personalized astrological
+                    readings.</p></div>
+            {% include 'core/includes/reading_list.html' %}
+        </div>
+    </div>
+{% endblock content %}

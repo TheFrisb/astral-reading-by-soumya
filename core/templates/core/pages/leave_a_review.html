@@ -1,0 +1,134 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <div class="pt-16">
+        <div class="bg-white py-24 sm:py-32">
+            <div class="mx-auto max-w-xl px-6 lg:px-8">
+
+                {% if has_testimonial %}
+                    <div class="mx-auto max-w-md px-6 lg:px-8">
+                        <div class="rounded-lg bg-white p-8 shadow-lg">
+                            <div class="flex flex-col items-center">
+                                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round"
+                                         class="lucide lucide-check-circle h-6 w-6 text-green-600">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <path d="m9 11 3 3L22 4"></path>
+                                    </svg>
+                                </div>
+                                <h2 class="mt-4 text-2xl font-semibold text-gray-900">Thank You!</h2>
+                                <p class="mt-2 text-center text-gray-600">Your review has been submitted successfully.
+                                    We appreciate your feedback!</p>
+                                <a href="{% url 'core:home' %}"
+                                   class="mt-6 rounded-md bg-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500">
+                                    Return Home
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="mx-auto max-w-2xl text-center">
+                        <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Leave a Review</h1>
+                        <p class="mt-2 text-lg leading-8 text-gray-600">Share your experience to help others on their
+                            astrological journey</p>
+                    </div>
+                    <div class="mt-16">
+                        <form method="POST" class="space-y-6">
+                            {% csrf_token %}
+
+                            {% if form.errors %}
+                                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                                     role="alert">
+                                    <strong class="font-bold">Oops!</strong>
+                                    {% for field, errors in form.errors.items %}
+                                        {% for error in errors %}
+                                            <span class="block"><span class="capitalize">{{ field }}</span>: <span
+                                                    class="lowercase">{{ error }}</span></span>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <div>
+                                <h2 class="text-xl font-semibold text-gray-900">Review for Birth Chart Reading</h2>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Full Name</label>
+                                {{ form.full_name }}
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Rating</label>
+                                <input type="hidden" id="rating" name="rating">
+
+                                <div class="mt-1 flex" id="starRatingContainer">
+                                    <button type="button"
+                                            class="p-1 leaveAReviewStarRatingButton">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="h-8 w-8 transition-colors text-gray-300">
+                                            <polygon
+                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                    </button>
+                                    <button type="button" class="p-1 leaveAReviewStarRatingButton">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="h-8 w-8 transition-colors text-gray-300">
+                                            <polygon
+                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                    </button>
+                                    <button type="button" class="p-1 leaveAReviewStarRatingButton">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="h-8 w-8 transition-colors text-gray-300">
+                                            <polygon
+                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                    </button>
+                                    <button type="button" class="p-1 leaveAReviewStarRatingButton">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="h-8 w-8 transition-colors text-gray-300">
+                                            <polygon
+                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                    </button>
+                                    <button type="button" class="p-1 leaveAReviewStarRatingButton">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="h-8 w-8 transition-colors text-gray-300">
+                                            <polygon
+                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Your Review</label>
+                                {{ form.content }}
+                            </div>
+                            <button type="submit"
+                                    class="w-full rounded-md bg-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
+                                Submit Review
+                            </button>
+                        </form>
+                    </div>
+                {% endif %}
+
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,65 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <div class="bg-white py-24 sm:py-32 relative overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.05)_0%,transparent_70%)]"></div>
+            <div class="absolute inset-0 pointer-events-none bg-[url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80')] bg-cover bg-fixed opacity-[0.02] mix-blend-overlay"></div>
+        </div>
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <article class="mx-auto max-w-2xl  " data-aos="fade-down">
+                <div class="mb-8 text-center"><span
+                    <h1 class="text-4xl sm:text-5xl mystical-header bg-clip-text text-transparent bg-gradient-to-r from-yellow-600 to-yellow-500">
+                        {{ blog_post.title }}</h1>
+                    <div class="mt-4 flex items-center gap-x-4 text-xs">
+                        <time datetime="2024-03-16"
+                              class="text-gray-500">{{ blog_post.created_at|date:"F d, Y" }}</time>
+                        <span class="text-gray-500">By Soumya</span></div>
+                </div>
+                <div class="prose prose-lg prose-purple mx-auto mt-8"><img
+                        src="{% if blog_post.image and blog_post.image.url %}{{ blog_post.image.url }}{% endif %}"
+                        alt=""
+                        class="w-full rounded-3xl transform transition-all duration-700 group-hover:scale-105 group-hover:rotate-1">
+                    <div class="mt-8 flex flex-wrap gap-2">
+
+
+                        {% for tag in blog_post.categories.all %}
+                            <span
+                                    class="inline-flex items-center gap-1 rounded-full bg-yellow-50 px-3 py-1 text-sm font-medium text-yellow-600 ring-1 ring-inset ring-yellow-200 transform transition-all duration-500 hover:scale-105 hover:bg-yellow-100"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="lucide lucide-tag h-3 w-3"><path
+                                    d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"></path><circle
+                                    cx="7.5" cy="7.5" r=".5" fill="currentColor"></circle></svg>
+                                {{ tag.name }}</span>
+                        {% endfor %}
+
+                    </div>
+                    <div class="mt-8 ck-content">{{ blog_post.content|safe }}</div>
+                    <div class="mt-8 flex items-center justify-between border-t border-gray-200 pt-8">
+                        <div class="flex gap-4">
+                            <button class="inline-flex items-center gap-2 rounded-full bg-yellow-400 px-6 py-2 text-sm font-semibold text-black ring-1 ring-yellow-400/20 hover:bg-yellow-400/60 transition-all duration-300 shareButton">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="lucide lucide-share2 h-4 w-4">
+                                    <circle cx="18" cy="5" r="3"></circle>
+                                    <circle cx="6" cy="12" r="3"></circle>
+                                    <circle cx="18" cy="19" r="3"></circle>
+                                    <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line>
+                                    <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line>
+                                </svg>
+                                Share
+                            </button>
+                        </div>
+                        <a class="inline-flex items-center gap-2 rounded-full bg-yellow-50 px-6 py-2 text-sm font-semibold text-yellow-600 ring-1 ring-yellow-200 hover:bg-yellow-100 transition-all duration-300 hover:scale-105"
+                           href="{% url 'core:readings' %}">Book a Personal Reading →</a></div>
+                </div>
+            </article>
+
+            {% if related_blog_posts %}
+                {% include 'core/includes/related_blog_posts.html' %}
+            {% endif %}
+
+        </div>
+    </div>{% endblock content %}

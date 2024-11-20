@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <div class="bg-white py-24 sm:py-32 relative overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.05)_0%,transparent_70%)]"></div>
+            <div class="absolute inset-0 pointer-events-none bg-[url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80')] bg-cover bg-fixed opacity-[0.02] mix-blend-overlay"></div>
+        </div>
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="mx-auto max-w-2xl text-center  " data-aos="fade-down">
+                <h2 class="text-4xl sm:text-5xl mystical-header bg-clip-text text-transparent bg-gradient-to-r from-yellow-600 to-yellow-500">
+                    Frequently Asked Questions</h2>
+                <p class="mt-2 text-lg leading-8 text-gray-600">Find answers to common questions about astrology
+                    readings and consultations.</p></div>
+            <div class="mt-16 relative">
+                <div class="absolute pointer-events-none -inset-x-4 -inset-y-2 bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.05)_0%,transparent_70%)]"></div>
+                <div class="mx-auto max-w-2xl space-y-4">
+                    {% for faq in faqs %}
+                        <div data-aos="fade-up" data-aos-delay="0"
+                             class="group relative overflow-hidden rounded-2xl bg-white p-6 ring-1 ring-yellow-200 hover:ring-yellow-300 transition-all duration-500  ">
+                            <div class="absolute pointer-events-none -inset-px bg-gradient-to-r from-yellow-400/0 via-yellow-400/10 to-yellow-400/0 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-1000"></div>
+                            <button class="flex w-full items-start justify-between text-left relative faqTogglerButton">
+                                <h3
+                                        class="text-lg font-semibold leading-7 text-gray-900 group-hover:text-yellow-600 transition-colors">
+                                    {{ faq.question }}</h3><span class="ml-6 flex h-7 items-center"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="lucide lucide-chevron-down h-6 w-6 transform transition-all duration-500 text-yellow-600 group-hover:rotate-90 faqTogglerButtonIcon"><path
+                                    d="m6 9 6 6 6-6"></path></svg></span></button>
+
+                            <div class="relative overflow-hidden transition-all duration-500 ease-in-out max-h-0 opacity-0">
+                                <div class="absolute pointer-events-none -inset-x-2 -inset-y-1 bg-yellow-50/50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
+                                <p class="text-base leading-7 text-gray-600 group-hover:text-gray-900 transition-colors">
+                                    {{ faq.answer }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>{% endblock content %}

@@ -1,0 +1,85 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+    <div class="bg-white py-24 sm:py-32 relative overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.05)_0%,transparent_70%)]"></div>
+            <div class="absolute inset-0 pointer-events-none bg-[url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80')] bg-cover bg-fixed opacity-[0.02] mix-blend-overlay"></div>
+        </div>
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="mx-auto max-w-2xl  " data-aos="fade-down">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-6 mb-12">
+                    <div class="flex items-center gap-4"><img
+                            src="{{ horoscope.sign.image.url }}"
+                            class="transform transition-all duration-700 group-hover:scale-110 group-hover:rotate-12 pointer-events-none h-32 w-auto">
+                        <div>
+                            <p class="text-gray-600">{{ horoscope.start_date|date:"F d" }}
+                                - {{ horoscope.end_date|date:"F d" }}</p></div>
+                    </div>
+                    <div class="inline-flex rounded-full p-1 bg-black/80 ring-1 ring-yellow-400/20 gap-4">
+                        <a href="{% url 'core:horoscope_detail' sign_name=horoscope.sign.name %}?filter=monthly"
+                           class="horoscopeFilterButton {% if current_filter == 'monthly' %}active{% endif %}">
+                            Monthly
+                        </a>
+                        <a href="{% url 'core:horoscope_detail' sign_name=horoscope.sign.name %}?filter=yearly"
+                           class="horoscopeFilterButton {% if current_filter == 'yearly' %}active{% endif %}">
+                            Yearly
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-12">
+                    <div class="relative overflow-hidden rounded-3xl bg-white p-8 ring-1 ring-yellow-200 hover:ring-yellow-300 transition-all duration-700">
+                        <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.05)_0%,transparent_70%)]"></div>
+                        <h2 class="text-3xl mystical-header text-yellow-600 mb-6"><span
+                                class="capitalize">{{ current_filter }}</span> Horoscope
+                            for {{ horoscope.sign.name }}</h2>
+                        <div class="prose prose-lg prose-yellow max-w-none">
+                            <div class="whitespace-pre-line text-gray-600 leading-relaxed">{{ horoscope.content|safe }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-yellow-200 pt-8">
+                        <div class="flex gap-4">
+                            <button class="inline-flex items-center gap-2 rounded-full bg-yellow-400 px-6 py-2 text-sm font-semibold text-black ring-1 ring-yellow-400/20 hover:bg-yellow-400/60 transition-all duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="lucide lucide-share2 h-4 w-4">
+                                    <circle cx="18" cy="5" r="3"></circle>
+                                    <circle cx="6" cy="12" r="3"></circle>
+                                    <circle cx="18" cy="19" r="3"></circle>
+                                    <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line>
+                                    <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line>
+                                </svg>
+                                Share
+                            </button>
+                        </div>
+                        <a class="text-sm font-semibold text-yellow-600 hover:text-yellow-500"
+                           href="{% url 'core:readings' %}">Book a
+                            Personal Reading →</a></div>
+                </div>
+            </div>
+            <div class="mt-16 border-t border-yellow-200 pt-16">
+                <div class="mx-auto max-w-3xl">
+                    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
+
+                        {% for sign in zodiac_signs %}
+                            <a
+                                    class="{% if horoscope.sign == sign %}bg-yellow-50 ring-2 ring-yellow-300 {% else %}hover:bg-yellow-50 hover:ring-2 hover:ring-yellow-300{% endif %} group flex flex-col items-center p-4 rounded-2xl transition-all duration-500 hover:-translate-y-1 hover:shadow-lg relative overflow-hidden "
+                                    href="{% url 'core:horoscope_detail' sign_name=sign.name %}?filter={{ current_filter }}">
+                                <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.1)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                                <img src="{{ sign.image.url }}"
+                                     class="transform transition-all duration-700 group-hover:scale-110 group-hover:rotate-12
+                                pointer-events-none h-24 w-auto"></a>
+
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% if related_blog_posts %}
+                {% include 'core/includes/related_blog_posts.html' %}
+            {% endif %}
+        </div>
+    </div>
+
+
+{% endblock content %}

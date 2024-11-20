@@ -1,0 +1,234 @@
+{#<header class="fixed w-full bg-[#1a0942]/95 backdrop-blur supports-[backdrop-filter]:bg-[#1a0942]/75 z-50">#}
+{#    <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">#}
+{#        <div class="flex lg:flex-1">#}
+{#            <a href="{% url 'core:home' %}" class="-m-1.5 p-1.5">#}
+{#                <span class="text-lg sm:text-xl font-semibold text-white">Astral Reading by Soumya</span>#}
+{#            </a>#}
+{#        </div>#}
+{#        <div class="flex lg:hidden">#}
+{#            <button#}
+{#                    type="button"#}
+{#                    class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white mobileMenuTogglerButton"#}
+{#            >#}
+{#                <span class="sr-only">Open main menu</span>#}
+{#                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">#}
+{#                    <path stroke-linecap="round" stroke-linejoin="round"#}
+{#                          d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>#}
+{#                </svg>#}
+{#            </button>#}
+{#        </div>#}
+{#        <div class="hidden lg:flex lg:gap-x-8">#}
+{#            <a href="{% url 'core:horoscope_list' %}"#}
+{#               class="text-sm font-semibold leading-6 text-white rounded-lg px-3 py-2 transition-colors hover:bg-[#2d0f6b]">#}
+{#                Horoscope#}
+{#            </a>#}
+{#            <a href="{% url 'core:readings' %}"#}
+{#               class="text-sm font-semibold leading-6 text-white rounded-lg px-3 py-2 transition-colors hover:bg-[#2d0f6b]">#}
+{#                Readings#}
+{#            </a>#}
+{#            <a href="{% url 'blog:home' %}"#}
+{#               class="text-sm font-semibold leading-6 text-white rounded-lg px-3 py-2 transition-colors hover:bg-[#2d0f6b]">#}
+{#                Blog#}
+{#            </a>#}
+{#            <a href="{% url 'core:about' %}"#}
+{#               class="text-sm font-semibold leading-6 text-white rounded-lg px-3 py-2 transition-colors hover:bg-[#2d0f6b]">#}
+{#                About#}
+{#            </a>#}
+{#            <a href="{% url 'core:faq' %}"#}
+{#               class="text-sm font-semibold leading-6 text-white rounded-lg px-3 py-2 transition-colors hover:bg-[#2d0f6b]">#}
+{#                FAQ#}
+{#            </a>#}
+{#        </div>#}
+{#        <div class="hidden lg:flex lg:flex-1 lg:justify-end">#}
+{#            <a#}
+{#                    href="{% url 'core:readings' %}"#}
+{#                    class="rounded-lg bg-purple-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 transition-colors"#}
+{#            >#}
+{#                Book a Reading#}
+{#            </a>#}
+{#        </div>#}
+{#    </nav>#}
+{##}
+{#    <div id="overlay" class="overlay fixed inset-0 bg-black/30 mobileMenuTogglerButton h-screen"></div>#}
+{##}
+{#    <div id="mobileMenu"#}
+{#         class="mobile-menu fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-[#1a0942] px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10 h-screen">#}
+{#        <div class="flex items-center justify-between">#}
+{#            <a href="{% url 'core:home' %}" class="-m-1.5 p-1.5">#}
+{#                <span class="text-xl font-semibold text-white">Astral Reading</span>#}
+{#            </a>#}
+{#            <button#}
+{#                    type="button"#}
+{#                    class="-m-2.5 rounded-md p-2.5 text-white mobileMenuTogglerButton"#}
+{#            >#}
+{#                <span class="sr-only">Close menu</span>#}
+{#                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">#}
+{#                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>#}
+{#                </svg>#}
+{#            </button>#}
+{#        </div>#}
+{#        <div class="mt-6 flow-root">#}
+{#            <div class="-my-6 divide-y divide-gray-500/25">#}
+{#                <div class="space-y-2 py-6">#}
+{#                    <a#}
+{#                            href="{% url 'core:horoscope_list' %}"#}
+{#                            class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-[#2d0f6b] transition-colors"#}
+{#                    >#}
+{#                        Horoscope#}
+{#                    </a>#}
+{#                    <a#}
+{#                            href="{% url 'core:readings' %}"#}
+{#                            class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-[#2d0f6b] transition-colors"#}
+{#                    >#}
+{#                        Readings#}
+{#                    </a>#}
+{#                    <a#}
+{#                            href="{% url 'blog:home' %}"#}
+{#                            class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-[#2d0f6b] transition-colors"#}
+{#                    >#}
+{#                        Blog#}
+{#                    </a>#}
+{#                    <a#}
+{#                            href="{% url 'core:about' %}"#}
+{#                            class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-[#2d0f6b] transition-colors"#}
+{#                    >#}
+{#                        About#}
+{#                    </a>#}
+{#                    <a#}
+{#                            href="{% url 'core:faq' %}"#}
+{#                            class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-[#2d0f6b] transition-colors"#}
+{#                    >#}
+{#                        FAQ#}
+{#                    </a>#}
+{#                </div>#}
+{#                <div class="py-6">#}
+{#                    <a#}
+{#                            href="{% url 'core:readings' %}"#}
+{#                            class="-mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white bg-[#2d0f6b] transition-colors flex items-center justify-between"#}
+{#                    >#}
+{#                        Book a Reading <span#}
+{#                            aria-hidden="true">→</span>#}
+{#                    </a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</header>#}
+<header class="w-full bg-white z-50 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top,rgba(251,191,36,0.03)_0%,transparent_50%)]"></div>
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute inset-0 pointer-events-none bg-[url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80')] bg-cover bg-fixed opacity-[0.02] mix-blend-overlay"></div>
+        <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-yellow-200/20 to-transparent"></div>
+        <div class="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-yellow-200/20 to-transparent"></div>
+    </div>
+    <div class="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-yellow-200/20 to-transparent"></div>
+    <div class="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-yellow-200/20 to-transparent"></div>
+    <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+        <div class="flex lg:flex-1"><a class="group flex items-center" href="/">
+            <div>
+                <div class="flex flex-col items-start"><span
+                        class="text-5xl font-black tracking-tight text-black relative group-hover:scale-105 transition-transform duration-500">ASTRAL<span
+                        class="absolute inset-0 pointer-events-none bg-gradient-to-r from-yellow-400/0 via-yellow-400/30 to-yellow-400/0 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 animate-pulse"></span><span
+                        class="absolute pointer-events-none -inset-4 bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.1)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></span></span><span
+                        class="text-5xl font-black tracking-tight text-black ml-12 relative group-hover:scale-105 transition-transform duration-500">READING<span
+                        class="absolute inset-0 pointer-events-none bg-gradient-to-r from-yellow-400/0 via-yellow-400/30 to-yellow-400/0 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 animate-pulse"></span><span
+                        class="absolute pointer-events-none -inset-4 bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.1)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></span></span>
+                </div>
+            </div>
+        </a></div>
+        <div class="text-left relative group">
+            <div class="absolute pointer-events-none -inset-4 bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.1)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <div class="absolute pointer-events-none -inset-2 bg-gradient-to-r from-yellow-400/0 via-yellow-400/10 to-yellow-400/0 rounded-lg opacity-0 group-hover:opacity-100 blur-lg transition-opacity duration-700"></div>
+            <span class="mystical-header !text-4xl text-black block relative">by</span><span
+                class="mystical-header !text-4xl text-black block mt-1 relative">Soumya Nair</span></div>
+        <div class="flex lg:hidden ml-auto">
+            <button type="button"
+                    class="-m-2.5 inline-flex items-center justify-center rounded-full p-2.5 text-gray-900 hover:bg-yellow-50 transition-colors">
+                <span class="sr-only">Open main menu</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     class="lucide lucide-menu h-6 w-6" aria-hidden="true">
+                    <line x1="4" x2="20" y1="12" y2="12"></line>
+                    <line x1="4" x2="20" y1="6" y2="6"></line>
+                    <line x1="4" x2="20" y1="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+    <div class="hidden lg:flex justify-center gap-x-6 pb-6">
+        <div class="flex gap-x-6"><a
+                class="group relative rounded-full bg-[#0B0B0B] px-6 py-2 overflow-hidden shadow-lg ring-1 ring-yellow-400/20 hover:ring-yellow-400/40 transition-all duration-500 hover:scale-105"
+                href="{% url 'core:home' %}"><span
+                class="relative libre-baskerville-regular-italic text-xl text-[#FFD700] group-hover:text-yellow-300 transition-colors duration-300">HOME</span><span
+                class="absolute inset-0 pointer-events-none bg-gradient-to-br from-yellow-400/0 to-yellow-400/10 opacity-0 group-hover:opacity-70 transition-all duration-500 group-hover:rotate-180"></span><span
+                class="absolute inset-0 pointer-events-none bg-[url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80')] bg-cover opacity-0 group-hover:opacity-5 transition-all duration-700 mix-blend-overlay"></span></a><a
+                class="group relative rounded-full bg-[#0B0B0B] px-6 py-2 overflow-hidden shadow-lg ring-1 ring-yellow-400/20 hover:ring-yellow-400/40 transition-all duration-500 hover:scale-105"
+                href="{% url 'core:horoscope_list' %}"><span
+                class="relative libre-baskerville-regular-italic text-xl text-[#FFD700] group-hover:text-yellow-300 transition-colors duration-300">HOROSCOPE</span><span
+                class="absolute inset-0 pointer-events-none bg-gradient-to-br from-yellow-400/0 to-yellow-400/10 opacity-0 group-hover:opacity-70 transition-all duration-500 group-hover:rotate-180"></span><span
+                class="absolute inset-0 pointer-events-none bg-[url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80')] bg-cover opacity-0 group-hover:opacity-5 transition-all duration-700 mix-blend-overlay"></span></a><a
+                class="group relative rounded-full bg-[#0B0B0B] px-6 py-2 overflow-hidden shadow-lg ring-1 ring-yellow-400/20 hover:ring-yellow-400/40 transition-all duration-500 hover:scale-105"
+                href="{% url 'core:readings' %}"><span
+                class="relative libre-baskerville-regular-italic text-xl text-[#FFD700] group-hover:text-yellow-300 transition-colors duration-300">READINGS</span><span
+                class="absolute inset-0 pointer-events-none bg-gradient-to-br from-yellow-400/0 to-yellow-400/10 opacity-0 group-hover:opacity-70 transition-all duration-500 group-hover:rotate-180"></span><span
+                class="absolute inset-0 pointer-events-none bg-[url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80')] bg-cover opacity-0 group-hover:opacity-5 transition-all duration-700 mix-blend-overlay"></span></a><a
+                class="group relative rounded-full bg-[#0B0B0B] px-6 py-2 overflow-hidden shadow-lg ring-1 ring-yellow-400/20 hover:ring-yellow-400/40 transition-all duration-500 hover:scale-105"
+                href="{% url 'core:about' %}"><span
+                class="relative libre-baskerville-regular-italic text-xl text-[#FFD700] group-hover:text-yellow-300 transition-colors duration-300">ABOUT</span><span
+                class="absolute inset-0 pointer-events-none bg-gradient-to-br from-yellow-400/0 to-yellow-400/10 opacity-0 group-hover:opacity-70 transition-all duration-500 group-hover:rotate-180"></span><span
+                class="absolute inset-0 pointer-events-none bg-[url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80')] bg-cover opacity-0 group-hover:opacity-5 transition-all duration-700 mix-blend-overlay"></span></a><a
+                class="group relative rounded-full bg-[#0B0B0B] px-6 py-2 overflow-hidden shadow-lg ring-1 ring-yellow-400/20 hover:ring-yellow-400/40 transition-all duration-500 hover:scale-105"
+                href="{% url 'blog:home' %}"><span
+                class="relative libre-baskerville-regular-italic text-xl text-[#FFD700] group-hover:text-yellow-300 transition-colors duration-300">BLOG</span><span
+                class="absolute inset-0 pointer-events-none bg-gradient-to-br from-yellow-400/0 to-yellow-400/10 opacity-0 group-hover:opacity-70 transition-all duration-500 group-hover:rotate-180"></span><span
+                class="absolute inset-0 pointer-events-none bg-[url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80')] bg-cover opacity-0 group-hover:opacity-5 transition-all duration-700 mix-blend-overlay"></span></a><a
+                class="group relative rounded-full bg-[#0B0B0B] px-6 py-2 overflow-hidden shadow-lg ring-1 ring-yellow-400/20 hover:ring-yellow-400/40 transition-all duration-500 hover:scale-105"
+                href="{% url 'core:faq' %}"><span
+                class="relative libre-baskerville-regular-italic text-xl text-[#FFD700] group-hover:text-yellow-300 transition-colors duration-300">FAQ</span><span
+                class="absolute inset-0 pointer-events-none bg-gradient-to-br from-yellow-400/0 to-yellow-400/10 opacity-0 group-hover:opacity-70 transition-all duration-500 group-hover:rotate-180"></span><span
+                class="absolute inset-0 pointer-events-none bg-[url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80')] bg-cover opacity-0 group-hover:opacity-5 transition-all duration-700 mix-blend-overlay"></span></a>
+        </div>
+    </div>
+</header>
+
+
+<script>
+  function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const overlay = document.getElementById('overlay');
+
+    if (mobileMenu.classList.contains('active')) {
+      mobileMenu.classList.remove('active');
+      overlay.classList.remove('active');
+
+      // Add exit animation classes
+      mobileMenu.classList.add('mobile-menu-exit');
+      overlay.classList.add('mobile-menu-overlay-exit');
+
+      // Remove animation classes after animation completes
+      setTimeout(() => {
+        mobileMenu.classList.remove('mobile-menu-exit');
+        overlay.classList.remove('mobile-menu-overlay-exit');
+      }, 300);
+    } else {
+      mobileMenu.classList.add('active');
+      overlay.classList.add('active');
+
+      // Add enter animation classes
+      mobileMenu.classList.add('mobile-menu-enter');
+      overlay.classList.add('mobile-menu-overlay-enter');
+
+      // Switch to active animation
+      requestAnimationFrame(() => {
+        mobileMenu.classList.add('mobile-menu-enter-active');
+        overlay.classList.add('mobile-menu-overlay-enter-active');
+      });
+
+      // Remove animation classes after animation completes
+      setTimeout(() => {
+        mobileMenu.classList.remove('mobile-menu-enter', 'mobile-menu-enter-active');
+        overlay.classList.remove('mobile-menu-overlay-enter', 'mobile-menu-overlay-enter-active');
+      }, 300);
+    }
+  }
+</script>

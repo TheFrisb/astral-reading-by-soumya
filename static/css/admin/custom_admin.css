@@ -1,0 +1,53 @@
+.ck-content h1 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    margin-bottom: 1rem;
+}
+
+.ck-content h2 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    margin-bottom: 1rem;
+}
+
+.ck-content h3 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    margin-bottom: 1rem;
+}
+
+.ck-content h4 {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    margin-bottom: 1rem;
+}
+
+.ck-content h5 {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.ck-content h6 {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.ck-content p {
+    font-size: 1rem;
+    line-height: 2rem;
+}
+
+/*
+If dark mode is enabled, make the default text color black
+ */
+
+html[data-theme='dark'] .ck-content > * {
+    color: #000;
+}
+
+html[data-theme='dark'] .ck-content td {
+    color: #000;
+    background-color: #fff;
+}

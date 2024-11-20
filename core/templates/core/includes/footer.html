@@ -1,0 +1,66 @@
+<footer class="bg-black relative overflow-hidden border-t border-yellow-400/20">
+    <canvas class="absolute inset-0 pointer-events-none w-full h-full pointer-events-none opacity-30" width="2545"
+            height="381"></canvas>
+    <div class="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
+        <div class="relative">
+            <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
+                <div class="pb-6"><a
+                        class="text-sm leading-6 text-gray-300 hover:text-yellow-400 transition-colors duration-300 relative group"
+                        href="{% url 'core:about' %}"><span class="relative">About<span
+                        class="absolute -bottom-1 left-0 w-0 h-px bg-yellow-400 transition-all duration-300 group-hover:w-full"></span></span></a>
+                </div>
+                <div class="pb-6"><a
+                        class="text-sm leading-6 text-gray-300 hover:text-yellow-400 transition-colors duration-300 relative group"
+                        href="{% url 'blog:home' %}"><span class="relative">Blog<span
+                        class="absolute -bottom-1 left-0 w-0 h-px bg-yellow-400 transition-all duration-300 group-hover:w-full"></span></span></a>
+                </div>
+                <div class="pb-6"><a
+                        class="text-sm leading-6 text-gray-300 hover:text-yellow-400 transition-colors duration-300 relative group"
+                        href="{% url 'core:readings' %}"><span class="relative">Readings<span
+                        class="absolute -bottom-1 left-0 w-0 h-px bg-yellow-400 transition-all duration-300 group-hover:w-full"></span></span></a>
+                </div>
+                <div class="pb-6"><a
+                        class="text-sm leading-6 text-gray-300 hover:text-yellow-400 transition-colors duration-300 relative group"
+                        href="{% url 'core:faq' %}"><span class="relative">FAQ<span
+                        class="absolute -bottom-1 left-0 w-0 h-px bg-yellow-400 transition-all duration-300 group-hover:w-full"></span></span></a>
+                </div>
+                {#                <div class="pb-6"><a#}
+                {#                        class="text-sm leading-6 text-gray-300 hover:text-yellow-400 transition-colors duration-300 relative group"#}
+                {#                        href="/privacy"><span class="relative">Privacy<span#}
+                {#                        class="absolute -bottom-1 left-0 w-0 h-px bg-yellow-400 transition-all duration-300 group-hover:w-full"></span></span></a>#}
+                {#                </div>#}
+                {#                <div class="pb-6"><a#}
+                {#                        class="text-sm leading-6 text-gray-300 hover:text-yellow-400 transition-colors duration-300 relative group"#}
+                {#                        href="/terms"><span class="relative">Terms<span#}
+                {#                        class="absolute -bottom-1 left-0 w-0 h-px bg-yellow-400 transition-all duration-300 group-hover:w-full"></span></span></a>#}
+                {#                </div>#}
+            </nav>
+        </div>
+        <div class="mt-10 flex justify-center space-x-10"><a
+                href="https://www.facebook.com/profile.php?id=61576954495765"
+                class="text-gray-400 hover:text-yellow-400 transition-colors duration-300 transform hover:scale-110"><span
+                class="sr-only">Facebook</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="lucide lucide-facebook h-6 w-6" aria-hidden="true">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+            </svg>
+        </a><a href="https://instagram.com/astralreadingsbysoumya"
+               class="text-gray-400 hover:text-yellow-400 transition-colors duration-300 transform hover:scale-110"><span
+                class="sr-only">Instagram</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="lucide lucide-instagram h-6 w-6" aria-hidden="true">
+                <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+            </svg>
+        </a>
+        </div>
+        <div class="mt-10 flex flex-col items-center">
+            <div class="h-px w-32 bg-gradient-to-r from-transparent via-yellow-400/20 to-transparent"></div>
+            <p class="mt-10 text-center text-xs leading-5 text-gray-400">© {% now "Y" %} Astral Readings by Soumya. All
+                rights
+                reserved.</p></div>
+    </div>
+</footer>

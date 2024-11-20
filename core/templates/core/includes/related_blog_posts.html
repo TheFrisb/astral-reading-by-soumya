@@ -1,0 +1,30 @@
+<div class="mt-16">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8"><h2
+            class="text-4xl mystical-header bg-clip-text text-transparent bg-gradient-to-r from-yellow-600 to-yellow-500 mb-8">
+        Related Articles</h2>
+        <div class="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+            {% for post in related_blog_posts %}
+
+                <article
+                        class="group flex flex-col items-start relative rounded-3xl bg-white ring-1 ring-yellow-200 hover:ring-yellow-300 transition-all duration-700 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(251,191,36,0.15)] overflow-hidden">
+                    <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.1)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                    <div class="absolute pointer-events-none -inset-px bg-gradient-to-r from-yellow-400/0 via-yellow-400/10 to-yellow-400/0 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-1000"></div>
+                    <div class="relative w-full"><img
+                            src="{% if post.image and post.image.url %}{{ post.image.url }}{% endif %}"
+                            alt=""
+                            class="aspect-[16/9] w-full bg-gray-100 object-cover transform transition-all duration-700 group-hover:scale-110 group-hover:rotate-1">
+                        <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/60 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                        <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.2)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 mix-blend-overlay"></div>
+                    </div>
+                    <div class="p-8"><a href="{% url 'blog:blog_post_detail' slug=post.slug %}"
+                                        class="block"><h3
+                            class="text-xl font-semibold leading-6 text-gray-900 group-hover:text-yellow-600 transition-all duration-500 group-hover:translate-x-2">
+                        {{ post.title }}</h3>
+                        <p class="mt-4 text-base leading-7 text-gray-600 group-hover:text-gray-900 transition-all duration-500 group-hover:translate-x-2">
+                            {{ post.get_preview }}</p></a>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+</div>

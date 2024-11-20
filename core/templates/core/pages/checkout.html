@@ -1,0 +1,35 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.9/dist/css/autoComplete.02.min.css">
+
+{% endblock head %}
+{% block content %}
+
+    <div class="bg-white py-24 sm:py-32 relative overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.05)_0%,transparent_70%)]"></div>
+            <div class="absolute inset-0 pointer-events-none bg-[url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80')] bg-cover bg-fixed opacity-[0.02] mix-blend-overlay"></div>
+        </div>
+        <div class="mx-auto max-w-2xl px-6 lg:px-8">
+            <div class="mx-auto max-w-2xl text-center  " data-aos="fade-down">
+                <h2 class="text-6xl  mystical-header bg-clip-text text-transparent bg-gradient-to-r from-yellow-600 to-yellow-500">
+                    Book Your Reading</h2>
+                <p class="mt-4 text-lg leading-8 text-gray-600">Please provide your details to schedule your
+                    personalized reading.</p></div>
+            <div class="mt-16  " data-aos="fade-up">
+                <form class="max-w-2xl mx-auto space-y-8" id="checkoutForm">
+                    {% csrf_token %}
+                    {{ form.as_div }}
+                    <button type="submit"
+                            class="w-full rounded-full bg-yellow-400 px-6 py-4 text-base font-semibold text-black shadow-xl transition-all duration-500 hover:bg-yellow-300 hover:shadow-yellow-400/25 hover:scale-[1.02] relative overflow-hidden group "
+                            data-aos="fade-up"><span
+                            class="absolute inset-0 pointer-events-none bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span><span
+                            class="relative">Proceed to Payment</span></button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

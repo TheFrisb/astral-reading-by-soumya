@@ -1,0 +1,79 @@
+{% extends 'core/base.html' %}
+{% block head %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/css/datepicker.min.css">
+{% endblock head %}
+{% block content %}
+    <div class="bg-white py-24 sm:py-32">
+        {% if has_appointment %}
+            <div class="py-24 sm:py-32">
+                <div class="mx-auto max-w-xl px-6 lg:px-8">
+                    <div class="p-6 group relative rounded-3xl bg-gradient-to-br from-black to-black/90 ring-1 ring-yellow-400/20 hover:ring-yellow-400/40 transition-all duration-700 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(251,191,36,0.15)] flex flex-col items-center">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-yellow-50">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 class="lucide lucide-check-circle h-6 w-6 text-green-600">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <path d="m9 11 3 3L22 4"></path>
+                            </svg>
+                        </div>
+                        <h2 class="mt-4 mystical-header text-yellow-400 text-5xl">Booking Confirmed!</h2>
+                        <div class="mt-4 text-center">
+                            <p class="text-lg text-gray-100">Your appointment is scheduled
+                                for:</p>
+                            <span id="appointmentTime"
+                                  data-utc="{{ order.appointment.start_time|date:'c' }}"></span>
+
+                            <p id="userDate" class="mt-2 text-xl font-medium text-yellow-600"></p>
+                            <p id="userTime" class="mt-1 text-xl font-medium text-yellow-600"></p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            {% csrf_token %}
+            <input type="hidden" name="order_id" value="{{ order.id }}" id="orderIdInput">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                <div class="mx-auto max-w-3xl text-center"><h2
+                        class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Book Your Session</h2>
+                    <p class="mt-2 text-lg leading-8 text-gray-600">Choose your preferred date and time for your
+                        astrological reading</p></div>
+                <div class="mt-16 max-w-3xl mx-auto space-y-8">
+                    <div class="space-y-6">
+                        <div type="text" id="queryTimeSlotsInput"></div>
+                    </div>
+                    <div class="space-y-6 transition-all duration-300 hidden" id="timeSlotsParent">
+                        <div class="rounded-lg border border-gray-200 p-4">
+                            <div class="flex items-center gap-4 mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="lucide lucide-clock h-5 w-5 text-yellow-600">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                                <h3 class="text-lg font-semibold text-gray-900">Available Times for <span
+                                        id="timeSlotsChosenDayContainer"></span></h3>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-3" id="timeSlotsContainer">
+
+                            </div>
+                            <p class="mt-4 text-sm text-gray-500 text-center">All times are shown in your local
+                                timezone</p>
+                        </div>
+                        <div class="mt-8">
+                            <button type="button"
+                                    class="w-full group relative overflow-hidden rounded-full bg-yellow-400 px-8 py-3.5 text-base font-semibold text-black shadow-xl transition-all duration-500 hover:shadow-yellow-400/25 hover:scale-105 backdrop-blur-sm"
+                                    disabled
+                                    id="submitTimeSlotButton">
+                                Reserve This Slot
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock content %}

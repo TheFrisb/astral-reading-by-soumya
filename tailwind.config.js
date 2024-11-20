@@ -1,9 +1,38 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [],
+  content: [
+    './core/templates/core/*.html',
+    './core/templates/core/**/*.html',
+    './blog/templates/blog/*.html',
+    './blog/templates/blog/**/*.html',
+    './booking/templates/booking/*.html',
+    './src/components/*.js',
+    './src/components/**/*.js',
+    './static/icons/*.svg',
+  ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Roboto', 'sans-serif'],
+      },
+      colors: {
+        purple: {
+          50: '#faf5ff',
+          100: '#f3e8ff',
+          200: '#e9d5ff',
+          300: '#d8b4fe',
+          400: '#c084fc',
+          500: '#a855f7',
+          600: '#9333ea',
+          700: '#7e22ce',
+          800: '#6b21a8',
+          900: '#581c87',
+          950: '#3b0764',
+        },
+      },
+    },
   },
-  plugins: [],
-}
-
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
+};

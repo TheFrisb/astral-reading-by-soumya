@@ -1,3 +1,288 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+input, textarea, select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    border-color: #6b7280;
+    border-width: 1px;
+    border-radius: 0px;
+    padding-top: 0.5rem;
+    padding-right: 0.75rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    --tw-shadow: 0 0 #0000;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: theme('colors.yellow.600') !important;
+    background-color: theme('colors.white') !important;
+    border: 1px solid theme('colors.gray.400') !important;
+    box-shadow: theme('boxShadow.sm') !important;
+    height: 60px !important;
+    width: 40px !important;
+    border-radius: 0.5rem !important;
+}
+
+.swiper-button-prev {
+    left: 0 !important;
+}
+
+.swiper-button-next {
+    right: 0 !important;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: 24px !important;
+}
+
+.mobile-menu-enter {
+    transform: translateX(100%);
+}
+
+.mobile-menu-enter-active {
+    transform: translateX(0);
+    transition: transform 300ms ease-out;
+}
+
+.mobile-menu-exit {
+    transform: translateX(0);
+}
+
+.mobile-menu-exit-active {
+    transform: translateX(100%);
+    transition: transform 300ms ease-in;
+}
+
+.mobile-menu-overlay-enter {
+    opacity: 0;
+}
+
+.mobile-menu-overlay-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-out;
+}
+
+.mobile-menu-overlay-exit {
+    opacity: 1;
+}
+
+.mobile-menu-overlay-exit-active {
+    opacity: 0;
+    transition: opacity 300ms ease-in;
+}
+
+.mobile-menu {
+    display: none;
+}
+
+.mobile-menu.active {
+    display: block;
+}
+
+.overlay {
+    display: none;
+}
+
+.overlay.active {
+    display: block;
+}
+
+.errorlist {
+    @apply text-red-500;
+}
+
+.horoscopeFilterButton {
+    @apply px-6 py-2 text-sm font-medium rounded-full transition-all duration-300  shadow-md text-yellow-400 hover:bg-yellow-400/20;
+}
+
+.horoscopeFilterButton.active {
+    @apply bg-yellow-400 text-black;
+}
+
+input, textarea, select {
+    @apply mt-1 block w-full rounded-lg border-2 shadow-sm
+    border-gray-200
+    focus:border-purple-500 focus:ring-2 focus:ring-purple-100 focus:outline-none
+    placeholder:text-gray-400
+    disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500
+    transition-colors duration-200 h-full;
+}
+
+.autoComplete_wrapper {
+    @apply !w-full h-auto;
+}
+
+/*.autoComplete_wrapper input {*/
+/*    @apply mt-1 block w-full rounded-lg border-2 shadow-sm border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-100 focus:outline-none placeholder:text-gray-400 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 transition-colors duration-200 h-auto text-textColor;*/
+/*}*/
+
+textarea {
+    @apply min-h-[100px] resize-none;
+}
+
+.ck-content h1 {
+    @apply text-3xl;
+    @apply mb-4;
+}
+
+.ck-content h2 {
+    @apply text-2xl;
+    @apply mb-4;
+}
+
+.ck-content h3 {
+    @apply text-xl;
+    @apply mb-4;
+}
+
+.ck-content h4 {
+    @apply text-lg;
+    @apply mb-4;
+}
+
+.ck-content h5 {
+    @apply text-base;
+    @apply mb-4;
+}
+
+.ck-content h6 {
+    @apply text-sm;
+    @apply mb-4;
+}
+
+.ck-content p {
+    @apply text-base leading-8;
+}
+
+.datepicker, .datepicker-view {
+    @apply w-full;
+}
+
+.datepicker-header {
+    @apply mb-4;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.mystical-header {
+    font-family: "Allura", cursive;
+    line-height: 1.2 !important;
+}
+
+.libre-baskerville-regular {
+    font-family: "Libre Baskerville", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.libre-baskerville-bold {
+    font-family: "Libre Baskerville", serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.libre-baskerville-regular-italic {
+    font-family: "Libre Baskerville", serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+
+/* Header Link Hover Animation */
+.nav-link {
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: theme('colors.yellow.400');
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: theme('colors.yellow.600') !important;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: 24px !important;
+}
+
+.testimonials-swiper {
+    padding-bottom: 2rem !important;
+    margin: -1rem !important;
+    padding: 1rem !important;
+}
+
+/* Mobile Menu Animation */
+.mobile-menu-enter {
+    transform: translateX(100%);
+}
+
+.mobile-menu-enter-active {
+    transform: translateX(0);
+    transition: transform 300ms ease-out;
+}
+
+.mobile-menu-exit {
+    transform: translateX(0);
+}
+
+.mobile-menu-exit-active {
+    transform: translateX(100%);
+    transition: transform 300ms ease-in;
+}
+
+.mobile-menu-overlay-enter {
+    opacity: 0;
+}
+
+.mobile-menu-overlay-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-out;
+}
+
+.mobile-menu-overlay-exit {
+    opacity: 1;
+}
+
+.mobile-menu-overlay-exit-active {
+    opacity: 0;
+    transition: opacity 300ms ease-in;
+}
+
+.slotButton {
+    @apply p-4 rounded-lg text-sm font-medium transition-colors relative hover:scale-105 transform duration-200 bg-yellow-100 text-black hover:bg-yellow-200 hover:shadow;
+}
+
+.slotButton.active {
+    @apply bg-yellow-400 text-black;
+}
+
+#checkoutForm input, #checkoutForm textarea, #checkoutForm select {
+    @apply block w-full rounded-lg px-4 py-3 bg-white ring-1 ring-gray-200 focus:ring-2 focus:ring-yellow-200 focus:outline-none placeholder:text-gray-400 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 transition-colors duration-300;
+}
+
+#checkoutForm label {
+    @apply block text-base text-gray-600 group-focus-within:text-yellow-600 transition-colors mb-1;
+}
