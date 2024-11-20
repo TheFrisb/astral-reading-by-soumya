@@ -1,15 +1,3 @@
-Admin Panel:
-1. Horoscope Signs
-- Make them drag order-able
-- Generate all horoscope signs with appropriate images
-2. Products
-- Switch over to Product with Product Variants
-3. Horoscope entries
-- Streamline form for adding new horoscope entries
-- Add a WYSIWYG editor for content
-4. Blog Page
-- Add a WYSIWYG editor for content
-
 Inspiration Sources:
 - https://www.astrology.com/horoscope/daily/taurus.html
 - https://www.thepattern.com/
@@ -27,6 +15,22 @@ Design:
 - Show client stories & Testimonials -- carousel
 3. FAQ page
 4. Readings tab
+
+---
+
+Admin Panel:
+1. Horoscope Signs
+- Make them drag order-able
+- Generate all horoscope signs with appropriate images
+2. Products
+- Switch over to Product with Product Variants
+3. Horoscope entries
+- Streamline form for adding new horoscope entries
+- Add a WYSIWYG editor for content
+4. Blog Page
+- Add a WYSIWYG editor for content
+
+
 
 Mail integration:
 - ???

@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.header__link {
+    @apply text-blue-500;
+    @apply hover:text-blue-700;
+    @apply transition-colors;
+}
