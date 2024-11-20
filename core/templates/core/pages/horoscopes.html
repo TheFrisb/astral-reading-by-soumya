@@ -1,4 +1,62 @@
 {% extends 'core/base.html' %}
+{% load static %}
 {% block content %}
-    <p>Content starts here</p>
-{% endblock content %} 
+    <div class="flex flex-col gap-12 py-8">
+        <div class="flex items-center justify-center gap-4 flex-wrap">
+            {% for sign in horoscope_signs %}
+                <a href="{% url 'core:horoscope_detail' sign.name %}"
+                   class="flex flex-col items-center justify-center p-4 border-2 rounded gap-4 w-24 hover:bg-black hover:text-white transition-all">
+                    <svg class="w-8 h-8">
+                        <use href="{% static 'icons/sprite.svg' %}#menu"></use>
+                    </svg>
+                    <p class="text-lg font-bold font-cormorant">{{ sign.name }}</p>
+                </a>
+            {% endfor %}
+        </div>
+
+        <div class="flex items-center justify-center gap-8">
+            <p class="text-3xl font-bold font-cormorant px-8 py-4 border-2 rounded cursor-pointer chooseHoroscopeButton active">
+                Weekly horoscopes</p>
+            <p class="text-3xl font-bold font-cormorant px-8 py-4 border-2 rounded cursor-pointer chooseHoroscopeButton">
+                Monthly
+                horoscopes</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {% for sign in horoscope_signs %}
+                <a href="{% url 'core:horoscope_detail' sign.name %}"
+                   class="flex flex-col items-center justify-center p-4 border-2 rounded gap-4 hover:bg-black hover:text-white transition-all">
+                    <p class="text-2xl font-bold font-cormorant">{{ sign.name }}</p>
+                    <p class="text font-open-sans text-center">
+                        {{ sign.weekly_horoscopes.0.content|truncatewords:7|default:"No weekly horoscope available" }}
+                    </p>
+
+                    <div class="flex items-center justify-between gap-2 px-4 py-2 border-2 rounded">
+                        <span class="">READ MORE</span>
+                        <svg class="w-4 h-4">
+                            <use href="{% static 'icons/sprite.svg' %}#arrow-right"></use>
+                        </svg>
+                    </div>
+                </a>
+
+                <a href="{% url 'core:horoscope_detail' sign.name %}"
+                   class="!hidden flex flex-col items-center justify-center p-4 border-2 rounded gap-4 hover:bg-black hover:text-white transition-all">
+                    <p class="text-2xl font-bold font-cormorant">{{ sign.name }}</p>
+                    <p class="text font-open-sans text-center">
+                        {{ sign.monthly_horoscopes.0.content|truncatewords:7|default:"No monthly horoscope available" }}
+                    </p>
+
+                    <div class="flex items-center justify-between gap-2 px-4 py-2 border-2 rounded">
+                        <span class="">READ MORE</span>
+                        <svg class="w-4 h-4">
+                            <use href="{% static 'icons/sprite.svg' %}#arrow-right"></use>
+                        </svg>
+                    </div>
+                </a>
+            {% endfor %}
+
+
+        </div>
+
+    </div>
+{% endblock content %}

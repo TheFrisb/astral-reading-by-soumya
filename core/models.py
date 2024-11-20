@@ -1,8 +1,6 @@
 import uuid
 
 from django.db import models
-from imagekit.models import ImageSpecField
-from pilkit.processors import ResizeToFill
 
 
 # Create your models here.
@@ -16,20 +14,10 @@ class InternalBaseModel(models.Model):
 
 
 class HoroscopeSign(InternalBaseModel):
-    image = models.ImageField(upload_to="horoscope-signs")
-    processed_png = ImageSpecField(
-        source="image",
-        processors=[ResizeToFill(100, 100)],
-        format="PNG",
-        options={"quality": 90},
-    )
-    processed_webp = ImageSpecField(
-        source="image",
-        processors=[ResizeToFill(100, 100)],
-        format="WEBP",
-        options={"quality": 90},
-    )
     name = models.CharField(max_length=100, unique=True, db_index=True)
+
+    def get_absolute_url(self):
+        return reverse("core:horoscope_detail", kwargs={"sign_name": self.name})
 
     def __str__(self):
         return self.name
@@ -37,6 +25,7 @@ class HoroscopeSign(InternalBaseModel):
     class Meta:
         verbose_name = "Horoscope Sign"
         verbose_name_plural = "Horoscope Signs"
+        ordering = ["name"]
 
 
 class Horoscope(InternalBaseModel):
@@ -44,7 +33,9 @@ class Horoscope(InternalBaseModel):
         WEEKLY = "WEEKLY", "Weekly"
         MONTHLY = "MONTHLY", "Monthly"
 
-    sign = models.ForeignKey(HoroscopeSign, on_delete=models.CASCADE)
+    sign = models.ForeignKey(
+        HoroscopeSign, on_delete=models.CASCADE, related_name="horoscopes"
+    )
     frequency = models.CharField(max_length=7, choices=Frequency.choices)
     start_date = models.DateField()
     end_date = models.DateField()

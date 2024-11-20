@@ -1,5 +1,4 @@
 from django.contrib import admin
-from imagekit.admin import AdminThumbnail
 
 from core.forms.admin.horoscope_entry_form import HoroscopeForm
 from core.models import HoroscopeSign, Product, Horoscope
@@ -12,9 +11,8 @@ class InternalBaseAdmin(admin.ModelAdmin):
 # Register your models here.
 @admin.register(HoroscopeSign)
 class HoroscopeSignAdmin(InternalBaseAdmin):
-    list_display = ["name", "admin_thumbnail"]
+    list_display = ["name"]
     search_fields = ["name"]
-    admin_thumbnail = AdminThumbnail(image_field="processed_webp")
 
 
 @admin.register(Product)
