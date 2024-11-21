@@ -1,0 +1,60 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <div class="py-12">
+        <div class="pb-12 max-w-4xl">
+            <h2 class="text-3xl font-bold text-gray-800 font-cormorant">Frequently asked questions</h2>
+            <p class="text-sm text-gray-500 mt-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor
+                auctor arcu, at fermentum dui. Maecenas. Sed bibendum purus in efficitur consequat. Fusce et
+                tincidunt arcu. Curabitur ac lacus lectus. Morbi congue facilisis sapien, a semper orci facilisis in.
+            </p>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-6">
+            <!-- Left Side (Even Indices) -->
+            <div class="space-y-6">
+                {% for faq in faqs %}
+                    {% if forloop.counter0|divisibleby:2 %}
+                        <div class="accordion bg-white shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-lg">
+                            <button type="button"
+                                    class="toggle-button p-6 w-full text-base text-left text-gray-800 flex items-center">
+                                <span class="mr-4 font-cormorant text-2xl">{{ faq.question }}</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 42"
+                                     class="w-3 fill-current ml-auto shrink-0">
+                                    <path class="plus"
+                                          d="M37.059 16H26V4.941C26 2.224 23.718 0 21 0s-5 2.224-5 4.941V16H4.941C2.224 16 0 18.282 0 21s2.224 5 4.941 5H16v11.059C16 39.776 18.282 42 21 42s5-2.224 5-4.941V26h11.059C39.776 26 42 23.718 42 21s-2.224-5-4.941-5z"/>
+                                    <path
+                                            d="M37.059 16H4.941C2.224 16 0 18.282 0 21s2.224 5 4.941 5h32.118C39.776 26 42 23.718 42 21s-2.224-5-4.941-5z"/>
+                                </svg>
+                            </button>
+                            <div class="content invisible max-h-0 px-6 overflow-hidden transition-all duration-300">
+                                <p class="text-sm text-gray-500">{{ faq.answer }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <!-- Right Side (Odd Indices) -->
+            <div class="space-y-6">
+                {% for faq in faqs %}
+                    {% if not forloop.counter0|divisibleby:2 %}
+                        <div class="accordion bg-white shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-lg">
+                            <button type="button"
+                                    class="toggle-button p-6 w-full text-base text-left text-gray-800 flex items-center">
+                                <span class="mr-4 font-cormorant text-2xl">{{ faq.question }}</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 42"
+                                     class="w-3 fill-current ml-auto shrink-0">
+                                    <path class="plus"
+                                          d="M37.059 16H26V4.941C26 2.224 23.718 0 21 0s-5 2.224-5 4.941V16H4.941C2.224 16 0 18.282 0 21s2.224 5 4.941 5H16v11.059C16 39.776 18.282 42 21 42s5-2.224 5-4.941V26h11.059C39.776 26 42 23.718 42 21s-2.224-5-4.941-5z"/>
+                                    <path
+                                            d="M37.059 16H4.941C2.224 16 0 18.282 0 21s2.224 5 4.941 5h32.118C39.776 26 42 23.718 42 21s-2.224-5-4.941-5z"/>
+                                </svg>
+                            </button>
+                            <div class="content invisible max-h-0 px-6 overflow-hidden transition-all duration-300">
+                                <p class="text-sm text-gray-500">{{ faq.answer }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

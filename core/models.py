@@ -41,8 +41,12 @@ class Horoscope(InternalBaseModel):
     end_date = models.DateField()
     content = models.TextField()
 
+    @property
+    def get_display_name(self):
+        return f"{self.sign.name} - {self.get_frequency_display()} Horoscope"
+
     def __str__(self):
-        return f"{self.sign.name} - {self.frequency} Horoscope ({self.start_date} to {self.end_date})"
+        return f"{self.sign.name} - {self.get_frequency_display()} Horoscope ({self.start_date} to {self.end_date})"
 
     class Meta:
         unique_together = ["sign", "frequency", "start_date"]
@@ -72,6 +76,7 @@ class Testimonial(InternalBaseModel):
     name = models.CharField(max_length=100)
     rating = models.IntegerField()
     content = models.TextField()
+    is_active = models.BooleanField(default=True, db_index=True)
 
     def clean(self):
         if self.rating < 1 or self.rating > 5:
@@ -81,3 +86,14 @@ class Testimonial(InternalBaseModel):
         verbose_name = "Testimonial"
         verbose_name_plural = "Testimonials"
         ordering = ["-created_at"]
+
+
+class FrequentlyAskedQuestion(InternalBaseModel):
+    question = models.CharField(max_length=255)
+    answer = models.TextField()
+    sortable_order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Frequently Asked Question"
+        verbose_name_plural = "Frequently Asked Questions"
+        ordering = ["question"]

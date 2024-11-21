@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="py-12 flex flex-col items-start justify-start gap-8">
+        <div>
+            <h1 class="font-cormorant text-4xl font-bold">{{ horoscope.get_display_name }}</h1>
+            <p class="text-gray-500">{{ horoscope.start_date|date:"F d, Y" }}
+                - {{ horoscope.end_date|date:"F d, Y" }}</p>
+            <div class="flex items-center justify-start gap-4 py-2">
+                {% for filter in filter_options %}
+                    <a href="{{ filter.url }}"
+                       class="horoscopeFilterLink {% if filter.active %}active{% endif %}">
+                        {{ filter.label }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <p>{{ horoscope.content }}</p>
+
+        <div class="w-full">
+            <h2 class="pb-2 font-cormorant text-2xl font-bold">Check out other <span
+                    class="lowercase">{{ horoscope.frequency }}</span> horoscopes</h2>
+            <div class="grid grid-cols-3 md:grid-cols-6 xl:grid-cols-12 gap-8">
+                {% for sign in horoscope_signs %}
+                    <a href="{% url 'core:horoscope_detail' sign.name %}?filter={{ current_filter }}"
+                       class="flex flex-col items-center justify-center p-4 border-2 rounded gap-4 hover:bg-black hover:text-white transition-all horoscopeListItem {% if sign == horoscope.sign %}active{% endif %} hopOnHover">
+                        <svg class="w-8 h-8">
+                            <use href="{% static 'icons/sprite.svg' %}#menu"></use>
+                        </svg>
+                        <p class="text-lg font-bold font-cormorant">{{ sign.name }}</p>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

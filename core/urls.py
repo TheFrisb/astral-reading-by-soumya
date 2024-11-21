@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import HomeView, HoroscopeDetailView
+from .views import HomeView, HoroscopeDetailView, FrequentlyAskedQuestionsView
 
 app_name = "core"
 urlpatterns = [
@@ -10,4 +10,5 @@ urlpatterns = [
         HoroscopeDetailView.as_view(),
         name="horoscope_detail",
     ),
+    path("frequently-asked-questions/", FrequentlyAskedQuestionsView.as_view(), name="faq"),
 ]

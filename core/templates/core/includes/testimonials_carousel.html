@@ -1,0 +1,43 @@
+{% load static %}
+<div class="glide">
+    <!-- Carousel Track -->
+    <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides">
+            {% for testimonial in testimonials %}
+                <li class="glide__slide">
+                    <div class="p-5 flex flex-col items-start gap-6 border-2 rounded">
+                        <div class="flex items-start justify-start flex-col">
+                            <p class="font-cormorant text-3xl font-bold">{{ testimonial.name }}</p>
+                            <div class="flex items-start justify-start">
+                                {% for i in testimonial_star_range %}
+                                    {% if i <= testimonial.rating %}
+                                        <svg class="w-4 h-4 text-yellow-300" fill="currentColor">
+                                            <use href="{% static 'icons/sprite.svg' %}#star"></use>
+                                        </svg>
+                                    {% else %}
+                                        <svg class="w-4 h-4 text-gray-300" fill="currentColor">
+                                            <use href="{% static 'icons/sprite.svg' %}#star"></use>
+                                        </svg>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <p class="text-lg">{{ testimonial.content }}</p>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="glide__arrows" data-glide-el="controls">
+        <button class="glide__arrow glide__arrow--left" data-glide-dir="<">‹</button>
+        <button class="glide__arrow glide__arrow--right" data-glide-dir=">">›</button>
+    </div>
+
+    <div class="glide__bullets" data-glide-el="controls[nav]">
+        {% for testimonial in testimonials %}
+            <button class="glide__bullet" data-glide-dir="={{ forloop.counter0 }}"></button>
+        {% endfor %}
+    </div>
+</div>
+

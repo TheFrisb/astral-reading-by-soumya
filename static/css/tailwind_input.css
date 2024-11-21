@@ -7,3 +7,62 @@
     @apply hover:text-blue-700;
     @apply transition-colors;
 }
+
+.horoscopeListItem.active {
+    @apply bg-black;
+    @apply text-white;
+}
+
+.hopOnHover {
+    @apply hover:-translate-y-2 transition-all relative;
+}
+
+.chooseHoroscopeButton {
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+}
+
+.chooseHoroscopeButton.active {
+    @apply bg-blue-500;
+    @apply text-white;
+
+}
+
+.horoscopeFilterLink {
+    @apply p-2;
+    @apply border-2;
+    @apply rounded;
+    @apply text-sm;
+}
+
+.horoscopeFilterLink.active {
+    @apply bg-blue-500;
+    @apply text-white;
+}
+
+.glide__arrow {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.glide__arrow--left {
+    left: 10px;
+}
+
+.glide__arrow--right {
+    right: 10px;
+}
+
+
+/*# sourceMappingURL=glide.theme.min.css.map */

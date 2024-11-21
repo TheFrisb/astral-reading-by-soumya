@@ -2,10 +2,10 @@
 {% load static %}
 {% block content %}
     <div class="flex flex-col gap-12 py-8">
-        <div class="flex items-center justify-center gap-4 flex-wrap">
+        <div class="grid grid-cols-3 md:grid-cols-6 xl:grid-cols-12 gap-8">
             {% for sign in horoscope_signs %}
                 <a href="{% url 'core:horoscope_detail' sign.name %}"
-                   class="flex flex-col items-center justify-center p-4 border-2 rounded gap-4 w-24 hover:bg-black hover:text-white transition-all">
+                   class="hopOnHover flex flex-col items-center justify-center p-4 border-2 rounded gap-4 hover:bg-black hover:text-white transition-all">
                     <svg class="w-8 h-8">
                         <use href="{% static 'icons/sprite.svg' %}#menu"></use>
                     </svg>
@@ -14,10 +14,12 @@
             {% endfor %}
         </div>
 
-        <div class="flex items-center justify-center gap-8">
-            <p class="text-3xl font-bold font-cormorant px-8 py-4 border-2 rounded cursor-pointer chooseHoroscopeButton active">
+        <div class="flex items-center justify-center gap-4">
+            <p class="text-3xl font-bold font-cormorant px-8 py-4 border-2 rounded cursor-pointer chooseHoroscopeButton active"
+               data-show-horoscope-type="weekly">
                 Weekly horoscopes</p>
-            <p class="text-3xl font-bold font-cormorant px-8 py-4 border-2 rounded cursor-pointer chooseHoroscopeButton">
+            <p class="text-3xl font-bold font-cormorant px-8 py-4 border-2 rounded cursor-pointer chooseHoroscopeButton"
+               data-show-horoscope-type="monthly">
                 Monthly
                 horoscopes</p>
         </div>
@@ -25,8 +27,12 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {% for sign in horoscope_signs %}
                 <a href="{% url 'core:horoscope_detail' sign.name %}"
-                   class="flex flex-col items-center justify-center p-4 border-2 rounded gap-4 hover:bg-black hover:text-white transition-all">
-                    <p class="text-2xl font-bold font-cormorant">{{ sign.name }}</p>
+                   class="hopOnHover flex flex-col items-center justify-center p-4 border-2 rounded gap-4 hover:bg-black hover:text-white transition-all"
+                   data-horoscope-type="weekly">
+                    <div class="flex flex-col items-center justify-center gap-2">
+                        <p class="text-2xl font-bold font-cormorant">{{ sign.name }}</p>
+                        <span class="text-sm font-cormorant">Weekly horoscope</span>
+                    </div>
                     <p class="text font-open-sans text-center">
                         {{ sign.weekly_horoscopes.0.content|truncatewords:7|default:"No weekly horoscope available" }}
                     </p>
@@ -40,8 +46,12 @@
                 </a>
 
                 <a href="{% url 'core:horoscope_detail' sign.name %}"
-                   class="!hidden flex flex-col items-center justify-center p-4 border-2 rounded gap-4 hover:bg-black hover:text-white transition-all">
-                    <p class="text-2xl font-bold font-cormorant">{{ sign.name }}</p>
+                   class="!hidden flex flex-col items-center justify-center p-4 border-2 rounded gap-4 hover:bg-black hover:text-white transition-all"
+                   data-horoscope-type="monthly">
+                    <div class="flex flex-col items-center justify-center gap-2">
+                        <p class="text-2xl font-bold font-cormorant">{{ sign.name }}</p>
+                        <span class="text-sm font-cormorant">Monthly horoscope</span>
+                    </div>
                     <p class="text font-open-sans text-center">
                         {{ sign.monthly_horoscopes.0.content|truncatewords:7|default:"No monthly horoscope available" }}
                     </p>
@@ -54,9 +64,10 @@
                     </div>
                 </a>
             {% endfor %}
-
-
         </div>
+
+        {% include 'core/includes/testimonials_carousel.html' with testimonials=testimonials %}
+
 
     </div>
 {% endblock content %}

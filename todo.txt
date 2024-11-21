@@ -6,12 +6,8 @@ Inspiration Sources:
 - https://www.costarastrology.com/
 
 Design:
-2. Horoscope Tab
-- Style reference: https://www.astrology.com/horoscope/daily.html?_gl=1*1lm072r*_ga*NDU2NDQ0MzMxLjE3Mjk1NTAzMzI.*_ga_QQ50MSVKT9*MTczMTU1MzQ5NS4zLjEuMTczMTU1NTY2OS4zNy4wLjE1OTY4Mzg0OTE.
-- Show monthly and weekly horoscopes
-- Show client stories & Testimonials -- carousel
-3. FAQ page
 4. Readings tab
+5. About tab
 
 ---
 
