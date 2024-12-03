@@ -1,14 +1,15 @@
 {% load static %}
-<header class="w-full border-2 relative" id="header">
+<header class="w-full relative" id="header">
     <div class="container mx-auto flex justify-between items-center p-2">
-        <a class="font-cormorant" href="{% url 'core:home' %}">
+        <a class="font-cormorant  text-goldAccent" href="{% url 'core:home' %}">
             <p class="text-4xl font-bold">Astral Readings</p>
-            <p class="text-2xl italic">By Soumya</p>
+            <p class="text-2xl italic text-goldAccent/80">By Soumya</p>
         </a>
         <nav class="hidden md:flex items-center gap-8" aria-label="Desktop navigation bar">
             <a href="{% url 'core:home' %}" class="header__link">Horoscope</a>
-            <a href="{% url 'core:home' %}" class="header__link">Readings</a>
-            <a href="{% url 'core:home' %}" class="header__link">About</a>
+            <a href="{% url 'core:readings' %}" class="header__link">Readings</a>
+            <a href="{% url 'blog:home' %}" class="header__link">Blog</a>
+            <a href="{% url 'core:about' %}" class="header__link">About</a>
             <a href="{% url 'core:faq' %}" class="header__link">FAQ</a>
         </nav>
         <svg class="w-8 h-8 md:hidden" id="mobileMenuIcon">
@@ -26,9 +27,8 @@
             aria-label="Mobile navigation bar"
     >
         <a href="{% url 'core:home' %}" class="header__link">Horoscope</a>
-        <a href="{% url 'core:home' %}" class="header__link">Readings</a>
-        <a href="{% url 'core:home' %}" class="header__link">About</a>
-        <a href="{% url 'core:home' %}" class="header__link">Testimonials</a>
-        <a href="{% url 'core:home' %}" class="header__link">FAQ</a>
+        <a href="{% url 'core:readings' %}" class="header__link">Readings</a>
+        <a href="{% url 'core:about' %}" class="header__link">About</a>
+        <a href="{% url 'core:faq' %}" class="header__link">FAQ</a>
     </nav>
 </header>

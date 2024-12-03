@@ -3,14 +3,19 @@
 @tailwind utilities;
 
 .header__link {
-    @apply text-blue-500;
-    @apply hover:text-blue-700;
+    @apply text-white;
+    @apply hover:text-rose-500;
     @apply transition-colors;
+    @apply duration-150;
+}
+
+
+.horoscopeListItem {
+    @apply hopOnHover flex flex-col items-center justify-center p-4 border rounded gap-4 transition-all border-softGold shadow-2xl shadow-gold/20 text-white hover:text-rose-500 hover:border-rose-500;
 }
 
 .horoscopeListItem.active {
-    @apply bg-black;
-    @apply text-white;
+    @apply border-rose-500 text-rose-500;
 }
 
 .hopOnHover {
@@ -18,26 +23,25 @@
 }
 
 .chooseHoroscopeButton {
-    transition: background-color 0.3s ease, color 0.3s ease;
-
+    @apply transition-all duration-300;
+    @apply font-bold font-cormorant text-white cursor-pointer;
+    @apply text-2xl px-4 py-2 border border-gray-500 rounded;
+    @apply hover:border-rose-500 hover:text-rose-500;
 }
 
 .chooseHoroscopeButton.active {
-    @apply bg-blue-500;
-    @apply text-white;
-
+    @apply border-rose-500 text-rose-500;
 }
 
 .horoscopeFilterLink {
-    @apply p-2;
-    @apply border-2;
-    @apply rounded;
-    @apply text-sm;
+    @apply transition-all duration-300;
+    @apply text-sm font-bold font-cormorant text-white cursor-pointer p-2;
+    @apply border rounded border-gray-500;
+    @apply hover:border-rose-500 hover:text-rose-500;
 }
 
 .horoscopeFilterLink.active {
-    @apply bg-blue-500;
-    @apply text-white;
+    @apply border-rose-500 text-rose-500;
 }
 
 .glide__arrow {

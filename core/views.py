@@ -1,13 +1,15 @@
 from django.http import Http404
 from django.views.generic import TemplateView, DetailView
 
-from .mixins import PageTagsMixin, StarRatingMixin
+from blog.services.BlogService import BlogService
+from .mixins import PageTagsMixin
 from .models import Horoscope, FrequentlyAskedQuestion
 from .services.horoscopes_service import HoroscopeService
+from .services.readings_service import ReadingsService
 from .services.testimonials_service import TestimonialService
 
 
-class HomeView(PageTagsMixin, StarRatingMixin, TemplateView):
+class HomeView(PageTagsMixin, TemplateView):
     template_name = "core/pages/horoscopes.html"
     page_title = "Home"
 
@@ -18,6 +20,24 @@ class HomeView(PageTagsMixin, StarRatingMixin, TemplateView):
 
         context["horoscope_signs"] = horoscope_service.get_horoscope_signs()
         context["testimonials"] = testimonial_service.get_active_testimonials()
+        return context
+
+
+class AboutView(PageTagsMixin, TemplateView):
+    template_name = "core/pages/about.html"
+    page_title = "About"
+
+
+class ReadingsView(PageTagsMixin, TemplateView):
+    template_name = "core/pages/readings.html"
+    page_title = "Readings"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        readings_service = ReadingsService()
+        testimonials_service = TestimonialService()
+        context["readings"] = readings_service.get_active_readings()
+        context["testimonials"] = testimonials_service.get_active_testimonials()
         return context
 
 
@@ -74,11 +94,15 @@ class HoroscopeDetailView(DetailView):
         ]
 
         service = HoroscopeService()
+        blog_service = BlogService()
         context.update(
             {
                 "filter_options": filter_options,
                 "horoscope_signs": service.get_horoscope_signs(),
                 "current_filter": filter_type,
+                "related_blog_posts": blog_service.get_related_by_horoscope_sign(
+                    self.object.sign
+                ),
             }
         )
         return context

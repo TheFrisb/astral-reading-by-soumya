@@ -6,10 +6,17 @@ Inspiration Sources:
 - https://www.costarastrology.com/
 
 Design:
-4. Readings tab
 5. About tab
 
 ---
+
+1. Make a footer
+2. Make about page
+4. Make blog page
+5. Style
+---
+
+
 
 Admin Panel:
 1. Horoscope Signs

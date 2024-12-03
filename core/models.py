@@ -1,6 +1,8 @@
 import uuid
 
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.urls import reverse
 
 
 # Create your models here.
@@ -55,23 +57,79 @@ class Horoscope(InternalBaseModel):
         ordering = ["-start_date", "sign"]
 
 
-class Product(InternalBaseModel):
-    class Type(models.TextChoices):
-        CALL_CONSULTATION = "CALL_CONSULTATION", "Call Consultation"
-        WRITTEN_REPORT = "WRITTEN_REPORT", "Written Report"
+class Reading(InternalBaseModel):
+    """
+    Represents a general reading service (e.g., Mini Reading, Natal Chart).
+    """
 
-    name = models.CharField(max_length=100)
-    type = models.CharField(max_length=50, choices=Type.choices)
+    name = models.CharField(max_length=100, unique=True)
     description = models.TextField()
-    regular_price = models.DecimalField(max_digits=10, decimal_places=2)
-    discounted_price = models.DecimalField(
-        max_digits=10, decimal_places=2, null=True, blank=True
+    is_active = models.BooleanField(default=True, db_index=True)
+    sortable_order = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Reading"
+        verbose_name_plural = "Readings"
+        ordering = ["name"]  # Orders readings alphabetically
+
+
+class ReadingType(InternalBaseModel):
+    """
+    Represents a specific type of reading service (e.g., Call Consultation, Written Report).
+    """
+
+    class Type(models.TextChoices):
+        CALL = "CALL", "Call Consultation"
+        REPORT = "REPORT", "Written Report"
+
+    reading = models.ForeignKey(
+        Reading,
+        on_delete=models.CASCADE,
+        related_name="variants",
+        help_text="The general reading service this type belongs to.",
     )
+    type = models.CharField(
+        max_length=6,
+        choices=Type.choices,
+        help_text="The type of this reading (e.g., Call or Report).",
+    )
+    regular_price = models.DecimalField(
+        max_digits=6,
+        decimal_places=2,
+        help_text="The standard price of this reading type.",
+    )
+    discounted_price = models.DecimalField(
+        max_digits=6,
+        decimal_places=2,
+        blank=True,
+        null=True,
+        help_text="Optional discounted price of this reading type.",
+    )
+
+    is_discounted = models.BooleanField(
+        default=False,
+        help_text="Whether this reading type is currently discounted.",
+    )
+
+    def __str__(self):
+        return f"{self.reading.name} - {self.get_type_display()}"
+
+    class Meta:
+        verbose_name = "Reading Type"
+        verbose_name_plural = "Reading Types"
+        ordering = ["reading__name", "type"]
+        unique_together = [
+            "reading",
+            "type",
+        ]  # Ensures each reading can have only one Call/Report type
 
 
 class Testimonial(InternalBaseModel):
-    product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="testimonials"
+    reading = models.ForeignKey(
+        Reading, on_delete=models.CASCADE, related_name="testimonials"
     )
     name = models.CharField(max_length=100)
     rating = models.IntegerField()

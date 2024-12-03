@@ -1,17 +1,17 @@
 {% load static %}
 <div class="glide">
     <!-- Carousel Track -->
-    <div class="glide__track" data-glide-el="track">
+    <div class="glide__track  shadow-2xl shadow-gold/20" data-glide-el="track">
         <ul class="glide__slides">
             {% for testimonial in testimonials %}
                 <li class="glide__slide">
-                    <div class="p-5 flex flex-col items-start gap-6 border-2 rounded">
+                    <div class="p-5 flex flex-col items-start gap-6 border border-rose-500 rounded-lg  shadow-2xl shadow-gold/20">
                         <div class="flex items-start justify-start flex-col">
-                            <p class="font-cormorant text-3xl font-bold">{{ testimonial.name }}</p>
+                            <p class="font-cormorant text-3xl font-bold text-rose-500">{{ testimonial.name }}</p>
                             <div class="flex items-start justify-start">
                                 {% for i in testimonial_star_range %}
                                     {% if i <= testimonial.rating %}
-                                        <svg class="w-4 h-4 text-yellow-300" fill="currentColor">
+                                        <svg class="w-4 h-4 text-softGold" fill="currentColor">
                                             <use href="{% static 'icons/sprite.svg' %}#star"></use>
                                         </svg>
                                     {% else %}
@@ -22,7 +22,7 @@
                                 {% endfor %}
                             </div>
                         </div>
-                        <p class="text-lg">{{ testimonial.content }}</p>
+                        <p class=" text-white/80">{{ testimonial.content }}</p>
                     </div>
                 </li>
             {% endfor %}

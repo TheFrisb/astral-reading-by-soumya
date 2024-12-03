@@ -44,9 +44,13 @@ class HoroscopeService:
             start_date = today.replace(day=1)
             # Handle month transition
             if start_date.month == 12:
-                end_date = start_date.replace(year=start_date.year + 1, month=1, day=1) - timedelta(days=1)
+                end_date = start_date.replace(
+                    year=start_date.year + 1, month=1, day=1
+                ) - timedelta(days=1)
             else:
-                end_date = start_date.replace(month=start_date.month + 1, day=1) - timedelta(days=1)
+                end_date = start_date.replace(
+                    month=start_date.month + 1, day=1
+                ) - timedelta(days=1)
         else:
             raise ValueError("Invalid frequency")
         return start_date, end_date

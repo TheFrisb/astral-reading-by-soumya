@@ -26,11 +26,5 @@ class PageTagsMixin:
         """
         context = super().get_context_data(**kwargs)
         context["page_tags"] = self.get_page_tags()
-        return context
-
-
-class StarRatingMixin:
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
         context["testimonial_star_range"] = range(1, 6)
         return context

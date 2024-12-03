@@ -5,7 +5,7 @@
         <div class="grid grid-cols-3 md:grid-cols-6 xl:grid-cols-12 gap-8">
             {% for sign in horoscope_signs %}
                 <a href="{% url 'core:horoscope_detail' sign.name %}"
-                   class="hopOnHover flex flex-col items-center justify-center p-4 border-2 rounded gap-4 hover:bg-black hover:text-white transition-all">
+                   class="horoscopeListItem">
                     <svg class="w-8 h-8">
                         <use href="{% static 'icons/sprite.svg' %}#menu"></use>
                     </svg>
@@ -15,10 +15,10 @@
         </div>
 
         <div class="flex items-center justify-center gap-4">
-            <p class="text-3xl font-bold font-cormorant px-8 py-4 border-2 rounded cursor-pointer chooseHoroscopeButton active"
+            <p class="chooseHoroscopeButton active"
                data-show-horoscope-type="weekly">
                 Weekly horoscopes</p>
-            <p class="text-3xl font-bold font-cormorant px-8 py-4 border-2 rounded cursor-pointer chooseHoroscopeButton"
+            <p class="chooseHoroscopeButton"
                data-show-horoscope-type="monthly">
                 Monthly
                 horoscopes</p>
@@ -27,17 +27,17 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {% for sign in horoscope_signs %}
                 <a href="{% url 'core:horoscope_detail' sign.name %}"
-                   class="hopOnHover flex flex-col items-center justify-center p-4 border-2 rounded gap-4 hover:bg-black hover:text-white transition-all"
+                   class="hopOnHover flex flex-col items-center justify-center p-4 bg-rose-950/65  rounded-lg gap-4 transition-all "
                    data-horoscope-type="weekly">
                     <div class="flex flex-col items-center justify-center gap-2">
-                        <p class="text-2xl font-bold font-cormorant">{{ sign.name }}</p>
-                        <span class="text-sm font-cormorant">Weekly horoscope</span>
+                        <p class="text-2xl font-bold font-cormorant text-softGold">{{ sign.name }}</p>
+                        <span class="text-xs font-cormorant text-rose-500">Weekly horoscope</span>
                     </div>
-                    <p class="text font-open-sans text-center">
+                    <p class="font-open-sans text-center  text-white/80">
                         {{ sign.weekly_horoscopes.0.content|truncatewords:7|default:"No weekly horoscope available" }}
                     </p>
 
-                    <div class="flex items-center justify-between gap-2 px-4 py-2 border-2 rounded">
+                    <div class="flex items-center justify-between gap-2 px-4 py-2 border border-softGold text-softGold rounded-lg transition-all duration-300 hover:text-rose-500">
                         <span class="">READ MORE</span>
                         <svg class="w-4 h-4">
                             <use href="{% static 'icons/sprite.svg' %}#arrow-right"></use>
@@ -46,17 +46,17 @@
                 </a>
 
                 <a href="{% url 'core:horoscope_detail' sign.name %}"
-                   class="!hidden flex flex-col items-center justify-center p-4 border-2 rounded gap-4 hover:bg-black hover:text-white transition-all"
+                   class="!hidden hopOnHover flex flex-col items-center justify-center p-4 bg-rose-950/65  rounded-lg gap-4 transition-all "
                    data-horoscope-type="monthly">
                     <div class="flex flex-col items-center justify-center gap-2">
-                        <p class="text-2xl font-bold font-cormorant">{{ sign.name }}</p>
-                        <span class="text-sm font-cormorant">Monthly horoscope</span>
+                        <p class="text-2xl font-bold font-cormorant text-softGold">{{ sign.name }}</p>
+                        <span class="text-xs font-cormorant text-rose-500">Monthly horoscope</span>
                     </div>
-                    <p class="text font-open-sans text-center">
+                    <p class="font-open-sans text-center  text-white/80">
                         {{ sign.monthly_horoscopes.0.content|truncatewords:7|default:"No monthly horoscope available" }}
                     </p>
 
-                    <div class="flex items-center justify-between gap-2 px-4 py-2 border-2 rounded">
+                    <div class="flex items-center justify-between gap-2 px-4 py-2 border border-softGold text-softGold rounded-lg transition-all duration-300 hover:text-rose-500">
                         <span class="">READ MORE</span>
                         <svg class="w-4 h-4">
                             <use href="{% static 'icons/sprite.svg' %}#arrow-right"></use>

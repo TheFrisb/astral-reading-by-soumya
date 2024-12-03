@@ -1,0 +1,52 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="py-8">
+
+        <div class="flex flex-col gap-8">
+            <div>
+                <h1 class="text-2xl font-bold mb-4">Readings</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad amet beatae culpa ea eius eligendi harum
+                    illo illum laboriosam laborum magnam molestiae molestias numquam obcaecati, quae quasi quisquam rem
+                    sapiente, tempore vel velit vitae voluptatibus. Accusamus atque blanditiis consequatur debitis
+                    dignissimos eligendi ex facere illo iste minima natus nesciunt nulla, perspiciatis possimus quae
+                    quaerat
+                    quasi reprehenderit rerum similique sunt? Culpa!</p>
+            </div>
+            {% for reading in readings %}
+                <div class="flex items-start justify-between p-5 rounded border-2">
+                    <div class="">
+                        <div class="mb-6">
+                            <p class="text-2xl font-bold mb-1">{{ reading.name }}</p>
+                            <div class="flex items-center justify-start">
+                                {% for i in testimonial_star_range %}
+                                    {% if i <= 5 %}
+                                        <svg class="w-4 h-4 text-yellow-300" fill="currentColor">
+                                            <use href="{% static 'icons/sprite.svg' %}#star"></use>
+                                        </svg>
+                                    {% else %}
+                                        <svg class="w-4 h-4 text-gray-300" fill="currentColor">
+                                            <use href="{% static 'icons/sprite.svg' %}#star"></use>
+                                        </svg>
+                                    {% endif %}
+                                {% endfor %}
+                                <span class="ml-2 text-sm">46 reviews</span>
+                            </div>
+                        </div>
+                        <p>{{ reading.description }}</p>
+                    </div>
+                    <div class="flex flex-col items-start justify-start">
+                        {% for variant in reading.variants.all %}
+                            <p class="font-bold text-sm">{{ variant.get_type_display }}:
+                                <span class="font-bold text-lg">${{ variant.regular_price }}</span></p>
+                        {% endfor %}
+                        <a href="#" class="w-full text-center border rounded-lg p-5">Order</a>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <h2 class="text-2xl font-bold">What our clients say about us</h2>
+            {% include 'core/includes/testimonials_carousel.html' %}
+        </div>
+    </div>
+{% endblock %}

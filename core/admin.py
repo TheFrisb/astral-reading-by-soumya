@@ -2,7 +2,13 @@ from adminsortable2.admin import SortableAdminMixin
 from django.contrib import admin
 
 from core.forms.admin.horoscope_entry_form import HoroscopeForm
-from core.models import HoroscopeSign, Product, Horoscope, FrequentlyAskedQuestion
+from core.models import (
+    HoroscopeSign,
+    Horoscope,
+    FrequentlyAskedQuestion,
+    ReadingType,
+    Reading,
+)
 
 
 class InternalBaseAdmin(admin.ModelAdmin):
@@ -14,13 +20,6 @@ class InternalBaseAdmin(admin.ModelAdmin):
 class HoroscopeSignAdmin(InternalBaseAdmin):
     list_display = ["name"]
     search_fields = ["name"]
-
-
-@admin.register(Product)
-class ProductAdmin(InternalBaseAdmin):
-    list_display = ("name", "type", "regular_price", "discounted_price")
-    search_fields = ["name"]
-    list_filter = ["type"]
 
 
 @admin.register(Horoscope)
@@ -36,6 +35,29 @@ class HoroscopeAdmin(InternalBaseAdmin):
 class FrequentlyAskedQuestionAdmin(SortableAdminMixin, InternalBaseAdmin):
     list_display = ("question", "sortable_order")
     ordering = ("sortable_order",)
+
+
+class ReadingTypeInline(admin.TabularInline):
+    """
+    Inline admin for managing Reading Types directly from the Reading admin.
+    """
+
+    model = ReadingType
+    extra = 1
+    max_num = ReadingType.Type.choices.__len__()
+
+
+@admin.register(Reading)
+class ReadingAdmin(SortableAdminMixin, InternalBaseAdmin):
+    """
+    Admin interface for Reading.
+    """
+
+    list_display = ("name", "is_active", "sortable_order")
+    ordering = ("sortable_order",)
+    list_filter = ("is_active",)
+    search_fields = ("name",)
+    inlines = [ReadingTypeInline]
 
 
 admin.site.site_header = "Astrology Admin"
