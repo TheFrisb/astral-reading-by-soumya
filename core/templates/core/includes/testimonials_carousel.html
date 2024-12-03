@@ -30,8 +30,17 @@
     </div>
 
     <div class="glide__arrows" data-glide-el="controls">
-        <button class="glide__arrow glide__arrow--left" data-glide-dir="<">‹</button>
-        <button class="glide__arrow glide__arrow--right" data-glide-dir=">">›</button>
+        <button class="glide__arrow glide__arrow--left "
+                data-glide-dir="<">
+            <svg class="text-softGold">
+                <use href="{% static 'icons/sprite.svg' %}#arrow-left"></use>
+            </svg>
+        </button>
+        <button class="glide__arrow glide__arrow--right " data-glide-dir=">">
+            <svg class="text-softGold">
+                <use href="{% static 'icons/sprite.svg' %}#arrow-right"></use>
+            </svg>
+        </button>
     </div>
 
     <div class="glide__bullets" data-glide-el="controls[nav]">

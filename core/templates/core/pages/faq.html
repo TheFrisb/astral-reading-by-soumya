@@ -2,8 +2,8 @@
 {% block content %}
     <div class="py-8">
         <div class="pb-12 max-w-4xl">
-            <h2 class="text-3xl font-bold text-gray-800 font-cormorant">Frequently asked questions</h2>
-            <p class="text-sm text-gray-500 mt-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor
+            <h2 class="text-3xl font-bold text-gray-800 font-cormorant text-rose-500">Frequently asked questions</h2>
+            <p class="text-sm text-gray-300 mt-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor
                 auctor arcu, at fermentum dui. Maecenas. Sed bibendum purus in efficitur consequat. Fusce et
                 tincidunt arcu. Curabitur ac lacus lectus. Morbi congue facilisis sapien, a semper orci facilisis in.
             </p>
@@ -13,9 +13,9 @@
             <div class="space-y-6">
                 {% for faq in faqs %}
                     {% if forloop.counter0|divisibleby:2 %}
-                        <div class="accordion bg-white shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-lg">
+                        <div class="accordion bg-rose-950/65 rounded-lg shadow-2xl shadow-softGold/20">
                             <button type="button"
-                                    class="toggle-button p-6 w-full text-base text-left text-gray-800 flex items-center">
+                                    class="toggle-button p-6 w-full text-base text-left text-softGold flex items-center">
                                 <span class="mr-4 font-cormorant text-2xl">{{ faq.question }}</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 42"
                                      class="w-3 fill-current ml-auto shrink-0">
@@ -26,7 +26,7 @@
                                 </svg>
                             </button>
                             <div class="content invisible max-h-0 px-6 overflow-hidden transition-all duration-300">
-                                <p class="text-sm text-gray-500">{{ faq.answer }}</p>
+                                <p class="text-sm text-gray-300">{{ faq.answer }}</p>
                             </div>
                         </div>
                     {% endif %}
@@ -36,9 +36,9 @@
             <div class="space-y-6">
                 {% for faq in faqs %}
                     {% if not forloop.counter0|divisibleby:2 %}
-                        <div class="accordion bg-white shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-lg">
+                        <div class="accordion bg-rose-950/65 rounded-lg shadow-2xl shadow-softGold/20">
                             <button type="button"
-                                    class="toggle-button p-6 w-full text-base text-left text-gray-800 flex items-center">
+                                    class="toggle-button p-6 w-full text-base text-left text-softGold flex items-center">
                                 <span class="mr-4 font-cormorant text-2xl">{{ faq.question }}</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 42"
                                      class="w-3 fill-current ml-auto shrink-0">
@@ -49,7 +49,7 @@
                                 </svg>
                             </button>
                             <div class="content invisible max-h-0 px-6 overflow-hidden transition-all duration-300">
-                                <p class="text-sm text-gray-500">{{ faq.answer }}</p>
+                                <p class="text-sm text-gray-300">{{ faq.answer }}</p>
                             </div>
                         </div>
                     {% endif %}
