@@ -24,7 +24,7 @@
             <div class="grid grid-cols-3 md:grid-cols-6 xl:grid-cols-12 gap-8">
                 {% for sign in horoscope_signs %}
                     <a href="{% url 'core:horoscope_detail' sign.name %}?filter={{ current_filter }}"
-                       class="flex flex-col items-center justify-center p-4 border-2 rounded gap-4 hover:bg-black hover:text-white transition-all horoscopeListItem {% if sign == horoscope.sign %}active{% endif %} hopOnHover">
+                       class="horoscopeListItem {% if sign == horoscope.sign %}active{% endif %}">
                         <svg class="w-8 h-8">
                             <use href="{% static 'icons/sprite.svg' %}#menu"></use>
                         </svg>
