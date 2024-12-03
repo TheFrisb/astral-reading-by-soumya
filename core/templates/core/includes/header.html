@@ -12,22 +12,23 @@
             <a href="{% url 'core:about' %}" class="header__link">About</a>
             <a href="{% url 'core:faq' %}" class="header__link">FAQ</a>
         </nav>
-        <svg class="w-8 h-8 md:hidden" id="mobileMenuIcon">
+        <svg class="w-8 h-8 md:hidden text-rose-500" id="mobileMenuIcon">
             <use href="{% static 'icons/sprite.svg' %}#menu"></use>
         </svg>
 
-        <svg class="w-8 h-8 hidden md:hidden text-black" id="mobileMenuCloseIcon">
+        <svg class="w-8 h-8 hidden md:hidden text-rose-500" id="mobileMenuCloseIcon">
             <use href="{% static 'icons/sprite.svg' %}#close"></use>
         </svg>
     </div>
 
     <nav
-            class="flex flex-col justify-center gap-4 items-center bg-gray-100 opacity-0 max-h-0 overflow-hidden transition-all duration-150 transform scale-y-0"
+            class="flex flex-col justify-center gap-4 items-center opacity-0 max-h-0 overflow-hidden transition-all duration-150 transform scale-y-0"
             id="mobileMenu"
             aria-label="Mobile navigation bar"
     >
         <a href="{% url 'core:home' %}" class="header__link">Horoscope</a>
         <a href="{% url 'core:readings' %}" class="header__link">Readings</a>
+        <a href="{% url 'blog:home' %}" class="header__link">Blog</a>
         <a href="{% url 'core:about' %}" class="header__link">About</a>
         <a href="{% url 'core:faq' %}" class="header__link">FAQ</a>
     </nav>

@@ -25,7 +25,7 @@
 .chooseHoroscopeButton {
     @apply transition-all duration-300;
     @apply font-bold font-cormorant text-white cursor-pointer;
-    @apply text-2xl px-4 py-2 border border-gray-500 rounded;
+    @apply text-lg md:text-2xl px-4 py-2 border border-gray-500 rounded;
     @apply hover:border-rose-500 hover:text-rose-500;
 }
 
