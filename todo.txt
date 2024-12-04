@@ -6,34 +6,17 @@ Inspiration Sources:
 - https://www.costarastrology.com/
 
 ---
-
-1. Make a footer
-2. Make about page
-4. Make blog page
-5. Style
+1. Finish checkout
+2. Make success page
+3. Send email invoice
+4. Send email calendar picker
+5. Show admin orders
+6. Show admin calendar
+7. Show admin notifications/messages
+8. Make footer
 ---
 
 
 
-Admin Panel:
-1. Horoscope Signs
-- Make them drag order-able
-- Generate all horoscope signs with appropriate images
-2. Products
-- Switch over to Product with Product Variants
-3. Horoscope entries
-- Streamline form for adding new horoscope entries
-- Add a WYSIWYG editor for content
-4. Blog Page
-- Add a WYSIWYG editor for content
 
-
-
-Mail integration:
-- ???
-
-Stripe integration:
-- ???
-
-Cloudflare integration
 

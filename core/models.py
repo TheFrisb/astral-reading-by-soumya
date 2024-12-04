@@ -115,7 +115,7 @@ class ReadingType(InternalBaseModel):
     )
 
     def __str__(self):
-        return f"{self.reading.name} - {self.get_type_display()}"
+        return f"{self.reading.name} {self.get_type_display()} - ${self.regular_price}"
 
     class Meta:
         verbose_name = "Reading Type"
@@ -154,4 +154,4 @@ class FrequentlyAskedQuestion(InternalBaseModel):
     class Meta:
         verbose_name = "Frequently Asked Question"
         verbose_name_plural = "Frequently Asked Questions"
-        ordering = ["question"]
+        ordering = ["sortable_order", "question"]

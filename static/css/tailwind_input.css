@@ -68,5 +68,40 @@
     right: 10px;
 }
 
+.checkoutForm {
+    @apply mx-auto max-w-lg;
+    @apply flex flex-col gap-8;
+}
+
+.checkoutForm div {
+    @apply flex flex-col gap-2;
+}
+
+.checkoutForm label {
+    @apply font-bold text-gray-300 text-sm;
+}
+
+.checkoutForm input, select, textarea {
+    @apply border border-gray-300 rounded-lg p-4 bg-rose-950/60;
+    @apply focus:outline-none focus:border-rose-500 focus:bg-rose-950/80;
+    @apply text-gray-300;
+    @apply transition-all duration-300;
+}
+
+.checkoutForm select > option {
+    @apply bg-rose-950 text-softGold font-normal text-sm rounded-lg p-4;
+}
+
+.checkoutForm input::placeholder, select::placeholder, textarea::placeholder {
+    @apply text-softGold/80 font-normal;
+}
+
+.checkoutForm button[type="submit"] {
+    @apply p-4 rounded-lg border border-softGold;
+    @apply text-softGold font-bold text-lg;
+    @apply hover:border-rose-500 hover:text-rose-500;
+    @apply transition-all duration-300;
+}
+
 
 /*# sourceMappingURL=glide.theme.min.css.map */

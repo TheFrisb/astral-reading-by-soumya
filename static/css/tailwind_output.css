@@ -938,11 +938,6 @@ video {
   padding-right: 1.5rem;
 }
 
-.px-8 {
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
-
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
@@ -1083,11 +1078,6 @@ video {
   color: rgb(37 99 235 / var(--tw-text-opacity, 1));
 }
 
-.text-goldAccent {
-  --tw-text-opacity: 1;
-  color: rgb(255 215 0 / var(--tw-text-opacity, 1));
-}
-
 .text-goldAccent\/80 {
   color: rgb(255 215 0 / 0.8);
 }
@@ -1110,11 +1100,6 @@ video {
 .text-gray-800 {
   --tw-text-opacity: 1;
   color: rgb(31 41 55 / var(--tw-text-opacity, 1));
-}
-
-.text-gray-900 {
-  --tw-text-opacity: 1;
-  color: rgb(17 24 39 / var(--tw-text-opacity, 1));
 }
 
 .text-rose-500 {
@@ -1361,6 +1346,102 @@ video {
   right: 10px;
 }
 
+.checkoutForm {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 32rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.checkoutForm div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.checkoutForm label {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity, 1));
+}
+
+.checkoutForm input, select, textarea {
+  border-radius: 0.5rem;
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
+  background-color: rgb(76 5 25 / 0.6);
+  padding: 1rem;
+}
+
+.checkoutForm input:focus, select:focus, textarea:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(244 63 94 / var(--tw-border-opacity, 1));
+  background-color: rgb(76 5 25 / 0.8);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.checkoutForm input, select, textarea {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity, 1));
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.checkoutForm select > option {
+  border-radius: 0.5rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(76 5 25 / var(--tw-bg-opacity, 1));
+  padding: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+  --tw-text-opacity: 1;
+  color: rgb(255 195 0 / var(--tw-text-opacity, 1));
+}
+
+.checkoutForm input::-moz-placeholder, select::-moz-placeholder, textarea::-moz-placeholder {
+  font-weight: 400;
+  color: rgb(255 195 0 / 0.8);
+}
+
+.checkoutForm input::placeholder, select::placeholder, textarea::placeholder {
+  font-weight: 400;
+  color: rgb(255 195 0 / 0.8);
+}
+
+.checkoutForm button[type="submit"] {
+  border-radius: 0.5rem;
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(255 195 0 / var(--tw-border-opacity, 1));
+  padding: 1rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  --tw-text-opacity: 1;
+  color: rgb(255 195 0 / var(--tw-text-opacity, 1));
+}
+
+.checkoutForm button[type="submit"]:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(244 63 94 / var(--tw-border-opacity, 1));
+  --tw-text-opacity: 1;
+  color: rgb(244 63 94 / var(--tw-text-opacity, 1));
+}
+
+.checkoutForm button[type="submit"] {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
 .hover\:border-rose-500:hover {
   --tw-border-opacity: 1;
   border-color: rgb(244 63 94 / var(--tw-border-opacity, 1));
@@ -1449,14 +1530,14 @@ video {
     gap: 0px;
   }
 
-  .md\:text-lg {
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-  }
-
   .md\:text-4xl {
     font-size: 2.25rem;
     line-height: 2.5rem;
+  }
+
+  .md\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
   }
 }
 
@@ -1484,6 +1565,11 @@ video {
   .lg\:text-3xl {
     font-size: 1.875rem;
     line-height: 2.25rem;
+  }
+
+  .lg\:text-6xl {
+    font-size: 3.75rem;
+    line-height: 1;
   }
 }
 

@@ -21,7 +21,7 @@
                             </h2>
 
                             <p class="text-gray-300">
-                                {{ post.content|truncatewords:20 }}</p>
+                                {{ post.content|safe|striptags|truncatewords:20 }}</p>
 
                             <div>
                                 <a href="{{ post.get_absolute_url }}"

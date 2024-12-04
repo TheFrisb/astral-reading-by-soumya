@@ -44,7 +44,7 @@
                                 </p>
                             {% endfor %}
                         </div>
-                        <a href="#"
+                        <a href="{% url 'core:checkout' reading_id=reading.id %}"
                            class="w-full text-center border text-softGold border-softGold transition-all duration-300 hover:border-rose-500 hover:text-rose-500 rounded-lg px-2 py-4">Order</a>
                     </div>
                 </div>

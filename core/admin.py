@@ -26,9 +26,10 @@ class HoroscopeSignAdmin(InternalBaseAdmin):
 class HoroscopeAdmin(InternalBaseAdmin):
     form = HoroscopeForm
     list_display = ("sign", "frequency", "start_date", "end_date")
-    list_filter = ("sign", "frequency", "start_date")
+    list_filter = ("sign", "frequency")
     search_fields = ("sign__name", "content")
     date_hierarchy = "start_date"
+    readonly_fields = ["end_date"] + InternalBaseAdmin.readonly_fields
 
 
 @admin.register(FrequentlyAskedQuestion)
@@ -53,11 +54,31 @@ class ReadingAdmin(SortableAdminMixin, InternalBaseAdmin):
     Admin interface for Reading.
     """
 
-    list_display = ("name", "is_active", "sortable_order")
+    list_display = (
+        "name",
+        "is_active",
+        "call_consultation",
+        "written_report",
+        "sortable_order",
+    )
     ordering = ("sortable_order",)
     list_filter = ("is_active",)
     search_fields = ("name",)
     inlines = [ReadingTypeInline]
+
+    # define the fields to be displayed in the list view
+    def call_consultation(self, obj):
+        return ReadingType.objects.filter(
+            reading=obj, type=ReadingType.Type.CALL
+        ).exists()
+
+    def written_report(self, obj):
+        return ReadingType.objects.filter(
+            reading=obj, type=ReadingType.Type.REPORT
+        ).exists()
+
+    call_consultation.boolean = True
+    written_report.boolean = True
 
 
 admin.site.site_header = "Astrology Admin"

@@ -1,13 +1,14 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from django_ckeditor_5.fields import CKEditor5Field
 
 from core.models import InternalBaseModel
 
 
 class BlogPost(InternalBaseModel):
     title = models.CharField(max_length=100)
-    content = models.TextField()
+    content = CKEditor5Field("Content", config_name="default")
     horoscopes = models.ManyToManyField(
         "core.HoroscopeSign", blank=True, related_name="blog_posts"
     )

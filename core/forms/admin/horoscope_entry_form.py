@@ -16,13 +16,24 @@ class HoroscopeForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        frequency = cleaned_data.get("frequency")
-        start_date = cleaned_data.get("start_date")
+        # You can keep your existing clean method if you need validation here
+        return cleaned_data
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        frequency = self.cleaned_data.get("frequency")
+        start_date = self.cleaned_data.get("start_date")
 
         if frequency and start_date:
             if frequency == Horoscope.Frequency.WEEKLY:
-                cleaned_data["end_date"] = start_date + timedelta(days=6)
+                instance.end_date = start_date + timedelta(days=6)
             elif frequency == Horoscope.Frequency.MONTHLY:
                 next_month = start_date.replace(day=28) + timedelta(days=4)
-                cleaned_data["end_date"] = next_month - timedelta(days=next_month.day)
-        return cleaned_data
+                instance.end_date = next_month - timedelta(days=next_month.day)
+        else:
+            # Handle cases where frequency or start_date might be missing
+            instance.end_date = None
+
+        if commit:
+            instance.save()
+        return instance

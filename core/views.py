@@ -1,9 +1,14 @@
+import stripe
+from django.conf import settings
 from django.http import Http404
+from django.shortcuts import redirect
 from django.views.generic import TemplateView, DetailView
+from django.views.generic.edit import FormView
 
 from blog.services.BlogService import BlogService
+from .forms.checkout_form import ConsultationForm
 from .mixins import PageTagsMixin
-from .models import Horoscope, FrequentlyAskedQuestion
+from .models import Horoscope, FrequentlyAskedQuestion, ReadingType
 from .services.horoscopes_service import HoroscopeService
 from .services.readings_service import ReadingsService
 from .services.testimonials_service import TestimonialService
@@ -21,6 +26,90 @@ class HomeView(PageTagsMixin, TemplateView):
         context["horoscope_signs"] = horoscope_service.get_horoscope_signs()
         context["testimonials"] = testimonial_service.get_active_testimonials()
         return context
+
+
+class CheckoutView(PageTagsMixin, FormView):
+    template_name = "core/pages/checkout.html"
+    page_title = "Checkout"
+    form_class = ConsultationForm
+
+    def get_reading(self):
+        """Retrieve the Reading object based on the 'reading_id' URL parameter."""
+        reading_id = self.kwargs.get("reading_id")
+        readings_service = ReadingsService()
+        reading = readings_service.get_reading_by_id(reading_id)
+        if not reading:
+            raise Http404("Reading does not exist")
+        return reading
+
+    def get_form_kwargs(self):
+        """Pass the 'reading' object to the form."""
+        kwargs = super().get_form_kwargs()
+        kwargs["reading"] = self.get_reading()
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        """Add the 'reading' object to the context."""
+        context = super().get_context_data(**kwargs)
+        context["reading"] = self.get_reading()
+        return context
+
+    def form_valid(self, form):
+
+        full_name = form.cleaned_data.get("full_name")
+        email = form.cleaned_data.get("email")
+        consultation_call_type_id = form.cleaned_data.get("consultation_call_type")
+
+        try:
+            reading_type = ReadingType.objects.get(pk=consultation_call_type_id)
+        except ReadingType.DoesNotExist:
+            form.add_error(
+                "consultation_call_type", "Invalid consultation call type selected."
+            )
+            return self.form_invalid(form)
+
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+
+        if reading_type.is_discounted and reading_type.discounted_price:
+            price = int(reading_type.discounted_price * 100)
+        else:
+            price = int(reading_type.regular_price * 100)
+
+        success_url = self.request.build_absolute_uri("www.trendiko.mk")
+        cancel_url = self.request.build_absolute_uri(self.request.path)
+
+        try:
+            checkout_session = stripe.checkout.Session.create(
+                payment_method_types=["card"],
+                mode="payment",
+                line_items=[
+                    {
+                        "price_data": {
+                            "currency": "usd",
+                            "unit_amount": price,
+                            "product_data": {
+                                "name": str(reading_type),
+                            },
+                        },
+                        "quantity": 1,
+                    }
+                ],
+                customer_email=email,
+                metadata={
+                    "reading_type_id": reading_type.pk,
+                    "full_name": full_name,
+                },
+                success_url=success_url + "?session_id={CHECKOUT_SESSION_ID}",
+                cancel_url=cancel_url,
+            )
+        except Exception as e:
+            form.add_error(
+                None,
+                "An error occurred while processing your payment. Please try again.",
+            )
+            return self.form_invalid(form)
+
+        return redirect(checkout_session.url)
 
 
 class AboutView(PageTagsMixin, TemplateView):

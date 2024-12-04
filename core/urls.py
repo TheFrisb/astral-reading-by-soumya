@@ -6,6 +6,7 @@ from .views import (
     FrequentlyAskedQuestionsView,
     ReadingsView,
     AboutView,
+    CheckoutView,
 )
 
 app_name = "core"
@@ -23,4 +24,5 @@ urlpatterns = [
     ),
     path("readings/", ReadingsView.as_view(), name="readings"),
     path("about/", AboutView.as_view(), name="about"),
+    path("checkout/<uuid:reading_id>/", CheckoutView.as_view(), name="checkout"),
 ]
