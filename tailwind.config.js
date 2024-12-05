@@ -6,6 +6,7 @@ module.exports = {
     './blog/templates/blog/*.html',
     './blog/templates/blog/**/*.html',
     './src/components/*.js',
+    './static/icons/*.svg',
   ],
   theme: {
     extend: {

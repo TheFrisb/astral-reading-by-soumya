@@ -56,6 +56,11 @@ class Horoscope(InternalBaseModel):
         verbose_name_plural = "Horoscope entries"
         ordering = ["-start_date", "sign"]
 
+        indexes = [
+            models.Index(fields=["sign", "frequency", "start_date", "end_date"]),
+            # Add any additional indexes if necessary
+        ]
+
 
 class Reading(InternalBaseModel):
     """
@@ -155,3 +160,66 @@ class FrequentlyAskedQuestion(InternalBaseModel):
         verbose_name = "Frequently Asked Question"
         verbose_name_plural = "Frequently Asked Questions"
         ordering = ["sortable_order", "question"]
+
+
+class Order(InternalBaseModel):
+    class Status(models.TextChoices):
+        PENDING = "PENDING", "Pending"
+        COMPLETED = "COMPLETED", "Completed"
+        CANCELLED = "CANCELLED", "Cancelled"
+
+    status = models.CharField(
+        max_length=10, choices=Status.choices, default=Status.PENDING
+    )
+
+    def get_purchased_reading_type(self):
+        return self.item.reading_type
+
+    class Meta:
+        verbose_name = "Order"
+        verbose_name_plural = "Orders"
+
+
+class OrderInformation(InternalBaseModel):
+    class DayPart(models.TextChoices):
+        AM = "AM", "AM"
+        PM = "PM", "PM"
+
+    order = models.OneToOneField(
+        Order, on_delete=models.CASCADE, related_name="information"
+    )
+    full_name = models.CharField(max_length=255)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=20)
+    date_of_birth = models.DateField()
+    birth_city = models.CharField(max_length=255)
+    birth_state = models.CharField(max_length=255)
+    time_of_birth = models.TimeField()
+    day_part = models.CharField(max_length=2, choices=DayPart.choices)
+    comment = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.full_name} - {self.email}"
+
+    class Meta:
+        verbose_name = "Order Information"
+        verbose_name_plural = "Order Information"
+
+
+class OrderItem(InternalBaseModel):
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name="item")
+    reading_type = models.ForeignKey(
+        ReadingType, on_delete=models.CASCADE, related_name="order_items"
+    )
+    quantity = models.PositiveIntegerField(default=1)
+
+    def get_total_price(self):
+        return self.reading_type.regular_price * self.quantity
+
+    def __str__(self):
+        return f"{self.reading_type.reading.name} {self.reading_type.get_type_display()} - ${self.get_total_price()}"
+
+    class Meta:
+        verbose_name = "Order Item"
+        verbose_name_plural = "Order Items"
+        ordering = ["-created_at"]

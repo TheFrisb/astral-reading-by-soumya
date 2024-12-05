@@ -8,6 +8,9 @@ from core.models import (
     FrequentlyAskedQuestion,
     ReadingType,
     Reading,
+    Order,
+    OrderInformation,
+    OrderItem,
 )
 
 
@@ -21,6 +24,8 @@ class HoroscopeSignAdmin(InternalBaseAdmin):
     list_display = ["name"]
     search_fields = ["name"]
 
+    search_fields = ["name"]
+
 
 @admin.register(Horoscope)
 class HoroscopeAdmin(InternalBaseAdmin):
@@ -30,6 +35,8 @@ class HoroscopeAdmin(InternalBaseAdmin):
     search_fields = ("sign__name", "content")
     date_hierarchy = "start_date"
     readonly_fields = ["end_date"] + InternalBaseAdmin.readonly_fields
+
+    autocomplete_fields = ["sign"]
 
 
 @admin.register(FrequentlyAskedQuestion)
@@ -79,6 +86,34 @@ class ReadingAdmin(SortableAdminMixin, InternalBaseAdmin):
 
     call_consultation.boolean = True
     written_report.boolean = True
+
+
+# make orderInformation OneToOne inline
+class OrderInformationInline(admin.StackedInline):
+    model = OrderInformation
+    readonly_fields = [f.name for f in OrderInformation._meta.fields]
+
+
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    readonly_fields = [f.name for f in OrderItem._meta.fields]
+
+
+@admin.register(Order)
+class OrderAdmin(InternalBaseAdmin):
+    list_display = ("id", "full_name", "item", "status", "created_at")
+    list_filter = ("status",)
+    search_fields = (
+        "id",
+        "information__full_name",
+        "information__email",
+    )
+    date_hierarchy = "created_at"
+
+    inlines = [OrderInformationInline, OrderItemInline]
+
+    def full_name(self, obj):
+        return obj.information.full_name
 
 
 admin.site.site_header = "Astrology Admin"

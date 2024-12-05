@@ -21,7 +21,7 @@ class BlogPost(InternalBaseModel):
             unique_slug = self.slug
             num = 1
             while (
-                    BlogPost.objects.filter(slug=unique_slug).exclude(pk=self.pk).exists()
+                BlogPost.objects.filter(slug=unique_slug).exclude(pk=self.pk).exists()
             ):
                 unique_slug = f"{self.slug}-{num}"
                 num += 1

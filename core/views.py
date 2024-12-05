@@ -1,15 +1,18 @@
 import stripe
-from django.conf import settings
-from django.http import Http404
+from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import redirect
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import FormView
 
 from blog.services.BlogService import BlogService
-from .forms.checkout_form import ConsultationForm
+from .forms.checkout_form import CheckoutForm
 from .mixins import PageTagsMixin
-from .models import Horoscope, FrequentlyAskedQuestion, ReadingType
+from .models import Horoscope, FrequentlyAskedQuestion, ReadingType, Order
+from .services.checkout.checkout_service import InternalCheckoutService
+from .services.checkout.stripe_service import InternalStripeService
 from .services.horoscopes_service import HoroscopeService
+from .services.mail.mail_service import MailService
 from .services.readings_service import ReadingsService
 from .services.testimonials_service import TestimonialService
 
@@ -23,7 +26,9 @@ class HomeView(PageTagsMixin, TemplateView):
         horoscope_service = HoroscopeService()
         testimonial_service = TestimonialService()
 
-        context["horoscope_signs"] = horoscope_service.get_horoscope_signs()
+        context["horoscope_signs"] = (
+            horoscope_service.get_horoscope_signs_with_current_horoscopes()
+        )
         context["testimonials"] = testimonial_service.get_active_testimonials()
         return context
 
@@ -31,7 +36,7 @@ class HomeView(PageTagsMixin, TemplateView):
 class CheckoutView(PageTagsMixin, FormView):
     template_name = "core/pages/checkout.html"
     page_title = "Checkout"
-    form_class = ConsultationForm
+    form_class = CheckoutForm
 
     def get_reading(self):
         """Retrieve the Reading object based on the 'reading_id' URL parameter."""
@@ -55,61 +60,17 @@ class CheckoutView(PageTagsMixin, FormView):
         return context
 
     def form_valid(self, form):
-
-        full_name = form.cleaned_data.get("full_name")
-        email = form.cleaned_data.get("email")
-        consultation_call_type_id = form.cleaned_data.get("consultation_call_type")
+        checkout_service = InternalCheckoutService()
 
         try:
-            reading_type = ReadingType.objects.get(pk=consultation_call_type_id)
+            checkout_url = checkout_service.get_checkout_url(form)
         except ReadingType.DoesNotExist:
             form.add_error(
                 "consultation_call_type", "Invalid consultation call type selected."
             )
             return self.form_invalid(form)
 
-        stripe.api_key = settings.STRIPE_SECRET_KEY
-
-        if reading_type.is_discounted and reading_type.discounted_price:
-            price = int(reading_type.discounted_price * 100)
-        else:
-            price = int(reading_type.regular_price * 100)
-
-        success_url = self.request.build_absolute_uri("www.trendiko.mk")
-        cancel_url = self.request.build_absolute_uri(self.request.path)
-
-        try:
-            checkout_session = stripe.checkout.Session.create(
-                payment_method_types=["card"],
-                mode="payment",
-                line_items=[
-                    {
-                        "price_data": {
-                            "currency": "usd",
-                            "unit_amount": price,
-                            "product_data": {
-                                "name": str(reading_type),
-                            },
-                        },
-                        "quantity": 1,
-                    }
-                ],
-                customer_email=email,
-                metadata={
-                    "reading_type_id": reading_type.pk,
-                    "full_name": full_name,
-                },
-                success_url=success_url + "?session_id={CHECKOUT_SESSION_ID}",
-                cancel_url=cancel_url,
-            )
-        except Exception as e:
-            form.add_error(
-                None,
-                "An error occurred while processing your payment. Please try again.",
-            )
-            return self.form_invalid(form)
-
-        return redirect(checkout_session.url)
+        return redirect(checkout_url)
 
 
 class AboutView(PageTagsMixin, TemplateView):
@@ -130,7 +91,7 @@ class ReadingsView(PageTagsMixin, TemplateView):
         return context
 
 
-class HoroscopeDetailView(DetailView):
+class HoroscopeDetailView(PageTagsMixin, DetailView):
     model = Horoscope
     template_name = "core/pages/horoscope_detail.html"
     context_object_name = "horoscope"
@@ -205,3 +166,58 @@ class FrequentlyAskedQuestionsView(PageTagsMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context["faqs"] = FrequentlyAskedQuestion.objects.all()
         return context
+
+
+class ThankYouView(PageTagsMixin, DetailView):
+    template_name = "core/pages/thank_you.html"
+    page_title = "Thank You"
+    object = Order
+    context_object_name = "order"
+
+    def get_object(self, queryset=None):
+        order_id = self.kwargs.get("order_id")
+
+        try:
+            order = (
+                Order.objects.select_related("information", "item")
+                .prefetch_related("item__reading_type", "item__reading_type__reading")
+                .get(id=order_id)
+            )
+        except Order.DoesNotExist:
+            raise Http404("Order does not exist")
+        print(order.item.reading_type)
+
+        mail_service = MailService()
+        mail_service.send_mail(
+            "bedzovski@yahoo.com",
+            "Thank you for your order!",
+            f"Thank you for your order! Your order ID is {order.id}.",
+        )
+
+        return order
+
+
+class TimeSlotPickerView(PageTagsMixin, TemplateView):
+    template_name = "core/pages/time_slot_picker.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
+@csrf_exempt
+def stripe_webhook(request):
+    stripe_service = InternalStripeService()
+    payload = request.body
+    sig_header = request.META.get("HTTP_STRIPE_SIGNATURE", "")
+
+    try:
+        event = stripe_service.process_stripe_event(payload, sig_header)
+    except ValueError:
+        # Invalid payload
+        return HttpResponse("Invalid payload", status=400)
+    except stripe.error.SignatureVerificationError:
+        print("Invalid signature")
+        return HttpResponse("Invalid signature", status=400)
+
+    return JsonResponse({"status": "success"})

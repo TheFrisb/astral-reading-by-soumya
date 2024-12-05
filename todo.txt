@@ -1,22 +1,22 @@
-https://docs.google.com/document/d/1htLqY14wuvdGQhiqWlg5UfTDxd1hAYeeOkeKOlmo2FA/edit?tab=t.0#heading=h.lt46xbgxf4ix
+1. Emails
+- Send an invoice link
+- Send a calendar picker link
 
-Inspiration Sources:
-- https://www.astrology.com/horoscope/daily/taurus.html
-- https://www.thepattern.com/
-- https://www.costarastrology.com/
-
----
-1. Finish checkout
-2. Make success page
-3. Send email invoice
-4. Send email calendar picker
-5. Show admin orders
-6. Show admin calendar
-7. Show admin notifications/messages
-8. Make footer
----
+2. Calendar picker
 
 
+4. Admin
+- Show calendar slots
+- Show notifications/messages
+
+
+5. Overall smoothness
+- Make admin css available on bedjovski.dev
+- Make footer
+- Switch design to a white background
+
+
+https://www.realtimecolors.com/?colors=100318-fcf9fe-8d22e2-f08dd5-e84c8b&fonts=Inter-Inter
 
 
 

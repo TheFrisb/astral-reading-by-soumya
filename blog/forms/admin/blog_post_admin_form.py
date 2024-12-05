@@ -9,6 +9,7 @@ class BlogPostAdminForm(forms.ModelForm):
     horoscopes = forms.ModelMultipleChoiceField(
         queryset=HoroscopeSign.objects.all(),
         widget=FilteredSelectMultiple(verbose_name="Horoscope Signs", is_stacked=False),
+        label="",
     )
 
     class Meta:

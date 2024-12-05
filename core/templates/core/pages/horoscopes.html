@@ -34,7 +34,7 @@
                         <span class="text-xs font-cormorant text-rose-500">Weekly horoscope</span>
                     </div>
                     <p class="font-open-sans text-center  text-white/80">
-                        {{ sign.weekly_horoscopes.0.content|truncatewords:7|default:"No weekly horoscope available" }}
+                        {{ sign.current_weekly_horoscope.content|truncatewords:7|default:"No weekly horoscope available" }}
                     </p>
 
                     <div class="flex items-center justify-between gap-2 px-4 py-2 border border-softGold text-softGold rounded-lg transition-all duration-300 hover:text-rose-500">
@@ -53,7 +53,7 @@
                         <span class="text-xs font-cormorant text-rose-500">Monthly horoscope</span>
                     </div>
                     <p class="font-open-sans text-center  text-white/80">
-                        {{ sign.monthly_horoscopes.0.content|truncatewords:7|default:"No monthly horoscope available" }}
+                        {{ sign.current_monthly_horoscope.content|truncatewords:7|default:"No monthly horoscope available" }}
                     </p>
 
                     <div class="flex items-center justify-between gap-2 px-4 py-2 border border-softGold text-softGold rounded-lg transition-all duration-300 hover:text-rose-500">
