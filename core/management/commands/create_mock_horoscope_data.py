@@ -33,8 +33,8 @@ class Command(BaseCommand):
                 if end_week > end_of_year:
                     end_week = end_of_year
                 content = (
-                        f"{sign.name} Weekly Horoscope ({weekly_date} - {end_week}):\n\n"
-                        + lorem.paragraph()
+                    f"{sign.name} Weekly Horoscope ({weekly_date} - {end_week}):\n\n"
+                    + lorem.paragraph()
                 )
                 obj, created = Horoscope.objects.get_or_create(
                     sign=sign,
@@ -57,8 +57,8 @@ class Command(BaseCommand):
                     else end_of_year
                 )
                 content = (
-                        f"{sign.name} Monthly Horoscope for {start_month.strftime('%B')}:\n\n"
-                        + lorem.text()
+                    f"{sign.name} Monthly Horoscope for {start_month.strftime('%B')}:\n\n"
+                    + lorem.text()
                 )
                 obj, created = Horoscope.objects.get_or_create(
                     sign=sign,

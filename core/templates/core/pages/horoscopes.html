@@ -9,7 +9,7 @@
                     <svg class="w-8 h-8">
                         <use href="{% static 'icons/sprite.svg' %}#menu"></use>
                     </svg>
-                    <p class="text-lg font-bold font-cormorant">{{ sign.name }}</p>
+                    <p class=" font-bold  group-hover:text-accent text-xs">{{ sign.name }}</p>
                 </a>
             {% endfor %}
         </div>
@@ -27,38 +27,38 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {% for sign in horoscope_signs %}
                 <a href="{% url 'core:horoscope_detail' sign.name %}"
-                   class="hopOnHover flex flex-col items-center justify-center p-4 bg-rose-950/65  rounded-lg gap-4 transition-all "
+                   class="hopOnHover flex flex-col items-center justify-center p-4 rounded-lg gap-4 transition-all duration-300 bg-secondary/30 group  border border-accent"
                    data-horoscope-type="weekly">
-                    <div class="flex flex-col items-center justify-center gap-2">
-                        <p class="text-2xl font-bold font-cormorant text-softGold">{{ sign.name }}</p>
-                        <span class="text-xs font-cormorant text-rose-500">Weekly horoscope</span>
+                    <div class="flex flex-col items-center justify-center gap-1">
+                        <p class="font-bold text-xl ">{{ sign.name }}</p>
+                        <span class="text-xs text-accent">Weekly horoscope</span>
                     </div>
-                    <p class="font-open-sans text-center  text-white/80">
+                    <p class="text-center text-textColor/80 text-sm">
                         {{ sign.current_weekly_horoscope.content|truncatewords:7|default:"No weekly horoscope available" }}
                     </p>
 
-                    <div class="flex items-center justify-between gap-2 px-4 py-2 border border-softGold text-softGold rounded-lg transition-all duration-300 hover:text-rose-500">
-                        <span class="">READ MORE</span>
-                        <svg class="w-4 h-4">
+                    <div class="flex items-center justify-between gap-2 px-4 py-2 transition-all duration-300 ">
+                        <span class="text-accent group-hover:text-textColor">READ MORE</span>
+                        <svg class="w-4 h-4 text-accent group-hover:text-textColor">
                             <use href="{% static 'icons/sprite.svg' %}#arrow-right"></use>
                         </svg>
                     </div>
                 </a>
 
                 <a href="{% url 'core:horoscope_detail' sign.name %}"
-                   class="!hidden hopOnHover flex flex-col items-center justify-center p-4 bg-rose-950/65  rounded-lg gap-4 transition-all "
+                   class="!hidden hopOnHover flex flex-col items-center justify-center p-4 rounded-lg gap-4 transition-all duration-300 bg-secondary/30 group border border-accent"
                    data-horoscope-type="monthly">
-                    <div class="flex flex-col items-center justify-center gap-2">
-                        <p class="text-2xl font-bold font-cormorant text-softGold">{{ sign.name }}</p>
-                        <span class="text-xs font-cormorant text-rose-500">Monthly horoscope</span>
+                    <div class="flex flex-col items-center justify-center gap-1">
+                        <p class="font-bold text-xl">{{ sign.name }}</p>
+                        <span class="text-xs text-accent">Monthly horoscope</span>
                     </div>
-                    <p class="font-open-sans text-center  text-white/80">
+                    <p class="text-center text-textColor/80 text-sm">
                         {{ sign.current_monthly_horoscope.content|truncatewords:7|default:"No monthly horoscope available" }}
                     </p>
 
-                    <div class="flex items-center justify-between gap-2 px-4 py-2 border border-softGold text-softGold rounded-lg transition-all duration-300 hover:text-rose-500">
-                        <span class="">READ MORE</span>
-                        <svg class="w-4 h-4">
+                    <div class="flex items-center justify-between gap-2 px-4 py-2 transition-all duration-300 ">
+                        <span class="text-accent group-hover:text-textColor">READ MORE</span>
+                        <svg class="w-4 h-4 text-accent group-hover:text-textColor">
                             <use href="{% static 'icons/sprite.svg' %}#arrow-right"></use>
                         </svg>
                     </div>

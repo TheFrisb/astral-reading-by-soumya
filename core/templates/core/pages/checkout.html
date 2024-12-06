@@ -3,7 +3,7 @@
     <div class="py-12">
         <form method="post" action="" class="checkoutForm">
             {% csrf_token %}
-            <h1 class="text-center text-4xl font-bold text-softGold">{{ reading.name }}</h1>
+            <h1 class="text-center text-4xl font-bold pb-2 border-b border-accent">{{ reading.name }}</h1>
             {{ form.as_div }}
             <button type="submit">Submit</button>
         </form>

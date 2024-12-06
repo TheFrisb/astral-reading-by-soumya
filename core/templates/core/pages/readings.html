@@ -5,8 +5,9 @@
 
         <div class="flex flex-col gap-8">
             <div>
-                <h1 class="text-xl font-bold mb-4 text-rose-500">Readings</h1>
-                <p class="text-gray-300">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad amet beatae culpa
+                <h1 class="font-bold mb-4 text-xl">Readings</h1>
+                <p class="text-black/80 text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad amet
+                    beatae culpa
                     ea eius eligendi harum
                     illo illum laboriosam laborum magnam molestiae molestias numquam obcaecati, quae quasi quisquam rem
                     sapiente, tempore vel velit vitae voluptatibus. Accusamus atque blanditiis consequatur debitis
@@ -15,48 +16,48 @@
                     quasi reprehenderit rerum similique sunt? Culpa!</p>
             </div>
             {% for reading in readings %}
-                <div class="flex flex-col gap-6 md:flex-row md:gap-0 items-start justify-between p-5 rounded-lg bg-rose-950/65">
+                <div class="flex flex-col gap-6 md:flex-row md:gap-0 items-start justify-between p-5 rounded-lg bg-textColor">
                     <div class="">
                         <div class="mb-6">
-                            <p class="text-2xl font-bold mb-1 text-softGold">{{ reading.name }}</p>
+                            <p class=" font-bold mb-1 text-white">{{ reading.name }}</p>
                             <div class="flex items-center justify-start">
                                 {% for i in testimonial_star_range %}
                                     {% if i <= 5 %}
-                                        <svg class="w-4 h-4 text-softGold" fill="currentColor">
+                                        <svg class="w-4 h-4 text-accent" fill="currentColor">
                                             <use href="{% static 'icons/sprite.svg' %}#star"></use>
                                         </svg>
                                     {% else %}
-                                        <svg class="w-4 h-4 text-gray-300" fill="currentColor">
+                                        <svg class="w-4 h-4 text-accent/30" fill="currentColor">
                                             <use href="{% static 'icons/sprite.svg' %}#star"></use>
                                         </svg>
                                     {% endif %}
                                 {% endfor %}
-                                <span class="ml-2 text-sm text-gray-400">46 reviews</span>
+                                <span class="ml-2 text-white/80 text-sm">46 reviews</span>
                             </div>
                         </div>
-                        <p class="text-gray-300 tracking-wide">{{ reading.description }}</p>
+                        <p class="tracking-wide text-sm text-white/80">{{ reading.description }}</p>
                     </div>
                     <div class="flex flex-col items-start justify-start gap-8 w-full md:w-auto">
                         <div>
                             {% for variant in reading.variants.all %}
-                                <p class="font-bold text-sm text-gray-300">{{ variant.get_type_display }}:
-                                    <span class="font-bold text-lg text-softGold">${{ variant.regular_price }}</span>
+                                <p class="font-bold text-white text-sm pb-2">{{ variant.get_type_display }}
+                                    <span class="font-bold text-accent text-lg">${{ variant.regular_price }}</span>
                                 </p>
                             {% endfor %}
                         </div>
                         <a href="{% url 'core:checkout' reading_id=reading.id %}"
-                           class="w-full text-center border text-softGold border-softGold transition-all duration-300 hover:border-rose-500 hover:text-rose-500 rounded-lg px-2 py-4">Order</a>
+                           class="w-full text-center transition-all duration-300 rounded-lg px-2 py-4 bg-primary font-bold hover:bg-primary/70">Order</a>
                     </div>
                 </div>
             {% endfor %}
 
             <div class="w-fit mx-auto mt-10 flex space-x-2">
-                <div class="h-0.5 w-2 bg-rose-500"></div>
-                <div class="h-0.5 w-32 bg-rose-500"></div>
-                <div class="h-0.5 w-2 bg-rose-500"></div>
+                <div class="h-0.5 w-2 "></div>
+                <div class="h-0.5 w-32 "></div>
+                <div class="h-0.5 w-2 "></div>
             </div>
 
-            <h2 class="text-2xl font-bold text-softGold">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse,
+            <h2 class=" font-bold text-accent">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse,
                 molestiae.</h2>
             {% include 'core/includes/testimonials_carousel.html' %}
         </div>

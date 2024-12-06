@@ -11,9 +11,7 @@
 
 
 5. Overall smoothness
-- Make admin css available on bedjovski.dev
 - Make footer
-- Switch design to a white background
 
 
 https://www.realtimecolors.com/?colors=100318-fcf9fe-8d22e2-f08dd5-e84c8b&fonts=Inter-Inter

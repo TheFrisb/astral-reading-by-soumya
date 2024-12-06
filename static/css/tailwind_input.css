@@ -3,19 +3,19 @@
 @tailwind utilities;
 
 .header__link {
-    @apply text-white;
-    @apply hover:text-rose-500;
+    @apply text-textColor hover:text-primary;
     @apply transition-colors;
     @apply duration-150;
 }
 
 
 .horoscopeListItem {
-    @apply hopOnHover flex flex-col items-center justify-center p-4 border rounded gap-4 transition-all border-softGold shadow-2xl shadow-gold/20 text-white hover:text-rose-500 hover:border-rose-500;
+    @apply hopOnHover flex flex-col items-center justify-center p-4 rounded-lg gap-4 transition-all text-textColor;
+    @apply hover:text-primary border border-primary;
 }
 
 .horoscopeListItem.active {
-    @apply border-rose-500 text-rose-500;
+    @apply bg-secondary;
 }
 
 .hopOnHover {
@@ -24,24 +24,32 @@
 
 .chooseHoroscopeButton {
     @apply transition-all duration-300;
-    @apply font-bold font-cormorant text-white cursor-pointer;
-    @apply text-lg md:text-2xl px-4 py-2 border border-gray-500 rounded;
-    @apply hover:border-rose-500 hover:text-rose-500;
+    @apply text-textColor cursor-pointer;
+    @apply px-4 py-2;
+    @apply rounded-lg bg-secondary/30;
+    @apply border-2 border-secondary/30;
+
+    @apply hover:bg-secondary/60;
+
 }
 
 .chooseHoroscopeButton.active {
-    @apply border-rose-500 text-rose-500;
+    @apply border-primary bg-secondary/60;
 }
 
 .horoscopeFilterLink {
     @apply transition-all duration-300;
-    @apply text-sm font-bold font-cormorant text-white cursor-pointer p-2;
-    @apply border rounded border-gray-500;
-    @apply hover:border-rose-500 hover:text-rose-500;
+    @apply text-sm font-bold cursor-pointer px-2 py-1;
+    @apply rounded-lg;
+    @apply border-b-2;
+    @apply border-transparent;
+    @apply hover:border-accent;
+
+    @apply text-textColor/80;
 }
 
 .horoscopeFilterLink.active {
-    @apply border-rose-500 text-rose-500;
+    @apply border-accent text-accent;
 }
 
 .glide__arrow {
@@ -78,28 +86,28 @@
 }
 
 .checkoutForm label {
-    @apply font-bold text-gray-300 text-sm;
+    @apply font-bold text-sm;
 }
 
 .checkoutForm input, select, textarea {
-    @apply border border-gray-300 rounded-lg p-4 bg-rose-950/60;
-    @apply focus:outline-none focus:border-rose-500 focus:bg-rose-950/80;
-    @apply text-gray-300;
-    @apply transition-all duration-300;
+    @apply border border-gray-300 rounded-lg p-4;
+    @apply focus:outline-primary focus:border-primary;
+    @apply bg-white text-primary;
+
 }
 
 .checkoutForm select > option {
-    @apply bg-rose-950 text-softGold font-normal text-sm rounded-lg p-4;
+    @apply font-normal text-sm rounded-lg p-4;
 }
 
 .checkoutForm input::placeholder, select::placeholder, textarea::placeholder {
-    @apply text-softGold/80 font-normal;
+    @apply font-normal;
 }
 
 .checkoutForm button[type="submit"] {
-    @apply p-4 rounded-lg border border-softGold;
-    @apply text-softGold font-bold text-lg;
-    @apply hover:border-rose-500 hover:text-rose-500;
+    @apply p-4 rounded-lg border;
+    @apply font-bold text-lg;
+    @apply bg-primary hover:bg-primary/70;
     @apply transition-all duration-300;
 }
 

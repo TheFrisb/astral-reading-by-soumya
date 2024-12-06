@@ -1,9 +1,9 @@
 {% load static %}
-<header class="w-full relative" id="header">
-    <div class="container mx-auto flex justify-between items-center p-2">
-        <a class="font-cormorant" href="{% url 'core:home' %}">
-            <p class="text-4xl lg:text-6xl font-bold text-rose-500">Astral Readings</p>
-            <p class="text-2xl italic text-goldAccent/80">By Soumya</p>
+<header class="w-full relative shadow-lg shadow-accent/10" id="header">
+    <div class="container mx-auto flex justify-between items-center py-2 px-4 md:px-2">
+        <a class="" href="{% url 'core:home' %}">
+            <p class="text-4xl  font-bold text-primary">Astral Readings</p>
+            <p class=" italic ">By Soumya</p>
         </a>
         <nav class="hidden md:flex items-center gap-8" aria-label="Desktop navigation bar">
             <a href="{% url 'core:home' %}" class="header__link">Horoscope</a>
@@ -12,11 +12,11 @@
             <a href="{% url 'core:about' %}" class="header__link">About</a>
             <a href="{% url 'core:faq' %}" class="header__link">FAQ</a>
         </nav>
-        <svg class="w-8 h-8 md:hidden text-rose-500" id="mobileMenuIcon">
+        <svg class="w-8 h-8 md:hidden " id="mobileMenuIcon">
             <use href="{% static 'icons/sprite.svg' %}#menu"></use>
         </svg>
 
-        <svg class="w-8 h-8 hidden md:hidden text-rose-500" id="mobileMenuCloseIcon">
+        <svg class="w-8 h-8 hidden md:hidden " id="mobileMenuCloseIcon">
             <use href="{% static 'icons/sprite.svg' %}#close"></use>
         </svg>
     </div>
