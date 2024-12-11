@@ -1,84 +1,25 @@
 {% extends 'core/base.html' %}
 {% block content %}
     <div class="py-12">
-        <form method="post" action="" class="checkoutForm">
-            {% csrf_token %}
-            <div class="bg-white py-24 sm:py-32">
-                <div class="mx-auto max-w-2xl px-6 lg:px-8">
-                    <div class="mx-auto max-w-2xl text-center"><h2
-                            class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Book Your Reading</h2>
-                        <p class="mt-2 text-lg leading-8 text-gray-600">Please provide your details to schedule your
-                            personalized reading.</p></div>
-                    <form class="mt-16 space-y-8">
-                        <div class="space-y-6">
-                            <div><label for="fullName" class="block text-sm font-medium text-gray-700">Full Name</label><input
-                                    type="text" id="fullName" required=""
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
-                                    value=""></div>
-                            <div><label for="email" class="block text-sm font-medium text-gray-700">Email
-                                Address</label><input type="email" id="email" required=""
-                                                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
-                                                      value=""></div>
-                            <div><label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label><input
-                                    type="tel" id="phone" required=""
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
-                                    value=""></div>
-                            <div class="grid grid-cols-2 gap-6">
-                                <div><label for="birthDate" class="block text-sm font-medium text-gray-700">Birth
-                                    Date</label><input type="date" id="birthDate" required=""
-                                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
-                                                       value=""></div>
-                                <div><label for="birthTime" class="block text-sm font-medium text-gray-700">Birth
-                                    Time</label>
-                                    <div class="mt-1 flex gap-2"><input type="time" id="birthTime" required=""
-                                                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
-                                                                        value=""><select
-                                            class="rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500">
-                                        <option>AM</option>
-                                        <option>PM</option>
-                                    </select></div>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-6">
-                                <div><label for="city" class="block text-sm font-medium text-gray-700">Birth
-                                    City</label><input type="text" id="city" required=""
-                                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
-                                                       value=""></div>
-                                <div><label for="state" class="block text-sm font-medium text-gray-700">Birth
-                                    State/Country</label><input type="text" id="state" required=""
-                                                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
-                                                                value=""></div>
-                            </div>
-                            <div><label for="service" class="block text-sm font-medium text-gray-700">Service
-                                Selection</label><select id="service" required=""
-                                                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500">
-                                <option value="Birth Chart Reading">Birth Chart Reading (90 minutes - $150)</option>
-                                <option value="Solar Return Reading">Solar Return Reading (60 minutes - $120)</option>
-                                <option value="Relationship Compatibility">Relationship Compatibility (90 minutes -
-                                    $180)
-                                </option>
-                                <option value="Career Guidance">Career Guidance (45 minutes - $100)</option>
-                            </select></div>
-                            <div><label for="consultationType" class="block text-sm font-medium text-gray-700">Consultation
-                                Preference</label><select id="consultationType" required=""
-                                                          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500">
-                                <option value="call">Video Call</option>
-                                <option value="written">Written Report</option>
-                            </select></div>
-                            <div><label for="reason" class="block text-sm font-medium text-gray-700">What would you like
-                                to focus on? (Optional)</label><textarea id="reason" rows="4"
-                                                                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"></textarea>
-                            </div>
-                        </div>
-                        <div class="mt-8">
-                            <button type="submit"
-                                    class="w-full rounded-md bg-purple-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600">
-                                Proceed to Payment
-                            </button>
-                        </div>
-                    </form>
-                </div>
+
+        <div class="bg-white py-24 sm:py-32">
+            <div class="mx-auto max-w-2xl px-6 lg:px-8">
+                <div class="mx-auto max-w-2xl text-center"><h2
+                        class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Book Your Reading</h2>
+                    <p class="mt-2 text-lg leading-8 text-gray-600">Please provide your details to schedule your
+                        personalized reading.</p></div>
+                <form class="pt-16 space-y-6" method="post">
+                    {% csrf_token %}
+                    {{ form.as_div }}
+                    <div class="mt-8">
+                        <button type="submit"
+                                class="w-full rounded-md bg-purple-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600">
+                            Proceed to Payment
+                        </button>
+                    </div>
+
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 {% endblock %}

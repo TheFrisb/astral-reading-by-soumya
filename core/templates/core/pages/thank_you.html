@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <div class="pt-16">
+        <div class="bg-white py-24 sm:py-32">
+            <div class="mx-auto max-w-4xl px-6 lg:px-8">
+                <div class="text-center"><h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Thank
+                    You for Your Purchase!</h2>
+                    <p class="mt-6 text-lg leading-8 text-gray-600">
+                        Your {{ order.item.reading_type.reading.name }} has been scheduled.<br>
+                        You will receive a confirmation email shortly with further details.
+                    </p>
+                    <p class="mt-4 leading-8 text-gray-600 break-all sm:break-normal text-sm">We'll send our e-mails to
+                        you
+                        at:<br class="sm:hidden"> <span class="font-bold">{{ order.information.email }}</span></p>
+                </div>
+                {% if order.item.reading_type.type == 'WRITTEN_REPORT' %}
+                    <div class="mt-16 rounded-xl bg-gray-50 p-8"><h3 class="text-lg font-semibold text-gray-900">Next
+                        Steps</h3>
+                        <ul class="mt-4 space-y-4 text-sm text-gray-600">
+                            <li>• Book a time slot from the link sent in your email</li>
+                            <li>• Prepare your questions for the session</li>
+                            <li>• You'll receive a video call link 24 hours before your session</li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <div class="mt-16 rounded-xl bg-gray-50 p-8">
+                        <p class="text-gray-600">You
+                            will receive your reading on your email in the next 7
+                            days</p>
+                    </div>
+                {% endif %}
+                <div class="mt-8 text-center"><p class="text-sm text-gray-600">Questions? Contact us at <a
+                        href="mailto:support@astralreadings.com" class="text-purple-600 hover:text-purple-500">support@astralreadings.com</a>
+                </p></div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

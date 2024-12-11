@@ -120,8 +120,12 @@ class HoroscopeDetailView(PageTagsMixin, DetailView):
 
     def get_object(self, queryset=None):
         sign_name = self.kwargs.get("sign_name")
-        filter_type = self.request.GET.get("filter", "monthly").lower()  # Default to monthly
-        valid_frequencies = [choice[0].lower() for choice in Horoscope.Frequency.choices]
+        filter_type = self.request.GET.get(
+            "filter", "monthly"
+        ).lower()  # Default to monthly
+        valid_frequencies = [
+            choice[0].lower() for choice in Horoscope.Frequency.choices
+        ]
 
         if filter_type not in valid_frequencies:
             filter_type = "monthly"
