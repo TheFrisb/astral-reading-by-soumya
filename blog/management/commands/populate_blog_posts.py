@@ -112,9 +112,14 @@ class Command(BaseCommand):
             categories.append(obj)
 
         for category in categories:
-            obj = BlogPost.objects.create(title="A blog post about " + category.name,
-                                          content="This is a blog post about " + category.name)
+            obj = BlogPost.objects.create(
+                title="A blog post about " + category.name,
+                content="This is a blog post about " + category.name,
+            )
             obj.categories.add(category)
             obj.save()
-        self.stdout.write(self.style.SUCCESS("Successfully created 50 blog posts with various horoscope tags."))
-        
+        self.stdout.write(
+            self.style.SUCCESS(
+                "Successfully created 50 blog posts with various horoscope tags."
+            )
+        )

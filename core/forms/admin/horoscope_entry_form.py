@@ -28,20 +28,22 @@ class HoroscopeForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        instance = getattr(self, 'instance', None)
+        instance = getattr(self, "instance", None)
 
         # If we have an existing instance, populate year and month if applicable
         if instance and instance.pk:
             if instance.frequency == instance.Frequency.YEARLY and instance.start_date:
                 # For YEARLY, just extract the year from the start_date
-                self.fields['year'].initial = instance.start_date.year
+                self.fields["year"].initial = instance.start_date.year
                 # Clear the month since it's not needed for yearly
-                self.fields['month'].initial = None
+                self.fields["month"].initial = None
 
-            elif instance.frequency == instance.Frequency.MONTHLY and instance.start_date:
+            elif (
+                    instance.frequency == instance.Frequency.MONTHLY and instance.start_date
+            ):
                 # For MONTHLY, extract both year and month
-                self.fields['year'].initial = instance.start_date.year
-                self.fields['month'].initial = instance.start_date.month
+                self.fields["year"].initial = instance.start_date.year
+                self.fields["month"].initial = instance.start_date.month
 
     def clean(self):
         cleaned_data = super().clean()

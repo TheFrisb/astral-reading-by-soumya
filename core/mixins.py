@@ -7,7 +7,7 @@ class PageTagsMixin(LoginRequiredMixin):
     Mixin to add page tags to the context and require login.
     """
 
-    login_url = '/admin/login/'
+    login_url = "/admin/login/"
 
     def get_login_url(self):
         # Force a redirect to core:home after login by passing 'next' parameter

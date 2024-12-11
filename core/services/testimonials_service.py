@@ -13,7 +13,7 @@ class TestimonialService:
         """
         Retrieves all active testimonials.
 
-        Returns: QuerySet: A queryset of active testimonials. 
+        Returns: QuerySet: A queryset of active testimonials.
         """
         return (
             Testimonial.objects.filter(is_active=True)
