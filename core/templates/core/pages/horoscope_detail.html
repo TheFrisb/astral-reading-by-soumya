@@ -1,93 +1,88 @@
 {% extends 'core/base.html' %}
-{% load static %}
 {% block content %}
-    <div class="py-12 flex flex-col items-start justify-start gap-8">
-        <div>
-            <h1 class="text-xl md:text-2xl font-bold ">{{ horoscope.get_display_name }}</h1>
-            <p class="text-xs text-accent">{{ horoscope.start_date|date:"F d, Y" }}
-                - {{ horoscope.end_date|date:"F d, Y" }}</p>
-            <div class="flex items-center justify-start gap-4 py-2">
-                {% for filter in filter_options %}
-                    <a href="{{ filter.url }}"
-                       class="horoscopeFilterLink {% if filter.active %}active{% endif %}">
-                        {{ filter.label }}
-                    </a>
-                {% endfor %}
-            </div>
-        </div>
-
-        <p class="">{{ horoscope.content }}</p>
-
-        <div class="w-full">
-            <h2 class="pb-4 font-bold text-accent">Check out other <span
-                    class="lowercase">{{ horoscope.frequency }}</span> horoscopes</h2>
-            <div class="grid grid-cols-3 md:grid-cols-6 xl:grid-cols-12 gap-8">
-                {% for sign in horoscope_signs %}
-                    <a href="{% url 'core:horoscope_detail' sign.name %}?filter={{ current_filter }}"
-                       class="horoscopeListItem {% if sign == horoscope.sign %}active{% endif %}">
-                        <svg class="w-8 h-8">
-                            <use href="{% static 'icons/sprite.svg' %}#menu"></use>
-                        </svg>
-                        <p class=" font-bold text-xs">{{ sign.name }}</p>
-                    </a>
-                {% endfor %}
-            </div>
-        </div>
-
-        {% if related_blog_posts %}
-            <div class="w-fit mx-auto mt-10 flex space-x-2">
-                <div class="h-0.5 w-2 bg-accent"></div>
-                <div class="h-0.5 w-32 bg-accent"></div>
-                <div class="h-0.5 w-2 bg-accent"></div>
-            </div>
-            <aside aria-label="Recent Posts" class="mt-10 w-full py-20">
-                <div class="">
-                    <!-- Heading -->
-                    <div class="mb-10 md:mb-16">
-                        <h2 class="mb-4 text-center  font-bold  md:mb-6 lg:text-3xl text-accent">Blog posts
-                            related to {{ horoscope.sign.name }}</h2>
-                        <p class="mx-auto max-w-screen-md text-center  md:">Lorem ipsum, dolor sit
-                            amet
-                            consectetur adipisicing elit. Sint necessitatibus molestias explicabo.</p>
+    <div class="pt-16">
+        <div class="bg-gray-50 py-24 sm:py-32">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                <div class="mx-auto max-w-2xl">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4"><span class="text-6xl">{{ horoscope.sign.symbol }}</span>
+                            <div><h1 class="text-3xl font-bold text-gray-900">{{ horoscope.sign.name }}</h1>
+                                <p class="text-gray-600">
+                                    {{ horoscope.start_date|date:"F d" }}
+                                    - {{ horoscope.end_date|date:"F d" }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="inline-flex rounded-lg border border-gray-200 p-1 bg-white">
+                            <a href="{% url 'core:horoscope_detail' sign_name=horoscope.sign.name %}?filter=monthly"
+                               class="px-4 py-2 text-sm font-medium rounded-md transition-colors horoscopeFilterButton {% if current_filter == 'weekly' %}active{% endif %}"
+                               data-frequency="monthly">
+                                Monthly
+                            </a>
+                            <a href="{% url 'core:horoscope_detail' sign_name=horoscope.sign.name %}?filter=yearly"
+                               class="px-4 py-2 text-sm font-medium rounded-md transition-colors horoscopeFilterButton {% if current_filter == 'yearly' %}active{% endif %}"
+                               data-frequency="yearly">
+                                Yearly
+                            </a>
+                        </div>
                     </div>
-                    <!-- /Heading -->
-                    <div class="grid gap-8 sm:grid-cols-2 sm:gap-12 lg:grid-cols-2 xl:grid-cols-2 xl:gap-16">
-                        <!-- Article -->
-                        {% for post in related_blog_posts %}
-                            <article
-                                    class="flex flex-col items-start gap-4 md:flex-row lg:gap-6">
-                                <a href="{{ post.get_absolute_url }}"
-                                   class="group shrink-0 relative block h-56 w-full self-start overflow-hidden rounded-lg  shadow-lg md:h-24 md:w-24 lg:h-40 lg:w-40">
-                                    <img src="https://images.unsplash.com/photo-1476362555312-ab9e108a0b7e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                                         loading="lazy" alt=""
-                                         class="group-hover:scale-110 absolute inset-0 h-full w-full object-cover object-center transition duration-200"/>
-                                </a>
+                    <div class="mt-12 prose prose-purple max-w-none">
+                        <div class="mt-8 grid gap-8">
+                            {{ horoscope.content|safe }}
+                        </div>
+                        <div class="mt-16 flex items-center justify-end border-t border-gray-200 pt-16">
 
-                                <div class="flex flex-col gap-2 h-full">
-                                    <div>
-                                        <p class="text-textColor/60 text-xs">{{ post.created_at|date:"F d, Y" }}</p>
-
-                                        <h2 class="font-bold">
-                                            <a href="{{ post.get_absolute_url }}"
-                                               class="transition duration-300 hover:text-primary">{{ post.title }}</a>
-                                        </h2>
-                                    </div>
-
-                                    <p class="">
-                                        {{ post.content|safe|striptags|truncatewords:20 }}</p>
-
-                                    <div class="mt-auto">
-                                        <a href="{{ post.get_absolute_url }}"
-                                           class="font-semibold  transition duration-300 text-accent hover:text-accent/70">Read
-                                            more</a>
-                                    </div>
-                                </div>
-                            </article>
-                        {% endfor %}
+                            <a class="text-sm font-semibold text-purple-600 hover:text-purple-500"
+                               href="{% url 'core:readings' %}">Book
+                                a
+                                Personal Reading →</a></div>
                     </div>
                 </div>
-            </aside>
-        {% endif %}
+                <div class="mt-16 border-t border-gray-200 pt-16">
+                    <div class="mx-auto max-w-2xl"><h3 class="text-lg font-semibold text-gray-900 mb-4">View Another
+                        Sign</h3>
+                        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+                            {% for sign in zodiac_signs %}
+                                <a
+                                        class="flex flex-col items-center p-2 rounded-lg transition-colors hover:bg-purple-50 text-purple-900 {% if horoscope.sign == sign %}bg-purple-100{% endif %}"
+                                        href="{% url 'core:horoscope_detail' sign_name=sign.name %}?filter={{ current_filter }}">
+                                    <span class="text-2xl">{{ sign.symbol }}</span>
+                                    <span
+                                            class="text-sm mt-1">{{ sign.name }}</span>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% if related_blog_posts %}
+                    <div class="mt-16">
+                        <div class="mx-auto max-w-7xl px-6 lg:px-8"><h2 class="text-2xl font-bold text-gray-900">Related
+                            Articles</h2>
+                            <div class="mt-6 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                                {% for post in related_blog_posts %}
+                                    <article
+                                            class="relative isolate flex flex-col overflow-hidden rounded-lg bg-white shadow-lg">
+                                        <img src="https://images.unsplash.com/photo-1532968961962-8a0cb3a2d4f5?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+                                             alt="" class="aspect-[16/9] w-full object-cover">
+                                        <div class="flex flex-1 flex-col justify-between p-6">
+                                            <div class="flex-1">
+                                                <a href="{% url 'blog:blog_post_detail' slug=post.slug %}"
+                                                   class="block">
+                                                    <h3
+                                                            class="text-lg font-semibold leading-6 text-gray-900 hover:text-purple-600">
+                                                        {{ post.title }}
+                                                    </h3>
+                                                    <p class="mt-3 text-sm leading-6 text-gray-600">{{ post.content|truncatewords:20 }}</p>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </article>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
     </div>
-
 {% endblock content %}

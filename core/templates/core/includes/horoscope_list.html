@@ -1,0 +1,56 @@
+<div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-12 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+    {% for sign in horoscope_signs %}
+        <div class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white hover:shadow-lg transition-shadow duration-300 horoscopeCard"
+             data-frequency="monthly">
+            <div class="flex flex-1 flex-col p-6">
+                <div class="flex items-center gap-4"><span class="text-4xl">{{ sign.symbol }}</span>
+                    <div><h3 class="text-xl font-semibold text-gray-900">{{ sign.name }}</h3>
+                        <p class="text-sm text-gray-500">{{ sign.current_monthly_horoscope.start_date|date:"F d" }}
+                            - {{ sign.current_monthly_horoscope.end_date|date:"F d" }}</p></div>
+                </div>
+                <p class="mt-4 flex-1 text-sm text-gray-600">
+                    {% if sign.current_monthly_horoscope %}
+                        {{ sign.current_monthly_horoscope|truncatewords:20 }}
+                    {% else %}
+                        No horoscope available for this month.
+                    {% endif %}
+                </p>
+                <div class="mt-6 flex items-center gap-4 text-sm"><span
+                        class="inline-flex items-center rounded-full bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700">{{ sign.element }}</span><span
+                        class="inline-flex items-center rounded-full bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700">{{ sign.ruling_planet }}</span>
+                </div>
+            </div>
+            <div class="bg-gray-50 p-6"><a
+                    class="block w-full rounded-md px-3 py-2 text-center text-sm font-semibold text-white bg-purple-600 hover:bg-purple-500"
+                    href="{% url 'core:horoscope_detail' sign_name=sign.name %}?filter=monthly">Read More</a></div>
+        </div>
+
+        <div class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white hover:shadow-lg transition-shadow duration-300 !hidden horoscopeCard"
+             data-frequency="yearly">
+            <div class="flex flex-1 flex-col p-6">
+                <div class="flex items-center gap-4"><span class="text-4xl">{{ sign.symbol }}</span>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900">{{ sign.name }}</h3>
+
+                        <p class="text-sm text-gray-500">{{ sign.current_yearly_horoscope.start_date|date:"F d Y" }}
+                            - {{ sign.current_yearly_horoscope.end_date|date:"F d Y" }}</p>
+                    </div>
+                </div>
+                <p class="mt-4 flex-1 text-sm text-gray-600">
+                    {% if sign.current_yearly_horoscope %}
+                        {{ sign.current_yearly_horoscope.content|safe|truncatewords:20 }}
+                    {% else %}
+                        No horoscope available for this year.
+                    {% endif %}
+                </p>
+                <div class="mt-6 flex items-center gap-4 text-sm"><span
+                        class="inline-flex items-center rounded-full bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700">{{ sign.element }}</span><span
+                        class="inline-flex items-center rounded-full bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700">{{ sign.ruling_planet }}</span>
+                </div>
+            </div>
+            <div class="bg-gray-50 p-6"><a
+                    class="block w-full rounded-md px-3 py-2 text-center text-sm font-semibold text-white bg-purple-600 hover:bg-purple-500"
+                    href="{% url 'core:horoscope_detail' sign_name=sign.name %}?filter=yearly">Read More</a></div>
+        </div>
+    {% endfor %}
+</div>

@@ -3,6 +3,8 @@ import uuid
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
+from imagekit.models import ImageSpecField
+from imagekit.processors import SmartResize
 
 
 # Create your models here.
@@ -15,8 +17,11 @@ class InternalBaseModel(models.Model):
         abstract = True
 
 
-class HoroscopeSign(InternalBaseModel):
+class ZodiacSigns(InternalBaseModel):
     name = models.CharField(max_length=100, unique=True, db_index=True)
+    symbol = models.CharField(max_length=10)
+    element = models.CharField(max_length=20)
+    ruling_planet = models.CharField(max_length=20)
 
     def get_absolute_url(self):
         return reverse("core:horoscope_detail", kwargs={"sign_name": self.name})
@@ -25,18 +30,18 @@ class HoroscopeSign(InternalBaseModel):
         return self.name
 
     class Meta:
-        verbose_name = "Horoscope Sign"
-        verbose_name_plural = "Horoscope Signs"
+        verbose_name = "Zodiac Sign"
+        verbose_name_plural = "Zodiac Signs"
         ordering = ["name"]
 
 
 class Horoscope(InternalBaseModel):
     class Frequency(models.TextChoices):
-        WEEKLY = "WEEKLY", "Weekly"
         MONTHLY = "MONTHLY", "Monthly"
+        YEARLY = "YEARLY", "Yearly"
 
     sign = models.ForeignKey(
-        HoroscopeSign, on_delete=models.CASCADE, related_name="horoscopes"
+        ZodiacSigns, on_delete=models.CASCADE, related_name="horoscopes"
     )
     frequency = models.CharField(max_length=7, choices=Frequency.choices)
     start_date = models.DateField()
@@ -58,7 +63,6 @@ class Horoscope(InternalBaseModel):
 
         indexes = [
             models.Index(fields=["sign", "frequency", "start_date", "end_date"]),
-            # Add any additional indexes if necessary
         ]
 
 
@@ -68,6 +72,13 @@ class Reading(InternalBaseModel):
     """
 
     name = models.CharField(max_length=100, unique=True)
+    image = models.ImageField(upload_to="readings/")
+    optimized_image = ImageSpecField(
+        source="image",
+        processors=[SmartResize(400, 225)],
+        format="JPEG",
+        options={"quality": 80},
+    )
     description = models.TextField()
     is_active = models.BooleanField(default=True, db_index=True)
     sortable_order = models.PositiveIntegerField(default=0)
@@ -90,8 +101,16 @@ class ReadingType(InternalBaseModel):
         CALL = "CALL", "Call Consultation"
         REPORT = "REPORT", "Written Report"
 
+    class CallDuration(models.IntegerChoices):
+        FIFTEEN = 15, "15 minutes"
+        THIRTY = 30, "30 minutes"
+        FORTY_FIVE = 45, "45 minutes"
+        SIXTY = 60, "60 minutes"
+        SEVENTY_FIVE = 75, "75 minutes"
+        NINETY = 90, "90 minutes"
+
     reading = models.ForeignKey(
-        Reading,
+        "Reading",
         on_delete=models.CASCADE,
         related_name="variants",
         help_text="The general reading service this type belongs to.",
@@ -113,14 +132,40 @@ class ReadingType(InternalBaseModel):
         null=True,
         help_text="Optional discounted price of this reading type.",
     )
-
     is_discounted = models.BooleanField(
         default=False,
         help_text="Whether this reading type is currently discounted.",
     )
+    call_duration = models.PositiveIntegerField(
+        choices=CallDuration.choices,
+        blank=True,
+        null=True,
+        help_text="Applicable only for Call Consultations: duration of the call in minutes.",
+    )
+
+    @property
+    def sale_price(self):
+        if self.is_discounted and self.discounted_price:
+            return self.discounted_price
+        return self.regular_price
+
+    def clean(self):
+        if self.type == self.Type.CALL and not self.call_duration:
+            raise ValidationError(
+                "Call length must be specified for Call Consultation types."
+            )
+        if self.type == self.Type.REPORT and self.call_duration:
+            raise ValidationError(
+                "Call length is not applicable for Written Report types."
+            )
 
     def __str__(self):
-        return f"{self.reading.name} {self.get_type_display()} - ${self.regular_price}"
+        call_info = (
+            f" ({self.get_call_duration_display()})"
+            if self.type == self.Type.CALL and self.call_duration
+            else ""
+        )
+        return f"{self.reading.name} {self.get_type_display()}{call_info} - ${self.regular_price}"
 
     class Meta:
         verbose_name = "Reading Type"
@@ -129,7 +174,7 @@ class ReadingType(InternalBaseModel):
         unique_together = [
             "reading",
             "type",
-        ]  # Ensures each reading can have only one Call/Report type
+        ]
 
 
 class Testimonial(InternalBaseModel):
@@ -137,6 +182,7 @@ class Testimonial(InternalBaseModel):
         Reading, on_delete=models.CASCADE, related_name="testimonials"
     )
     name = models.CharField(max_length=100)
+
     rating = models.IntegerField()
     content = models.TextField()
     is_active = models.BooleanField(default=True, db_index=True)
@@ -212,9 +258,10 @@ class OrderItem(InternalBaseModel):
         ReadingType, on_delete=models.CASCADE, related_name="order_items"
     )
     quantity = models.PositiveIntegerField(default=1)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
 
     def get_total_price(self):
-        return self.reading_type.regular_price * self.quantity
+        return self.price * self.quantity
 
     def __str__(self):
         return f"{self.reading_type.reading.name} {self.reading_type.get_type_display()} - ${self.get_total_price()}"

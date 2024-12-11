@@ -1,11 +1,11 @@
 import {initMobileMenu} from './components/mobileMenu';
-import {initHoroscopeButtons} from './components/horoscopeButtons';
-import {initAccordions} from './components/accordions';
-import {initCarousel} from './components/carousel';
+import {initTestimonialSwiper} from "./components/testimonialSwiper";
+import {initFaq} from "./components/frequently_asked_questions";
+import {initHoroscopeFrequencyFilterButtons} from "./components/initHoroscopeFrequencyFilterButtons";
 
 document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
-  initHoroscopeButtons();
-  initAccordions();
-  initCarousel();
+  initTestimonialSwiper();
+  initFaq();
+  initHoroscopeFrequencyFilterButtons();
 });

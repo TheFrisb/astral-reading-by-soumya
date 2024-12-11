@@ -2,114 +2,89 @@
 @tailwind components;
 @tailwind utilities;
 
-.header__link {
-    @apply text-textColor hover:text-primary;
-    @apply transition-colors;
-    @apply duration-150;
+input, textarea, select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    border-color: #6b7280;
+    border-width: 1px;
+    border-radius: 0px;
+    padding-top: 0.5rem;
+    padding-right: 0.75rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    --tw-shadow: 0 0 #0000;
 }
 
-
-.horoscopeListItem {
-    @apply hopOnHover flex flex-col items-center justify-center p-4 rounded-lg gap-4 transition-all text-textColor;
-    @apply hover:text-primary border border-primary;
+.swiper-button-next,
+.swiper-button-prev {
+    color: theme('colors.purple.600') !important;
 }
 
-.horoscopeListItem.active {
-    @apply bg-secondary;
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: 24px !important;
 }
 
-.hopOnHover {
-    @apply hover:-translate-y-2 transition-all relative;
+.mobile-menu-enter {
+    transform: translateX(100%);
 }
 
-.chooseHoroscopeButton {
-    @apply transition-all duration-300;
-    @apply text-textColor cursor-pointer;
-    @apply px-4 py-2;
-    @apply rounded-lg bg-secondary/30;
-    @apply border-2 border-secondary/30;
-
-    @apply hover:bg-secondary/60;
-
+.mobile-menu-enter-active {
+    transform: translateX(0);
+    transition: transform 300ms ease-out;
 }
 
-.chooseHoroscopeButton.active {
-    @apply border-primary bg-secondary/60;
+.mobile-menu-exit {
+    transform: translateX(0);
 }
 
-.horoscopeFilterLink {
-    @apply transition-all duration-300;
-    @apply text-sm font-bold cursor-pointer px-2 py-1;
-    @apply rounded-lg;
-    @apply border-b-2;
-    @apply border-transparent;
-    @apply hover:border-accent;
-
-    @apply text-textColor/80;
+.mobile-menu-exit-active {
+    transform: translateX(100%);
+    transition: transform 300ms ease-in;
 }
 
-.horoscopeFilterLink.active {
-    @apply border-accent text-accent;
+.mobile-menu-overlay-enter {
+    opacity: 0;
 }
 
-.glide__arrow {
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
+.mobile-menu-overlay-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-out;
 }
 
-.glide__arrow--left {
-    left: 10px;
+.mobile-menu-overlay-exit {
+    opacity: 1;
 }
 
-.glide__arrow--right {
-    right: 10px;
+.mobile-menu-overlay-exit-active {
+    opacity: 0;
+    transition: opacity 300ms ease-in;
 }
 
-.checkoutForm {
-    @apply mx-auto max-w-lg;
-    @apply flex flex-col gap-8;
+.mobile-menu {
+    display: none;
 }
 
-.checkoutForm div {
-    @apply flex flex-col gap-2;
+.mobile-menu.active {
+    display: block;
 }
 
-.checkoutForm label {
-    @apply font-bold text-sm;
+.overlay {
+    display: none;
 }
 
-.checkoutForm input, select, textarea {
-    @apply border border-gray-300 rounded-lg p-4;
-    @apply focus:outline-primary focus:border-primary;
-    @apply bg-white text-primary;
-
+.overlay.active {
+    display: block;
 }
 
-.checkoutForm select > option {
-    @apply font-normal text-sm rounded-lg p-4;
+.horoscopeFilterButton {
+    @apply text-gray-500 hover:text-gray-700;
 }
 
-.checkoutForm input::placeholder, select::placeholder, textarea::placeholder {
-    @apply font-normal;
+.horoscopeFilterButton.active {
+    @apply bg-purple-600 text-white;
 }
-
-.checkoutForm button[type="submit"] {
-    @apply p-4 rounded-lg border;
-    @apply font-bold text-lg;
-    @apply bg-primary hover:bg-primary/70;
-    @apply transition-all duration-300;
-}
-
-
-/*# sourceMappingURL=glide.theme.min.css.map */

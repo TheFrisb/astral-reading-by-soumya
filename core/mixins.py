@@ -3,15 +3,19 @@ class PageTagsMixin:
     Mixin to add page tags to the context.
     """
 
-    page_title = None  # Should be set in subclasses
-
     def get_page_title(self):
         """
         Returns the page title. Subclasses can override this method
         if they need dynamic titles.
         """
-        return self.page_title
+        if hasattr(super(), "get_page_title"):
+            return super().get_page_title()
 
+        if hasattr(self, "page_title"):
+            return self.page_title
+
+        return "Astral Readings by Soumya"
+ 
     def get_page_tags(self):
         """
         Generates the page tags using the page title.

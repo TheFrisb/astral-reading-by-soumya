@@ -10,11 +10,13 @@ from .views import (
     stripe_webhook,
     ThankYouView,
     TimeSlotPickerView,
+    HoroscopeListView,
 )
 
 app_name = "core"
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
+    path("horoscopes/", HoroscopeListView.as_view(), name="horoscope_list"),
     path(
         "horoscope/<str:sign_name>/",
         HoroscopeDetailView.as_view(),

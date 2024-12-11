@@ -1,23 +1,43 @@
 export function initMobileMenu() {
-  const menuIcon = document.getElementById('mobileMenuIcon');
-  const closeIcon = document.getElementById('mobileMenuCloseIcon');
+  const mobileMenuTogglerButtons = document.querySelectorAll('.mobileMenuTogglerButton');
   const mobileMenu = document.getElementById('mobileMenu');
+  const overlay = document.getElementById('overlay');
 
-  if (!menuIcon || !closeIcon || !mobileMenu) return;
+  if (!mobileMenu || !overlay || mobileMenuTogglerButtons.length === 0) {
+    return;
+  }
 
-  menuIcon.addEventListener('click', () => {
-    mobileMenu.classList.remove('opacity-0', 'max-h-0', 'scale-y-0');
-    mobileMenu.classList.add('opacity-100', 'max-h-screen', 'scale-y-100', 'p-2');
+  mobileMenuTogglerButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      if (mobileMenu.classList.contains('active')) {
+        mobileMenu.classList.remove('active');
+        overlay.classList.remove('active');
 
-    menuIcon.classList.add('hidden');
-    closeIcon.classList.remove('hidden');
-  });
+        mobileMenu.classList.add('mobile-menu-exit');
+        overlay.classList.add('mobile-menu-overlay-exit');
 
-  closeIcon.addEventListener('click', () => {
-    mobileMenu.classList.add('opacity-0', 'max-h-0', 'scale-y-0');
-    mobileMenu.classList.remove('opacity-100', 'max-h-screen', 'scale-y-100', 'p-2');
+        setTimeout(() => {
+          mobileMenu.classList.remove('mobile-menu-exit');
+          overlay.classList.remove('mobile-menu-overlay-exit');
+        }, 300);
+      } else {
+        console.log("clicked")
+        mobileMenu.classList.add('active');
+        overlay.classList.add('active');
 
-    closeIcon.classList.add('hidden');
-    menuIcon.classList.remove('hidden');
+        mobileMenu.classList.add('mobile-menu-enter');
+        overlay.classList.add('mobile-menu-overlay-enter');
+
+        requestAnimationFrame(() => {
+          mobileMenu.classList.add('mobile-menu-enter-active');
+          overlay.classList.add('mobile-menu-overlay-enter-active');
+        });
+
+        setTimeout(() => {
+          mobileMenu.classList.remove('mobile-menu-enter', 'mobile-menu-enter-active');
+          overlay.classList.remove('mobile-menu-overlay-enter', 'mobile-menu-overlay-enter-active');
+        }, 300);
+      }
+    });
   });
 }

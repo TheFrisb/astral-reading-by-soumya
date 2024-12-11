@@ -1,0 +1,115 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <div class="relative isolate overflow-hidden">
+        <div class="absolute inset-0 -z-10 h-full w-full object-cover"
+             style="background: linear-gradient(rgba(88, 28, 135, 0.8), rgba(55, 48, 163, 0.8)) center center / cover, url(&quot;https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=2013&amp;q=80&quot;);"></div>
+        <div class="mx-auto max-w-7xl px-6 py-24 sm:py-64 lg:px-8">
+            <div class="mx-auto max-w-2xl lg:mx-0"><h1
+                    class="text-4xl font-bold tracking-tight text-white sm:text-6xl">Discover Your Celestial
+                Path</h1>
+                <p class="mt-6 text-lg leading-8 text-gray-300">Unlock the mysteries of your destiny through
+                    personalized astrology readings. Let the stars guide your journey to self-discovery and
+                    enlightenment.</p>
+                <div class="mt-10 flex items-center gap-x-6"><a href="{% url 'core:readings' %}"
+                                                                class="rounded-md bg-purple-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600">Explore
+                    Readings</a><a href="{% url 'core:about' %}" class="text-sm font-semibold leading-6 text-white">Learn
+                    More <span
+                            aria-hidden="true">→</span></a></div>
+            </div>
+        </div>
+    </div>
+    <div class="bg-white py-24 sm:py-32">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="mx-auto max-w-2xl text-center"><h2
+                    class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Astrological Services</h2>
+                <p class="mt-4 text-lg leading-8 text-gray-600">Choose from our range of personalized readings to
+                    illuminate your path forward.</p></div>
+            <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-4">
+                {% for reading in readings %}
+                    <div class="flex flex-col rounded-3xl bg-white overflow-hidden ring-1 ring-gray-200 hover:shadow-lg transition-shadow duration-300">
+                        <div class="aspect-[4/3] relative"><img
+                                src="{{ reading.image.url }}"
+                                alt="Birth Chart Reading" class="absolute inset-0 h-full w-full object-cover"></div>
+                        <div class="flex-1 p-8">
+                            <div class="flex items-center justify-between gap-x-4"><h3
+                                    class="text-lg font-semibold leading-8 text-gray-900">{{ reading.name }}</h3></div>
+                            <p class="mt-4 text-sm leading-6 text-gray-600">{{ reading.description }}</p></div>
+                        <div class="p-8 pt-0">
+                            {% for reading_type in reading.variants.all %}
+                                <div class="flex items-center gap-x-4"><h4
+                                        class="flex-none text-sm font-semibold leading-6 text-purple-600">
+                                    ${{ reading_type.sale_price }}</h4>
+                                    <div class="h-px flex-auto bg-gray-100"></div>
+                                    <div class="flex-none text-sm text-gray-500">
+                                        {% if reading_type.type == 'CALL' %}
+                                            {{ reading_type.call_duration }} minutes call
+                                        {% else %}
+                                            {{ reading_type.get_type_display }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <a href="{% url 'core:checkout' reading_id=reading.id %}"
+                               class="mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 text-white bg-purple-600 hover:bg-purple-500">Book
+                                Now</a></div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% include 'core/includes/testimonials.html' %}
+
+
+    <div class="bg-white py-24 sm:py-32">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="mx-auto max-w-2xl text-center"><h2
+                    class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Explore Your Horoscope</h2>
+                <p class="mt-4 text-lg leading-8 text-gray-600">Discover what the stars have in store for you. Get
+                    insights into love, career, and personal growth.</p>
+                <div class="mt-8">
+                    <div class="inline-flex rounded-lg border border-gray-200 p-1 bg-white">
+                        <button class="px-4 py-2 text-sm font-medium rounded-md transition-colors horoscopeFilterButton active"
+                                data-frequency="monthly">
+                            Monthly
+                        </button>
+                        <button class="px-4 py-2 text-sm font-medium rounded-md transition-colors horoscopeFilterButton"
+                                data-frequency="yearly">
+                            Yearly
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% include 'core/includes/horoscope_list.html' %}
+        </div>
+    </div>
+    <div class="bg-white py-24 sm:py-32">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="mx-auto max-w-2xl text-center"><h2
+                    class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Why Choose Astrology
+                Consultation?</h2>
+                <p class="mt-4 text-lg leading-8 text-gray-600">Discover how astrology can illuminate your path and
+                    guide your decisions.</p></div>
+            <div class="mx-auto mt-16 max-w-4xl">
+                <div class="relative aspect-video overflow-hidden rounded-xl bg-gray-900 shadow-lg"><img
+                        src="https://images.unsplash.com/photo-1532012197267-da84d127e765?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"
+                        alt="Video thumbnail" class="absolute inset-0 h-full w-full object-cover opacity-75">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button type="button"
+                                class="flex h-20 w-20 items-center justify-center rounded-full bg-white/30 backdrop-blur-sm transition hover:bg-white/40">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="lucide lucide-play h-8 w-8 text-white">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                            </svg>
+                            <span class="sr-only">Play video</span></button>
+                    </div>
+                </div>
+                <div class="mt-8 text-center"><h3 class="text-lg font-semibold text-gray-900">Understanding Your
+                    Cosmic Blueprint</h3>
+                    <p class="mt-2 text-sm text-gray-600">Learn how astrology can provide insights into your
+                        personality, relationships, and life path.</p></div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

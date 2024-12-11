@@ -8,24 +8,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {% block head %}{% endblock head %}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
     <link rel="stylesheet" href="{% static 'css/glide.css' %}">
     <link rel="stylesheet" href="{% static 'css/tailwind_output.css' %}">
     <title>{{ page_tags.title }}</title>
 </head>
 <body class="bg-backgroundColor ">
-{% include 'core/includes/header.html' %}
 
-<div class="w-full">
-    <div class="container mx-auto px-4 md:px-2">
-        {% block content %}{% endblock content %}
-    </div>
+
+<div class="min-h-screen bg-gray-50">
+    {% include 'core/includes/header.html' %}
+
+    {% block content %}
+    {% endblock content %}
+    {% include 'core/includes/footer.html' %}
 </div>
 
-{% include 'core/includes/footer.html' %}
 
 <script src="{% static 'js/core_v1.bundle.js' %}"></script>
 </body>

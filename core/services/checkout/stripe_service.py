@@ -4,7 +4,7 @@ import stripe
 from django.conf import settings
 from django.urls import reverse
 
-from core.models import ReadingType, Order
+from core.models import Order, OrderItem
 
 
 class StripeWebhookEvent(Enum):
@@ -55,15 +55,15 @@ class InternalStripeService:
                     "product_data": {
                         "name": f"{item.reading_type.reading.name} - {item.reading_type.get_type_display()}",
                     },
-                    "unit_amount": self.get_reading_type_price(item.reading_type),
+                    "unit_amount": self.get_reading_type_price(item),
                 },
                 "quantity": item.quantity,
             }
         ]
 
-    def get_reading_type_price(self, reading_type: ReadingType) -> int:
+    def get_reading_type_price(self, order_item: OrderItem) -> int:
         """Retrieve the price of a ReadingType."""
-        return int(reading_type.regular_price * 100)
+        return int(order_item.get_total_price() * 100)
 
     def get_metadata(self, order: Order) -> dict:
         """Return the metadata for the Stripe Checkout session."""

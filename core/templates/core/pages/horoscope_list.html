@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <div class="pt-16">
+        <div class="bg-gray-50 py-24 sm:py-32">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                <div class="mx-auto max-w-2xl text-center"><h2
+                        class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Daily Horoscope
+                    Readings</h2>
+                    <p class="mt-4 text-lg leading-8 text-gray-600">Discover what the stars have in store for you.
+                        Select
+                        your
+                        zodiac sign to view your detailed horoscope reading.</p>
+                    <div class="mt-8">
+                        <div class="inline-flex rounded-lg border border-gray-200 p-1 bg-white">
+                            <button class="px-4 py-2 text-sm font-medium rounded-md transition-colors horoscopeFilterButton active"
+                                    data-frequency="monthly">
+                                Monthly
+                            </button>
+                            <button class="px-4 py-2 text-sm font-medium rounded-md transition-colors horoscopeFilterButton"
+                                    data-frequency="yearly">
+                                Yearly
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% include 'core/includes/horoscope_list.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

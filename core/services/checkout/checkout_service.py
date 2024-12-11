@@ -21,7 +21,7 @@ class InternalCheckoutService:
 
     def get_reading_type(self, reading_type: uuid.UUID) -> ReadingType:
         try:
-            return ReadingType.objects.get(pk=reading_type)
+            return ReadingType.objects.get(pk=reading_type, reading__is_active=True)
         except ReadingType.DoesNotExist:
             raise ValidationError("Invalid consultation call type selected.")
 
@@ -43,7 +43,10 @@ class InternalCheckoutService:
         )
 
         order_item = OrderItem.objects.create(
-            order=order, reading_type=reading_type, quantity=1
+            order=order,
+            reading_type=reading_type,
+            quantity=1,
+            price=reading_type.sale_price,
         )
 
         return (

@@ -8,7 +8,7 @@ from django.views.generic.edit import FormView
 from blog.services.BlogService import BlogService
 from .forms.checkout_form import CheckoutForm
 from .mixins import PageTagsMixin
-from .models import Horoscope, FrequentlyAskedQuestion, ReadingType, Order
+from .models import Horoscope, FrequentlyAskedQuestion, ReadingType, Order, Reading
 from .services.checkout.checkout_service import InternalCheckoutService
 from .services.checkout.stripe_service import InternalStripeService
 from .services.horoscopes_service import HoroscopeService
@@ -18,7 +18,7 @@ from .services.testimonials_service import TestimonialService
 
 
 class HomeView(PageTagsMixin, TemplateView):
-    template_name = "core/pages/horoscopes.html"
+    template_name = "core/pages/home.html"
     page_title = "Home"
 
     def get_context_data(self, **kwargs):
@@ -26,10 +26,32 @@ class HomeView(PageTagsMixin, TemplateView):
         horoscope_service = HoroscopeService()
         testimonial_service = TestimonialService()
 
-        context["horoscope_signs"] = (
-            horoscope_service.get_horoscope_signs_with_current_horoscopes()
+        context.update(
+            {
+                "horoscope_signs": horoscope_service.get_horoscope_signs_with_current_horoscopes(),
+                "testimonials": testimonial_service.get_active_testimonials(),
+                "readings": Reading.objects.prefetch_related("variants")
+                .all()
+                .order_by("sortable_order"),
+            }
         )
-        context["testimonials"] = testimonial_service.get_active_testimonials()
+
+        return context
+
+
+class HoroscopeListView(PageTagsMixin, TemplateView):
+    template_name = "core/pages/horoscope_list.html"
+    page_title = "Horoscopes"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        horoscope_service = HoroscopeService()
+        context.update(
+            {
+                "horoscope_signs": horoscope_service.get_horoscope_signs_with_current_horoscopes(),
+            }
+        )
+
         return context
 
 
@@ -97,24 +119,19 @@ class HoroscopeDetailView(PageTagsMixin, DetailView):
     context_object_name = "horoscope"
 
     def get_object(self, queryset=None):
-        # Fetch the sign name from URL parameters
         sign_name = self.kwargs.get("sign_name")
+        filter_type = self.request.GET.get("filter", "monthly").lower()  # Default to monthly
+        valid_frequencies = [choice[0].lower() for choice in Horoscope.Frequency.choices]
 
-        # Retrieve the filter type from request parameters (default to 'weekly')
-        filter_type = self.request.GET.get("filter", "weekly").lower()
-
-        # Validate filter_type to ensure it matches available frequencies
-        valid_frequencies = [
-            choice[0].lower() for choice in Horoscope.Frequency.choices
-        ]
         if filter_type not in valid_frequencies:
-            filter_type = "weekly"  # Default to 'weekly' if invalid
+            filter_type = "monthly"
 
         service = HoroscopeService()
         horoscope = service.get_current_horoscope(sign_name, filter_type)
 
         if not horoscope:
             raise Http404("Horoscope does not exist")
+
         return horoscope
 
     def get_context_data(self, **kwargs):
@@ -148,7 +165,7 @@ class HoroscopeDetailView(PageTagsMixin, DetailView):
         context.update(
             {
                 "filter_options": filter_options,
-                "horoscope_signs": service.get_horoscope_signs(),
+                "zodiac_signs": service.get_horoscope_signs(),
                 "current_filter": filter_type,
                 "related_blog_posts": blog_service.get_related_by_horoscope_sign(
                     self.object.sign
@@ -157,6 +174,9 @@ class HoroscopeDetailView(PageTagsMixin, DetailView):
         )
         return context
 
+    def get_page_title(self):
+        return f"{self.object.sign} Horoscope"
+
 
 class FrequentlyAskedQuestionsView(PageTagsMixin, TemplateView):
     template_name = "core/pages/faq.html"
@@ -164,7 +184,9 @@ class FrequentlyAskedQuestionsView(PageTagsMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["faqs"] = FrequentlyAskedQuestion.objects.all()
+        context["faqs"] = FrequentlyAskedQuestion.objects.all().order_by(
+            "sortable_order"
+        )
         return context
 
 

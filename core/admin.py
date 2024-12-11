@@ -3,7 +3,7 @@ from django.contrib import admin
 
 from core.forms.admin.horoscope_entry_form import HoroscopeForm
 from core.models import (
-    HoroscopeSign,
+    ZodiacSigns,
     Horoscope,
     FrequentlyAskedQuestion,
     ReadingType,
@@ -11,6 +11,7 @@ from core.models import (
     Order,
     OrderInformation,
     OrderItem,
+    Testimonial,
 )
 
 
@@ -19,11 +20,9 @@ class InternalBaseAdmin(admin.ModelAdmin):
 
 
 # Register your models here.
-@admin.register(HoroscopeSign)
+@admin.register(ZodiacSigns)
 class HoroscopeSignAdmin(InternalBaseAdmin):
     list_display = ["name"]
-    search_fields = ["name"]
-
     search_fields = ["name"]
 
 
@@ -34,7 +33,7 @@ class HoroscopeAdmin(InternalBaseAdmin):
     list_filter = ("sign", "frequency")
     search_fields = ("sign__name", "content")
     date_hierarchy = "start_date"
-    readonly_fields = ["end_date"] + InternalBaseAdmin.readonly_fields
+    readonly_fields = ["start_date", "end_date"] + InternalBaseAdmin.readonly_fields
 
     autocomplete_fields = ["sign"]
 
@@ -114,6 +113,14 @@ class OrderAdmin(InternalBaseAdmin):
 
     def full_name(self, obj):
         return obj.information.full_name
+
+
+@admin.register(Testimonial)
+class TestimonialAdmin(admin.ModelAdmin):
+    list_display = ("name", "is_active")
+    list_filter = ("is_active",)
+    search_fields = ("name", "content")
+    autocomplete_fields = ["reading"]
 
 
 admin.site.site_header = "Astrology Admin"
