@@ -10,7 +10,7 @@
                 </div>
                 <p class="mt-4 flex-1 text-sm text-gray-600">
                     {% if sign.current_monthly_horoscope %}
-                        {{ sign.current_monthly_horoscope|truncatewords:20 }}
+                        {{ sign.current_monthly_horoscope.content|safe|truncatewords:20 }}
                     {% else %}
                         No horoscope available for this month.
                     {% endif %}
