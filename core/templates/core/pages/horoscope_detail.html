@@ -13,9 +13,9 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="inline-flex rounded-lg border border-gray-200 p-1 bg-white mt-6">
+                        <div class="inline-flex rounded-lg border border-gray-200 p-1 bg-white mt-6 ml-auto sm:mt-0 sm:ml-0">
                             <a href="{% url 'core:horoscope_detail' sign_name=horoscope.sign.name %}?filter=monthly"
-                               class="px-4 py-2 text-sm font-medium rounded-md transition-colors horoscopeFilterButton {% if current_filter == 'weekly' %}active{% endif %}"
+                               class="px-4 py-2 text-sm font-medium rounded-md transition-colors horoscopeFilterButton {% if current_filter == 'monthly' %}active{% endif %}"
                                data-frequency="monthly">
                                 Monthly
                             </a>
