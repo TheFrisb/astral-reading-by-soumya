@@ -20,7 +20,7 @@ class PageTagsMixin(LoginRequiredMixin):
         if hasattr(self, "page_title"):
             return self.page_title
 
-        return "Astral Readings by Soumya"
+        return "Astral Reading by Soumya"
 
     def get_page_tags(self):
         return {
