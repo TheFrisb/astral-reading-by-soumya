@@ -5,11 +5,8 @@
              style="background: linear-gradient(rgba(88, 28, 135, 0.8), rgba(55, 48, 163, 0.8)) center center / cover, url('{{ hero_section.background_image.url }}')"></div>
         <div class="mx-auto max-w-7xl px-6 py-24 sm:py-64 lg:px-8">
             <div class="mx-auto max-w-2xl lg:mx-0"><h1
-                    class="text-4xl font-bold tracking-tight text-white sm:text-6xl">Discover Your Celestial
-                Path</h1>
-                <p class="mt-6 text-lg leading-8 text-gray-300">Unlock the mysteries of your destiny through
-                    personalized astrology readings. Let the stars guide your journey to self-discovery and
-                    enlightenment.</p>
+                    class="text-4xl font-bold tracking-tight text-white sm:text-6xl">{{ hero_section.title }}</h1>
+                <p class="mt-6 text-lg leading-8 text-gray-300">{{ hero_section.subtitle }}</p>
                 <div class="mt-10 flex items-center gap-x-6"><a href="{% url 'core:readings' %}"
                                                                 class="rounded-md bg-purple-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600">Explore
                     Readings</a><a href="{% url 'core:about' %}" class="text-sm font-semibold leading-6 text-white">Learn
