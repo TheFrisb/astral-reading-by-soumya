@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "adminsortable2",
     "django_ckeditor_5",
+    "solo",
     # Internal apps
     "core",
     "blog",

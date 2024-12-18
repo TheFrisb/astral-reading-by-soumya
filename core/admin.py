@@ -1,5 +1,6 @@
 from adminsortable2.admin import SortableAdminMixin
 from django.contrib import admin
+from solo.admin import SingletonModelAdmin
 
 from core.forms.admin.horoscope_entry_form import HoroscopeForm
 from core.models import (
@@ -12,6 +13,7 @@ from core.models import (
     OrderInformation,
     OrderItem,
     Testimonial,
+    HeroSection,
 )
 
 
@@ -124,3 +126,4 @@ class TestimonialAdmin(admin.ModelAdmin):
 
 
 admin.site.site_header = "Astrology Admin"
+admin.site.register(HeroSection, SingletonModelAdmin)

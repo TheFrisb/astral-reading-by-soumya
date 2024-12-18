@@ -8,7 +8,14 @@ from django.views.generic.edit import FormView
 from blog.services.BlogService import BlogService
 from .forms.checkout_form import CheckoutForm
 from .mixins import PageTagsMixin
-from .models import Horoscope, FrequentlyAskedQuestion, ReadingType, Order, Reading
+from .models import (
+    Horoscope,
+    FrequentlyAskedQuestion,
+    ReadingType,
+    Order,
+    Reading,
+    HeroSection,
+)
 from .services.checkout.checkout_service import InternalCheckoutService
 from .services.checkout.stripe_service import InternalStripeService
 from .services.horoscopes_service import HoroscopeService
@@ -30,9 +37,8 @@ class HomeView(PageTagsMixin, TemplateView):
             {
                 "horoscope_signs": horoscope_service.get_horoscope_signs_with_current_horoscopes(),
                 "testimonials": testimonial_service.get_active_testimonials(),
-                "readings": Reading.objects.prefetch_related("variants")
-                .all()
-                .order_by("sortable_order"),
+                "readings": Reading.objects.prefetch_related("variants"),
+                "hero_section": HeroSection.get_solo(),
             }
         )
 

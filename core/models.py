@@ -5,6 +5,7 @@ from django.db import models
 from django.urls import reverse
 from imagekit.models import ImageSpecField
 from imagekit.processors import SmartResize
+from solo.models import SingletonModel
 
 
 # Create your models here.
@@ -270,3 +271,12 @@ class OrderItem(InternalBaseModel):
         verbose_name = "Order Item"
         verbose_name_plural = "Order Items"
         ordering = ["-created_at"]
+
+
+class HeroSection(SingletonModel):
+    title = models.CharField(max_length=255)
+    subtitle = models.TextField()
+    background_image = models.ImageField(upload_to="hero/")
+
+    def __str__(self):
+        return self.title
