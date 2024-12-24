@@ -1,9 +1,14 @@
 import stripe
+from django.db.models import Q
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import FormView
+from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from blog.services.BlogService import BlogService
 from .forms.checkout_form import CheckoutForm
@@ -15,11 +20,11 @@ from .models import (
     Order,
     Reading,
     HeroSection,
+    Location,
 )
 from .services.checkout.checkout_service import InternalCheckoutService
 from .services.checkout.stripe_service import InternalStripeService
 from .services.horoscopes_service import HoroscopeService
-from .services.mail.mail_service import MailService
 from .services.readings_service import ReadingsService
 from .services.testimonials_service import TestimonialService
 
@@ -217,14 +222,6 @@ class ThankYouView(PageTagsMixin, DetailView):
             )
         except Order.DoesNotExist:
             raise Http404("Order does not exist")
-        print(order.item.reading_type)
-
-        mail_service = MailService()
-        mail_service.send_mail(
-            "bedzovski@yahoo.com",
-            "Thank you for your order!",
-            f"Thank you for your order! Your order ID is {order.id}.",
-        )
 
         return order
 
@@ -242,6 +239,7 @@ def stripe_webhook(request):
     stripe_service = InternalStripeService()
     payload = request.body
     sig_header = request.META.get("HTTP_STRIPE_SIGNATURE", "")
+    print("Received webhook")
 
     try:
         event = stripe_service.process_stripe_event(payload, sig_header)
@@ -249,7 +247,31 @@ def stripe_webhook(request):
         # Invalid payload
         return HttpResponse("Invalid payload", status=400)
     except stripe.error.SignatureVerificationError:
-        print("Invalid signature")
         return HttpResponse("Invalid signature", status=400)
 
     return JsonResponse({"status": "success"})
+
+
+class LocationSearchView(APIView):
+    class LocationSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Location
+            fields = [
+                "id",
+                "country_code",
+                "postal_code",
+                "town",
+                "state_name",
+                "latitude",
+                "longitude",
+            ]
+
+    def get(self, request):
+        query = request.query_params.get("town", "").strip()
+
+        if not query:
+            raise ValidationError({"error": "The 'town' parameter is required."})
+
+        locations = Location.objects.filter(Q(town__icontains=query))[:10]
+        serializer = self.LocationSerializer(locations, many=True)
+        return Response(serializer.data)

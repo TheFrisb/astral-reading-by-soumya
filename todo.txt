@@ -1,8 +1,12 @@
-5. Make blog list tags
-8. Make checkout form complete
-9. Make thank you page
-10. Make calendar picker
-11. Send email invoice
-12. Send email calendar picker
-
-
+1. Use autocomplete on checkout for birth place
+2. Remove AM/PM duplication in the checkout form
+3. Update Thank You verbiage
+4. Fix CkEditor CSS
+5. Build Calendar Picker
+- Make Admin able to block calendar time slots
+- Make admin able to
+- Make Admin able to see calendar bookings
+- Make Admin able to cancel bookings
+6. Fix send leave a review email
+- Build leave a review view
+7. Host on DigitalOcean

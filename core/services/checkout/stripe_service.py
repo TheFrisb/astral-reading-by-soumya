@@ -5,6 +5,7 @@ from django.conf import settings
 from django.urls import reverse
 
 from core.models import Order, OrderItem
+from core.services.mail.mail_service import MailService
 
 
 class StripeWebhookEvent(Enum):
@@ -17,6 +18,7 @@ class InternalStripeService:
         self.api_key = settings.STRIPE_API_SECRET_KEY
         self.webhook_secret = settings.STRIPE_WEBHOOK_SECRET_KEY
         self.base_url = settings.BASE_URL
+        self.mailer = MailService()
 
     def create_checkout_session(self, order: Order) -> str:
         """Create a new Stripe Checkout session."""
@@ -90,6 +92,11 @@ class InternalStripeService:
         order = Order.objects.get(id=order_id)
         order.status = Order.Status.COMPLETED
         order.save()
+
+        try:
+            self.mailer.send_thank_you_email(order.information.email, order)
+        except Exception as e:
+            print(f"Error sending thank you email: {e}")
         return order
 
     def process_checkout_session_expired(self, event_data: dict):

@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@glidejs/glide": "^3.7.1",
+    "@tarekraafat/autocomplete.js": "^10.2.9",
     "swiper": "^11.1.15",
     "yaml": "^2.6.1"
   },

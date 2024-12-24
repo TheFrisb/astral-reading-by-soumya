@@ -1,5 +1,7 @@
 from adminsortable2.admin import SortableAdminMixin
-from django.contrib import admin
+from django.contrib import admin, messages
+from django.shortcuts import redirect
+from django.urls import path
 from solo.admin import SingletonModelAdmin
 
 from core.forms.admin.horoscope_entry_form import HoroscopeForm
@@ -14,7 +16,10 @@ from core.models import (
     OrderItem,
     Testimonial,
     HeroSection,
+    SiteSettings,
+    Location,
 )
+from core.services.mail.mail_service import MailService
 
 
 class InternalBaseAdmin(admin.ModelAdmin):
@@ -102,6 +107,7 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(InternalBaseAdmin):
+    change_form_template = "admin/orders/order/change_form.html"
     list_display = ("id", "full_name", "item", "status", "created_at")
     list_filter = ("status",)
     search_fields = (
@@ -116,6 +122,38 @@ class OrderAdmin(InternalBaseAdmin):
     def full_name(self, obj):
         return obj.information.full_name
 
+    def send_review_request(self, request, order_id):
+        order = self.get_object(request, order_id)
+        if order:
+            mailer = MailService()
+            try:
+                mailer.send_leave_a_review_email(order.information.email, order)
+                messages.success(request, f"Review request sent for Order {order.id}.")
+            except Exception as e:
+                messages.error(request, f"Error sending review request: {e}")
+        else:
+            messages.error(request, "Order not found.")
+        return redirect("admin:core_order_change", object_id=order_id)
+
+    def change_view(self, request, object_id, form_url="", extra_context=None):
+        # Ensure 'object' is passed to the template
+        extra_context = extra_context or {}
+        extra_context["object"] = self.get_object(request, object_id)
+        return super().change_view(
+            request, object_id, form_url, extra_context=extra_context
+        )
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path(
+                "<uuid:order_id>/send-review-request/",
+                self.admin_site.admin_view(self.send_review_request),
+                name="order-send-review-request",
+            ),
+        ]
+        return custom_urls + urls
+
 
 @admin.register(Testimonial)
 class TestimonialAdmin(admin.ModelAdmin):
@@ -127,3 +165,5 @@ class TestimonialAdmin(admin.ModelAdmin):
 
 admin.site.site_header = "Astrology Admin"
 admin.site.register(HeroSection, SingletonModelAdmin)
+admin.site.register(SiteSettings, SingletonModelAdmin)
+admin.site.register(Location, InternalBaseAdmin)

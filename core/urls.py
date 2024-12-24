@@ -11,6 +11,7 @@ from .views import (
     ThankYouView,
     TimeSlotPickerView,
     HoroscopeListView,
+    LocationSearchView,
 )
 
 app_name = "core"
@@ -33,4 +34,5 @@ urlpatterns = [
     path("thank-you/<uuid:order_id>/", ThankYouView.as_view(), name="thank_you"),
     path("time-slot-picker/", TimeSlotPickerView.as_view(), name="time_slot_picker"),
     path("stripe/webhook/", stripe_webhook, name="stripe_webhook"),
+    path("location-search/", LocationSearchView.as_view(), name="location_search"),
 ]

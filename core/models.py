@@ -145,6 +145,10 @@ class ReadingType(InternalBaseModel):
     )
 
     @property
+    def get_display_name(self):
+        return f"{self.reading.name} {self.get_type_display()}"
+
+    @property
     def sale_price(self):
         if self.is_discounted and self.discounted_price:
             return self.discounted_price
@@ -280,3 +284,34 @@ class HeroSection(SingletonModel):
 
     def __str__(self):
         return self.title
+
+
+class SiteSettings(SingletonModel):
+    thank_you_template_id = models.CharField(max_length=255)
+    leave_a_review_template_id = models.CharField(max_length=255)
+
+
+class Location(InternalBaseModel):
+    country_code = models.CharField(
+        max_length=2, verbose_name="Country Code"
+    )  # ISO country code
+    postal_code = models.CharField(
+        max_length=20, verbose_name="Postal Code"
+    )  # Not used directly but kept for data reference
+    town = models.CharField(max_length=180, verbose_name="Town")  # Place name
+    state_name = models.CharField(
+        max_length=100, verbose_name="State Name"
+    )  # Admin name1
+    latitude = models.FloatField(verbose_name="Latitude")
+    longitude = models.FloatField(verbose_name="Longitude")
+
+    def __str__(self):
+        return f"{self.town}, {self.state_name}, {self.country_code}"
+
+    class Meta:
+        verbose_name = "Location"
+        verbose_name_plural = "Locations"
+        indexes = [
+            models.Index(fields=["town"]),
+            models.Index(fields=["country_code", "state_name", "town"]),
+        ]
