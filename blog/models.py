@@ -37,6 +37,7 @@ class Category(InternalBaseModel):
 
 
 class BlogPost(InternalBaseModel):
+    image = models.ImageField(upload_to="blog_images")
     title = models.CharField(max_length=100)
     content = CKEditor5Field("Content")
     categories = models.ManyToManyField(

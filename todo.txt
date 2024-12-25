@@ -1,7 +1,3 @@
-1. Use autocomplete on checkout for birth place
-2. Remove AM/PM duplication in the checkout form
-3. Update Thank You verbiage
-4. Fix CkEditor CSS
 5. Build Calendar Picker
 - Make Admin able to block calendar time slots
 - Make admin able to

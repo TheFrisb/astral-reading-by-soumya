@@ -10,19 +10,22 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/44.1.0/ckeditor5.css"/>
 
     <link rel="stylesheet" href="{% static 'css/glide.css' %}">
     <link rel="stylesheet" href="{% static 'css/tailwind_output.css' %}">
     <title>{{ page_tags.title }}</title>
 </head>
-<body class="bg-backgroundColor ">
+<body class="bg-backgroundColor">
 
 
-<div class="min-h-screen bg-gray-50">
+<div class="min-h-screen flex flex-col bg-gray-50">
     {% include 'core/includes/header.html' %}
 
-    {% block content %}
-    {% endblock content %}
+    <div class="flex-grow">
+        {% block content %}
+        {% endblock content %}
+    </div>
     {% include 'core/includes/footer.html' %}
 </div>
 

@@ -1,0 +1,103 @@
+{% extends 'core/base.html' %}
+{% block head %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/css/datepicker.min.css">
+{% endblock head %}
+{% block content %}
+    <div class="bg-white py-24 sm:py-32">
+        {% if has_appointment %}
+            <div class="bg-gray-50 py-24 sm:py-32">
+                <div class="mx-auto max-w-md px-6 lg:px-8">
+                    <div class="rounded-lg bg-white p-8 shadow-lg">
+                        <div class="flex flex-col items-center">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round"
+                                     class="lucide lucide-check-circle h-6 w-6 text-green-600">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <path d="m9 11 3 3L22 4"></path>
+                                </svg>
+                            </div>
+                            <h2 class="mt-4 text-2xl font-semibold text-gray-900">Booking Confirmed!</h2>
+                            <div class="mt-4 text-center"><p class="text-lg text-gray-600">Your appointment is scheduled
+                                for:</p>
+                                <script>
+                                  // Convert the start time to the user's local timezone
+                                  const appointmentStartTime = new Date("{{ order.appointment.start_time|date:'Y-m-d\\TH:i:s' }}");
+                                  const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+                                  // Format options for date and time
+                                  const dateOptions = {
+                                    timeZone: userTimezone,
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
+                                  };
+
+                                  const timeOptions = {
+                                    timeZone: userTimezone,
+                                    hour: 'numeric',
+                                    minute: 'numeric',
+                                    hour12: true
+                                  };
+
+                                  // Generate local date and time
+                                  const localDate = appointmentStartTime.toLocaleString('en-US', dateOptions);
+                                  const localTime = appointmentStartTime.toLocaleString('en-US', timeOptions);
+
+                                  // Write them into the HTML
+                                  document.write(`<p class="mt-2 text-xl font-medium text-purple-600">${localDate}</p>`);
+                                  document.write(`<p class="mt-1 text-xl font-medium text-purple-600">${localTime}</p>`);
+                                </script>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            {% csrf_token %}
+            <input type="hidden" name="order_id" value="{{ order.id }}" id="orderIdInput">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                <div class="mx-auto max-w-3xl text-center"><h2
+                        class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Book Your Session</h2>
+                    <p class="mt-2 text-lg leading-8 text-gray-600">Choose your preferred date and time for your
+                        astrological reading</p></div>
+                <div class="mt-16 max-w-3xl mx-auto space-y-8">
+                    <div class="space-y-6">
+                        <div type="text" id="queryTimeSlotsInput"></div>
+                    </div>
+                    <div class="space-y-6 transition-all duration-300 hidden" id="timeSlotsParent">
+                        <div class="rounded-lg border border-gray-200 p-4">
+                            <div class="flex items-center gap-4 mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="lucide lucide-clock h-5 w-5 text-purple-600">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                                <h3 class="text-lg font-semibold text-gray-900">Available Times for <span
+                                        id="timeSlotsChosenDayContainer"></span></h3>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-3" id="timeSlotsContainer">
+
+                            </div>
+                            <p class="mt-4 text-sm text-gray-500 text-center">All times are shown in your local
+                                timezone</p>
+                        </div>
+                        <div class="mt-8">
+                            <button type="button"
+                                    class="w-full rounded-lg bg-purple-600 px-6 py-4 text-base font-semibold text-white shadow-lg hover:bg-purple-500 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] transform disabled:cursor-not-allowed"
+                                    disabled
+                                    id="submitTimeSlotButton">
+                                Reserve This Slot
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock content %}

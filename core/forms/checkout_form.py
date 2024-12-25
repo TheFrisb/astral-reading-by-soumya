@@ -1,3 +1,5 @@
+import re
+
 from django import forms
 
 from core.models import Reading
@@ -21,20 +23,28 @@ class CheckoutForm(forms.Form):
     date_of_birth = forms.DateField(
         label="Date of Birth", widget=forms.DateInput(attrs={"type": "date"})
     )
-    birth_city = forms.CharField(
-        label="Place of Birth City",
-        max_length=255,
-        widget=forms.TextInput(attrs={"placeholder": "Enter your place of birth City"}),
-    )
-    birth_state = forms.CharField(
-        label="Place of Birth State",
+    place_of_birth = forms.CharField(
+        label="Place of Birth",
         max_length=255,
         widget=forms.TextInput(
-            attrs={"placeholder": "Enter your place of birth State"}
+            attrs={
+                "placeholder": "Enter your Place of Birth",
+                "id": "place_of_birth",
+            }
         ),
     )
-    time_of_birth = forms.TimeField(
-        label="Time of Birth", widget=forms.TimeInput(attrs={"type": "time"})
+    time_of_birth = forms.CharField(
+        label="Time of Birth",
+        max_length=255,
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Enter your Time of Birth (HH:MM)",
+                "id": "time_of_birth",
+                "pattern": "^(0[1-9]|1[0-2]):[0-5]\\d$",  # Enforces HH:MM 12-hour format
+                "maxlength": "5",
+                "class": "time-input",
+            }
+        ),
     )
     day_part = forms.ChoiceField(label="AM or PM", choices=[("AM", "AM"), ("PM", "PM")])
     reading_type = forms.ChoiceField(
@@ -81,5 +91,13 @@ class CheckoutForm(forms.Form):
         full_name = cleaned_data.get("full_name")
         if len(full_name.split(" ")) < 2:
             self.add_error("full_name", "Please enter your full name.")
+
+        time_of_birth = cleaned_data.get("time_of_birth")
+        if time_of_birth:
+            if not re.match(r"^(0[1-9]|1[0-2]):[0-5]\d$", time_of_birth):
+                self.add_error(
+                    "time_of_birth",
+                    "Please enter a valid time in HH:MM format (12-hour clock).",
+                )
 
         return cleaned_data

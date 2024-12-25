@@ -10,9 +10,10 @@
                               class="text-gray-500">{{ blog_post.created_at|date:"F d, Y" }}</time>
                         <span class="text-gray-500">By Soumya</span></div>
                 </div>
-                <div class="prose prose-lg prose-purple mx-auto mt-8"><img
-                        src="https://images.unsplash.com/photo-1532968961962-8a0cb3a2d4f5?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"
-                        alt="Moon in the night sky" class="w-full rounded-xl">
+                <div class="prose prose-lg prose-purple mx-auto mt-8">
+                    <img
+                            src="{{ blog_post.image.url }}"
+                            alt="{{ blog_post.title }}" class="w-full rounded-xl">
                     <div class="mt-8 flex flex-wrap gap-2">
                         {% for tag in blog_post.categories.all %}
                             <a
@@ -32,7 +33,7 @@
                                 {{ tag.name }}</a>
                         {% endfor %}
                     </div>
-                    <div class="mt-8">
+                    <div class="mt-8 ck-content">
                         {{ blog_post.content|safe }}
                     </div>
                     <div class="mt-8 flex items-center justify-between border-t border-gray-200 pt-8">
@@ -48,8 +49,8 @@
                             {% for post in related_blog_posts %}
                                 <article
                                         class="relative isolate flex flex-col overflow-hidden rounded-lg bg-white shadow-lg">
-                                    <img src="https://images.unsplash.com/photo-1532968961962-8a0cb3a2d4f5?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
-                                         alt="" class="aspect-[16/9] w-full object-cover">
+                                    <img src="{{ post.image.url }}"
+                                         alt="{{ post.title }}" class="aspect-[16/9] w-full object-cover">
                                     <div class="flex flex-1 flex-col justify-between p-6">
                                         <div class="flex-1">
                                             <a href="{% url 'blog:blog_post_detail' slug=post.slug %}"

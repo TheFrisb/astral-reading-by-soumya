@@ -230,6 +230,9 @@ class Order(InternalBaseModel):
         verbose_name = "Order"
         verbose_name_plural = "Orders"
 
+    def __str__(self):
+        return f"Order {self.id}"
+
 
 class OrderInformation(InternalBaseModel):
     class DayPart(models.TextChoices):
@@ -243,9 +246,8 @@ class OrderInformation(InternalBaseModel):
     email = models.EmailField()
     phone_number = models.CharField(max_length=20)
     date_of_birth = models.DateField()
-    birth_city = models.CharField(max_length=255)
-    birth_state = models.CharField(max_length=255)
-    time_of_birth = models.TimeField()
+    place_of_birth = models.CharField(max_length=255)
+    time_of_birth = models.CharField(max_length=255)
     day_part = models.CharField(max_length=2, choices=DayPart.choices)
     comment = models.TextField(blank=True)
 
