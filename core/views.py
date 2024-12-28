@@ -2,6 +2,7 @@ import stripe
 from django.db.models import Q
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import FormView
@@ -12,6 +13,7 @@ from rest_framework.views import APIView
 
 from blog.services.BlogService import BlogService
 from .forms.checkout_form import CheckoutForm
+from .forms.testimonial_form import TestimonialForm
 from .mixins import PageTagsMixin
 from .models import (
     Horoscope,
@@ -19,8 +21,8 @@ from .models import (
     ReadingType,
     Order,
     Reading,
-    HeroSection,
     Location,
+    SiteSettings,
 )
 from .services.checkout.checkout_service import InternalCheckoutService
 from .services.checkout.stripe_service import InternalStripeService
@@ -43,7 +45,7 @@ class HomeView(PageTagsMixin, TemplateView):
                 "horoscope_signs": horoscope_service.get_horoscope_signs_with_current_horoscopes(),
                 "testimonials": testimonial_service.get_active_testimonials(),
                 "readings": Reading.objects.prefetch_related("variants"),
-                "hero_section": HeroSection.get_solo(),
+                "hero_section": SiteSettings.get_solo().get_hero_section_details(),
             }
         )
 
@@ -275,3 +277,49 @@ class LocationSearchView(APIView):
         locations = Location.objects.filter(Q(town__icontains=query))[:10]
         serializer = self.LocationSerializer(locations, many=True)
         return Response(serializer.data)
+
+
+class LeaveReviewView(PageTagsMixin, FormView):
+    page_title = "Leave a Review"
+    template_name = "core/pages/leave_a_review.html"
+    form_class = TestimonialForm
+
+    def get_success_url(self):
+        return reverse(
+            "core:leave_review", kwargs={"order_id": self.kwargs["order_id"]}
+        )
+
+    def get_order(self):
+        order_id = self.kwargs.get("order_id")
+        order = (
+            Order.objects.select_related(
+                "item",
+                "item__reading_type",
+                "item__testimonial",
+                "item__reading_type__reading",
+            )
+            .filter(id=order_id)
+            .first()
+        )
+        if not order:
+            raise Http404("Order does not exist")
+        return order
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["order"] = self.get_order()
+        context["has_testimonial"] = hasattr(context["order"].item, "testimonial")
+        return context
+
+    def form_valid(self, form):
+        order = self.get_order()
+        if hasattr(order.item, "testimonial"):
+            form.add_error(None, "A testimonial already exists for this order.")
+            return self.form_invalid(form)
+
+        form.instance.order_item = order.item
+        form.save()
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super().form_invalid(form)

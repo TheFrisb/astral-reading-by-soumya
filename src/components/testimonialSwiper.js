@@ -4,7 +4,7 @@ export function initTestimonialSwiper() {
 
   if (!document.querySelector('.testimonials-swiper')) return;
 
-  new Swiper('.testimonials-swiper', {
+  let swiper = new Swiper('.testimonials-swiper', {
     slidesPerView: 1,
     spaceBetween: 30,
     navigation: {
@@ -24,5 +24,17 @@ export function initTestimonialSwiper() {
         slidesPerView: 3,
       }
     }
+  });
+
+
+  const left_arrow = document.querySelector('.swiper-button-prev');
+  const right_arrow = document.querySelector('.swiper-button-next');
+
+  left_arrow.addEventListener('click', () => {
+    swiper.slidePrev();
+  });
+
+  right_arrow.addEventListener('click', () => {
+    swiper.slideNext();
   });
 }

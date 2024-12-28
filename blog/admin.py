@@ -26,6 +26,9 @@ class BlogPostAdmin(InternalBaseAdmin):
     def tags(self, obj):
         return ", ".join([tag.name for tag in obj.categories.all()])
 
+    class Media:
+        css = {"all": ("css/admin/custom_admin.css",)}
+
 
 @admin.register(Category)
 class CategoryAdmin(SortableAdminMixin, InternalBaseAdmin):

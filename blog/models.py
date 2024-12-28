@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.utils.html import strip_tags
 from django.utils.text import slugify
 from django_ckeditor_5.fields import CKEditor5Field
 
@@ -60,6 +61,12 @@ class BlogPost(InternalBaseModel):
 
     def get_absolute_url(self):
         return reverse("blog:blog_post_detail", args=[self.slug])
+
+    @property
+    def get_preview(self):
+        plain_text = strip_tags(self.content)  # Remove HTML tags
+        words = plain_text.split()[:20]  # Get the first 20 words
+        return " ".join(words)
 
     def __str__(self):
         return self.title

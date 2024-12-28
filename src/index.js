@@ -4,6 +4,7 @@ import {initFaq} from "./components/frequently_asked_questions";
 import {initHoroscopeFrequencyFilterButtons} from "./components/initHoroscopeFrequencyFilterButtons";
 import {initCheckout} from "./components/checkout";
 import {initBooking} from "./components/booking/booking";
+import {initReviewFormStarRating} from "./components/review_form/starRating";
 
 document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
@@ -12,4 +13,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initHoroscopeFrequencyFilterButtons();
   initCheckout();
   initBooking();
+  initReviewFormStarRating('starRatingContainer', 'rating');
 });

@@ -8,9 +8,9 @@
                         <p class="text-sm text-gray-500">{{ sign.current_monthly_horoscope.start_date|date:"F d" }}
                             - {{ sign.current_monthly_horoscope.end_date|date:"F d" }}</p></div>
                 </div>
-                <p class="mt-4 flex-1 text-sm text-gray-600">
+                <p class="mt-4 flex-1 text-sm font-normal text-gray-600">
                     {% if sign.current_monthly_horoscope %}
-                        {{ sign.current_monthly_horoscope.content|safe|truncatewords:20 }}
+                        {{ sign.current_monthly_horoscope.get_preview }}
                     {% else %}
                         No horoscope available for this month.
                     {% endif %}
@@ -36,9 +36,9 @@
                             - {{ sign.current_yearly_horoscope.end_date|date:"F d Y" }}</p>
                     </div>
                 </div>
-                <p class="mt-4 flex-1 text-sm text-gray-600">
+                <p class="mt-4 flex-1 text-sm font-normal text-gray-600">
                     {% if sign.current_yearly_horoscope %}
-                        {{ sign.current_yearly_horoscope.content|safe|truncatewords:20 }}
+                        {{ sign.current_yearly_horoscope.get_preview }}
                     {% else %}
                         No horoscope available for this year.
                     {% endif %}

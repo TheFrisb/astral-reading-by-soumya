@@ -17,6 +17,10 @@ class TestimonialService:
         """
         return (
             Testimonial.objects.filter(is_active=True)
-            .select_related("reading")
+            .select_related(
+                "order_item",
+                "order_item__reading_type",
+                "order_item__reading_type__reading",
+            )
             .order_by("created_at")[0:12]
         )

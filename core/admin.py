@@ -15,9 +15,8 @@ from core.models import (
     OrderInformation,
     OrderItem,
     Testimonial,
-    HeroSection,
-    SiteSettings,
     Location,
+    SiteSettings,
 )
 from core.services.mail.mail_service import MailService
 
@@ -157,13 +156,29 @@ class OrderAdmin(InternalBaseAdmin):
 
 @admin.register(Testimonial)
 class TestimonialAdmin(admin.ModelAdmin):
-    list_display = ("name", "is_active")
+    list_display = ("full_name", "is_active")
     list_filter = ("is_active",)
-    search_fields = ("name", "content")
-    autocomplete_fields = ["reading"]
+    search_fields = ("full_name", "content")
+    readonly_fields = ["order_item"]
+
+
+@admin.register(SiteSettings)
+class SiteSettingsAdmin(SingletonModelAdmin):
+    fieldsets = (
+        (
+            "Email Templates",
+            {
+                "fields": ("thank_you_template_id", "leave_a_review_template_id"),
+            },
+        ),
+        (
+            "Hero Section",
+            {
+                "fields": ("hero_title", "hero_subtitle", "hero_background_image"),
+            },
+        ),
+    )
 
 
 admin.site.site_header = "Astrology Admin"
-admin.site.register(HeroSection, SingletonModelAdmin)
-admin.site.register(SiteSettings, SingletonModelAdmin)
 admin.site.register(Location, InternalBaseAdmin)

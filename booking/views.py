@@ -15,80 +15,67 @@ from .serializers import ScheduledAppointmentSerializer
 
 class AvailableTimeSlotsView(APIView):
     def get(self, request, *args, **kwargs):
-        date_str = request.query_params.get("date")
-        order_id = request.query_params.get("order_id")
+        date_str = request.query_params.get("date", None)
+        order_id = request.query_params.get("order_id", None)
 
-        # Activate UTC timezone
-        activate("UTC")
-
-        # Parse and validate the date
         if not date_str:
             raise ValidationError({"date": "This field is required."})
+        if not order_id:
+            raise ValidationError({"order_id": "This field is required."})
+
+        activate("UTC")
+
         try:
             date = datetime.strptime(date_str, "%Y-%m-%d").date()
         except ValueError:
             raise ValidationError({"date": "Invalid date format. Use YYYY-MM-DD."})
 
-        # Get the order and associated reading type
         try:
             order = Order.objects.get(id=order_id)
             reading_type = order.item.reading_type
             call_duration_minutes = reading_type.call_duration
+            if not call_duration_minutes or call_duration_minutes <= 0:
+                raise ValidationError({"call_duration": "Invalid call duration."})
         except Order.DoesNotExist:
             raise ValidationError({"order_id": "Invalid order ID."})
         except AttributeError:
-            raise ValidationError(
-                {
-                    "order": "The order does not have a valid reading type with a call duration."
-                }
-            )
-
-        # Validate call_duration
-        if not call_duration_minutes:
-            raise ValidationError(
-                {
-                    "reading_type": "The reading type does not have a valid call duration."
-                }
-            )
+            raise ValidationError({"order": "Invalid reading type configuration."})
 
         call_duration = timedelta(minutes=call_duration_minutes)
 
-        # Determine the workday for the given date
-        day_of_week = date.strftime("%A")
         try:
-            workday = WorkDay.objects.get(day=day_of_week)
+            workday = WorkDay.objects.get(day=date.weekday())
         except WorkDay.DoesNotExist:
             return Response(
                 {"detail": "No working hours configured for this day."}, status=404
             )
 
-        # Generate start and end times for the workday in UTC
         start_of_day = make_aware(datetime.combine(date, workday.start_time))
         end_of_day = make_aware(datetime.combine(date, workday.end_time))
 
-        # Fetch scheduled appointments
         appointments = ScheduledAppointment.objects.filter(
             start_time__gte=start_of_day, start_time__lt=end_of_day
         ).order_by("start_time")
 
-        # Generate available timeslots
         available_timeslots = []
         current_time = start_of_day
 
+        for appointment in appointments:
+            while current_time + call_duration <= appointment.start_time:
+                next_time = current_time + call_duration
+                available_timeslots.append({"start": current_time, "end": next_time})
+                current_time = next_time
+            current_time = max(current_time, appointment.end_time)
+
         while current_time + call_duration <= end_of_day:
             next_time = current_time + call_duration
-            # Check if the current timeslot overlaps with any appointments
-            if not appointments.filter(
-                    start_time__lt=next_time, end_time__gt=current_time
-            ).exists():
-                available_timeslots.append({"start": current_time, "end": next_time})
-            current_time = next_time  # Move to the next non-overlapping slot
+            available_timeslots.append({"start": current_time, "end": next_time})
+            current_time = next_time
 
-        # Return response with all times in UTC
         return Response(
             {
                 "date": date_str,
-                "day": day_of_week,
+                "day": date.strftime("%A"),
                 "call_duration": f"{call_duration_minutes} minutes",
                 "available_timeslots": [
                     {"start": slot["start"].isoformat(), "end": slot["end"].isoformat()}

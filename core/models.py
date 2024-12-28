@@ -1,8 +1,11 @@
 import uuid
 
 from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.urls import reverse
+from django.utils.html import strip_tags
+from django_ckeditor_5.fields import CKEditor5Field
 from imagekit.models import ImageSpecField
 from imagekit.processors import SmartResize
 from solo.models import SingletonModel
@@ -47,11 +50,17 @@ class Horoscope(InternalBaseModel):
     frequency = models.CharField(max_length=7, choices=Frequency.choices)
     start_date = models.DateField()
     end_date = models.DateField()
-    content = models.TextField()
+    content = CKEditor5Field("Content")
 
     @property
     def get_display_name(self):
         return f"{self.sign.name} - {self.get_frequency_display()} Horoscope"
+
+    @property
+    def get_preview(self):
+        plain_text = strip_tags(self.content)  # Remove HTML tags
+        words = plain_text.split()[:20]  # Get the first 20 words
+        return " ".join(words)
 
     def __str__(self):
         return f"{self.sign.name} - {self.get_frequency_display()} Horoscope ({self.start_date} to {self.end_date})"
@@ -183,18 +192,20 @@ class ReadingType(InternalBaseModel):
 
 
 class Testimonial(InternalBaseModel):
-    reading = models.ForeignKey(
-        Reading, on_delete=models.CASCADE, related_name="testimonials"
+    order_item = models.OneToOneField(
+        "OrderItem",
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="testimonial",
+        help_text="The order item this testimonial is for.",
     )
-    name = models.CharField(max_length=100)
+    full_name = models.CharField(max_length=100)
 
-    rating = models.IntegerField()
+    rating = models.PositiveIntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)]
+    )
     content = models.TextField()
-    is_active = models.BooleanField(default=True, db_index=True)
-
-    def clean(self):
-        if self.rating < 1 or self.rating > 5:
-            raise ValidationError("Rating must be between 1 and 5.")
+    is_active = models.BooleanField(default=False, db_index=True)
 
     class Meta:
         verbose_name = "Testimonial"
@@ -279,18 +290,24 @@ class OrderItem(InternalBaseModel):
         ordering = ["-created_at"]
 
 
-class HeroSection(SingletonModel):
-    title = models.CharField(max_length=255)
-    subtitle = models.TextField()
-    background_image = models.ImageField(upload_to="hero/")
+class SiteSettings(SingletonModel):
+    thank_you_template_id = models.CharField(max_length=255, blank=True)
+    leave_a_review_template_id = models.CharField(max_length=255, blank=True)
+    hero_title = models.CharField(max_length=255, verbose_name="Hero Title")
+    hero_subtitle = models.TextField(verbose_name="Hero Subtitle")
+    hero_background_image = models.ImageField(
+        upload_to="hero/", verbose_name="Hero Background Image"
+    )
+
+    def get_hero_section_details(self):
+        return {
+            "title": self.hero_title,
+            "subtitle": self.hero_subtitle,
+            "background_image_url": self.hero_background_image.url,
+        }
 
     def __str__(self):
-        return self.title
-
-
-class SiteSettings(SingletonModel):
-    thank_you_template_id = models.CharField(max_length=255)
-    leave_a_review_template_id = models.CharField(max_length=255)
+        return "Site Settings"
 
 
 class Location(InternalBaseModel):

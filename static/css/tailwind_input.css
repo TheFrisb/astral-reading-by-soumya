@@ -24,6 +24,14 @@ input, textarea, select {
     color: theme('colors.purple.600') !important;
 }
 
+.swiper-button-prev {
+    left: 0 !important;
+}
+
+.swiper-button-next {
+    right: 0 !important;
+}
+
 .swiper-button-next::after,
 .swiper-button-prev::after {
     font-size: 24px !important;

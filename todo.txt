@@ -1,8 +1,4 @@
-5. Build Calendar Picker
-- Make Admin able to block calendar time slots
-- Make admin able to
-- Make Admin able to see calendar bookings
-- Make Admin able to cancel bookings
-6. Fix send leave a review email
-- Build leave a review view
-7. Host on DigitalOcean
+1. CKEditor CSS in admin
+2. Leave a review page
+3. Fix Calendar Picker
+4. Show scheduled slots neatly in the admin

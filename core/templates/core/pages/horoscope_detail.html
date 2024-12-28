@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <div class="mt-12 prose prose-purple max-w-none">
-                        <div class="mt-8 grid gap-8">
+                        <div class="mt-8 grid gap-8 ck-content">
                             {{ horoscope.content|safe }}
                         </div>
                         <div class="mt-16 flex items-center justify-end border-t border-gray-200 pt-16">
@@ -72,7 +72,7 @@
                                                             class="text-lg font-semibold leading-6 text-gray-900 hover:text-purple-600">
                                                         {{ post.title }}
                                                     </h3>
-                                                    <p class="mt-3 text-sm leading-6 text-gray-600">{{ post.content|truncatewords:20 }}</p>
+                                                    <p class="mt-3 text-sm leading-6 text-gray-600">{{ post.get_preview }}</p>
                                                 </a>
                                             </div>
                                         </div>
