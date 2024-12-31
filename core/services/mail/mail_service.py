@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.urls import reverse
 from sendgrid import SendGridAPIClient
 
 from core.models import Order, ReadingType, SiteSettings
@@ -48,19 +49,19 @@ class MailService:
         if order.item.reading_type.type == ReadingType.Type.CALL:
             info_text = "Click the button below to schedule your call."
             primary_button_text = "Schedule Call"
-            primary_button_url = "https://example.com"
+            primary_button_url = f"{settings.BASE_URL}{reverse(
+                "booking:book_appointment", kwargs={"order_id": order.id}
+            )}"
         else:
             info_text = (
                 "You will receive an email with your reading in the next 7 days."
             )
             primary_button_text = "View other readings"
-            primary_button_url = "https://example.com"
+            primary_button_url = settings.BASE_URL
 
         return {
             "order_id": str(order.id),
             "order_total": str(order.item.get_total_price()),
-            "order_item_quantity": order.item.quantity,
-            "order_item_price": str(order.item.price),
             "order_item_name": order.item.reading_type.get_display_name,
             "info_text": info_text,
             "primary_button_text": primary_button_text,
@@ -69,5 +70,5 @@ class MailService:
 
     def get_leave_a_review_params(self, order):
         return {
-            "order_item_name": order.item.reading_type.get_display_name,
+            "primary_button_url": f"{settings.BASE_URL}{reverse('core:leave_review', kwargs={'order_id': order.id})}",
         }

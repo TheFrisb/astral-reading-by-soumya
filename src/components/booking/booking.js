@@ -36,9 +36,12 @@ export function initBooking() {
   datePickerInput.addEventListener('changeDate', (e) => {
 
     const chosenDate = new Date(e.detail.date);
+    console.log(chosenDate);
 
-    // Format the chosen date as YYYY-MM-DD
-    const chosenDateFormatted = chosenDate.toISOString().split('T')[0];
+    const year = chosenDate.getFullYear();
+    const month = String(chosenDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const day = String(chosenDate.getDate()).padStart(2, '0');
+    const chosenDateFormatted = `${year}-${month}-${day}`;
 
     // Fetch time slots for the selected date
     fetchTimeSlots(orderId, chosenDateFormatted)
@@ -156,11 +159,17 @@ export function initBooking() {
       return;
     }
 
+    // convert the selected slot to UTC time
+    let utc_start_time = new Date(selectedSlot.start).toISOString();
+    let utc_end_time = new Date(selectedSlot.end).toISOString();
+
     const payload = {
-      start_time: selectedSlot.start,
-      end_time: selectedSlot.end,
+      start_time: utc_start_time,
+      end_time: utc_end_time,
       order: orderId,
     };
+
+    console.log(payload);
 
     fetch('/booking/create-appointment/', {
       method: 'POST',
@@ -179,7 +188,6 @@ export function initBooking() {
         return response.json();
       })
       .then(() => {
-        alert('Appointment created successfully!');
         location.reload(); // Refresh the page on success
       })
       .catch((err) => {

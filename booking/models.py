@@ -27,11 +27,13 @@ class WorkDay(models.Model):
 class ScheduledAppointment(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    order = models.OneToOneField("core.Order", on_delete=models.CASCADE, related_name="appointment")
+    order = models.OneToOneField(
+        "core.Order", on_delete=models.CASCADE, related_name="appointment"
+    )
 
     def __str__(self):
-        return f"{self.start_time} - {self.end_time}"
+        return f"Appointment slot for order: {self.order.id}"
 
     class Meta:
-        verbose_name = "Appointment Slot"
-        verbose_name_plural = "Appointment Slots"
+        verbose_name = "Scheduled Appointment Slot"
+        verbose_name_plural = "Scheduled Appointment Slots"

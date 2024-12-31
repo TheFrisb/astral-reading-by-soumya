@@ -78,9 +78,11 @@ class InternalStripeService:
         event_type = event["type"]
 
         if event_type == StripeWebhookEvent.CHECKOUT_SESSION_COMPLETED.value:
+            print("Processing checkout session completed event")
             self.process_checkout_session_completed(event["data"]["object"])
 
         elif event_type == StripeWebhookEvent.CHECKOUT_SESSION_EXPIRED.value:
+            print("Processing checkout session expired event")
             self.process_checkout_session_expired(event["data"]["object"])
 
         else:
@@ -91,6 +93,8 @@ class InternalStripeService:
 
         order = Order.objects.get(id=order_id)
         order.status = Order.Status.COMPLETED
+
+        print(f"Order {order_id} has been completed")
         order.save()
 
         try:

@@ -2,8 +2,10 @@ from adminsortable2.admin import SortableAdminMixin
 from django.contrib import admin, messages
 from django.shortcuts import redirect
 from django.urls import path
+from django.utils import timezone
 from solo.admin import SingletonModelAdmin
 
+from booking.models import ScheduledAppointment
 from core.forms.admin.horoscope_entry_form import HoroscopeForm
 from core.models import (
     ZodiacSigns,
@@ -93,33 +95,126 @@ class ReadingAdmin(SortableAdminMixin, InternalBaseAdmin):
     written_report.boolean = True
 
 
-# make orderInformation OneToOne inline
 class OrderInformationInline(admin.StackedInline):
     model = OrderInformation
-    readonly_fields = [f.name for f in OrderInformation._meta.fields]
+    can_delete = False
+    extra = 0
+    max_num = 1
+    readonly_fields = [
+        "full_name",
+        "email",
+        "phone_number",
+        "date_of_birth",
+        "place_of_birth",
+        "time_of_birth",
+        "day_part",
+        "comment",
+    ]
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
 
 
-class OrderItemInline(admin.TabularInline):
+class OrderItemInline(admin.StackedInline):
     model = OrderItem
-    readonly_fields = [f.name for f in OrderItem._meta.fields]
+    can_delete = False
+    extra = 0
+    max_num = 1
+    readonly_fields = [
+        "reading_type",
+        "quantity",
+        "price",
+        "get_total_price",
+    ]
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+
+class ScheduledAppointmentInline(admin.StackedInline):
+    model = ScheduledAppointment
+    can_delete = False
+    extra = 0
+    max_num = 1
+    readonly_fields = [
+        "start_time",
+        "end_time",
+    ]
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+
+class ConsultationTypeFilter(admin.SimpleListFilter):
+    """
+    Filter orders by the ReadingType type (CALL or REPORT).
+    """
+
+    title = "Consultation Type"
+    parameter_name = "consultation_type"
+
+    def lookups(self, request, model_admin):
+        # Return ReadingType.Type choices as filter options
+        return ReadingType.Type.choices
+
+    def queryset(self, request, queryset):
+        if self.value() in [choice[0] for choice in ReadingType.Type.choices]:
+            return queryset.filter(item__reading_type__type=self.value())
+        return queryset
+
+
+class FutureAppointmentFilter(admin.SimpleListFilter):
+    """
+    Filter orders that have future appointments scheduled.
+    """
+
+    title = "Future Appointment"
+    parameter_name = "future_appointment"
+
+    def lookups(self, request, model_admin):
+        return (
+            ("yes", "Has future appointment"),
+            ("no", "Does not have future appointment"),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == "yes":
+            # Show only Orders whose appointment starts in the future
+            return queryset.filter(appointment__start_time__gte=timezone.now())
+        elif self.value() == "no":
+            # Show only Orders that do not have a future appointment
+            return queryset.exclude(appointment__start_time__gte=timezone.now())
+        return queryset
 
 
 @admin.register(Order)
 class OrderAdmin(InternalBaseAdmin):
     change_form_template = "admin/orders/order/change_form.html"
-    list_display = ("id", "full_name", "item", "status", "created_at")
-    list_filter = ("status",)
+    list_display = (
+        "id",
+        "order_full_name",
+        "reading_type_display_name",
+        "scheduled_appointment",
+        "created_at",
+    )
+    list_filter = (ConsultationTypeFilter, FutureAppointmentFilter)
+    inlines = [OrderInformationInline, OrderItemInline, ScheduledAppointmentInline]
+
     search_fields = (
         "id",
         "information__full_name",
         "information__email",
     )
     date_hierarchy = "created_at"
-
-    inlines = [OrderInformationInline, OrderItemInline]
-
-    def full_name(self, obj):
-        return obj.information.full_name
 
     def send_review_request(self, request, order_id):
         order = self.get_object(request, order_id)
@@ -152,6 +247,52 @@ class OrderAdmin(InternalBaseAdmin):
             ),
         ]
         return custom_urls + urls
+
+    def get_queryset(self, request):
+        """
+        Override the default queryset to show only CONFIRMED orders.
+        """
+        qs = super().get_queryset(request)
+        return qs.filter(status=Order.Status.COMPLETED)
+
+    @admin.display(description="Full Name")
+    def order_full_name(self, obj):
+        """
+        Safely retrieve the full_name from OrderInformation.
+        """
+        if hasattr(obj, "information"):
+            return obj.information.full_name
+        return "-"
+
+    @admin.display(description="Reading Type")
+    def reading_type_display_name(self, obj):
+        """
+        Safely retrieve the reading type display name.
+        """
+        if hasattr(obj, "item") and obj.item.reading_type:
+            return obj.item.reading_type.get_display_name
+        return "-"
+
+    @admin.display(description="Scheduled Appointment")
+    def scheduled_appointment(self, obj):
+        """
+        Show the appointment times if this is a CALL consultation.
+        Otherwise, display '-'.
+        """
+        # Ensure the order has an item, reading_type, and an appointment.
+        if (
+                hasattr(obj, "item")
+                and hasattr(obj, "appointment")
+                and obj.item.reading_type.type == ReadingType.Type.CALL
+        ):
+            local_start = timezone.localtime(obj.appointment.start_time)
+            local_end = timezone.localtime(obj.appointment.end_time)
+            return f"{local_start.strftime('%Y-%m-%d %I:%M %p %Z')} - {local_end.strftime('%Y-%m-%d %I:%M %p %Z')}"
+        return "-"
+
+    @admin.display(description="Created At")
+    def created_at(self, obj):
+        return obj.created_at
 
 
 @admin.register(Testimonial)

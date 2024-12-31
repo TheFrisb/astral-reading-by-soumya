@@ -23,7 +23,7 @@ class AvailableTimeSlotsView(APIView):
         if not order_id:
             raise ValidationError({"order_id": "This field is required."})
 
-        activate("UTC")
+        activate("America/Los_Angeles")
 
         try:
             date = datetime.strptime(date_str, "%Y-%m-%d").date()
@@ -43,8 +43,10 @@ class AvailableTimeSlotsView(APIView):
 
         call_duration = timedelta(minutes=call_duration_minutes)
 
+        print(date.strftime("%A"))
+
         try:
-            workday = WorkDay.objects.get(day=date.weekday())
+            workday = WorkDay.objects.get(day__iexact=date.strftime("%A"))
         except WorkDay.DoesNotExist:
             return Response(
                 {"detail": "No working hours configured for this day."}, status=404
@@ -57,6 +59,8 @@ class AvailableTimeSlotsView(APIView):
             start_time__gte=start_of_day, start_time__lt=end_of_day
         ).order_by("start_time")
 
+        print(appointments)
+
         available_timeslots = []
         current_time = start_of_day
 
@@ -65,12 +69,15 @@ class AvailableTimeSlotsView(APIView):
                 next_time = current_time + call_duration
                 available_timeslots.append({"start": current_time, "end": next_time})
                 current_time = next_time
-            current_time = max(current_time, appointment.end_time)
+                print(current_time)
 
+            current_time = max(current_time, appointment.end_time)
+            print(current_time)
         while current_time + call_duration <= end_of_day:
             next_time = current_time + call_duration
             available_timeslots.append({"start": current_time, "end": next_time})
             current_time = next_time
+            print(current_time)
 
         return Response(
             {

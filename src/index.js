@@ -5,6 +5,7 @@ import {initHoroscopeFrequencyFilterButtons} from "./components/initHoroscopeFre
 import {initCheckout} from "./components/checkout";
 import {initBooking} from "./components/booking/booking";
 import {initReviewFormStarRating} from "./components/review_form/starRating";
+import {initAppointmentTime} from "./components/appointmentTime";
 
 document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
@@ -14,4 +15,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initCheckout();
   initBooking();
   initReviewFormStarRating('starRatingContainer', 'rating');
+  initAppointmentTime();
 });
