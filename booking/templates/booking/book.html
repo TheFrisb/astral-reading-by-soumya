@@ -24,7 +24,8 @@
                                 <p class="text-lg text-gray-600">Your appointment is scheduled
                                     for:</p>
                                 <span id="appointmentTime"
-                                      data-utc="{{ order.appointment.start_time|date:'Y-m-d\\TH:i:s' }}"></span>
+                                      data-utc="{{ order.appointment.start_time|date:'c' }}"></span>
+
                                 <p id="userDate" class="mt-2 text-xl font-medium text-purple-600"></p>
                                 <p id="userTime" class="mt-1 text-xl font-medium text-purple-600"></p>
 
