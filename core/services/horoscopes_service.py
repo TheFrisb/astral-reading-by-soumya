@@ -19,7 +19,6 @@ class HoroscopeService:
         """
         frequency = frequency.upper()  # Normalize frequency to uppercase
         start_date, end_date = self._get_date_range(frequency)
-        print(f"start_date: {start_date}, end_date: {end_date}")
 
         return Horoscope.objects.filter(
             sign__name__iexact=sign_name,

@@ -1,3 +1,4 @@
+import logging
 from enum import Enum
 
 import stripe
@@ -6,6 +7,8 @@ from django.urls import reverse
 
 from core.models import Order, OrderItem
 from core.services.mail.mail_service import MailService
+
+log = logging.getLogger(__name__)
 
 
 class StripeWebhookEvent(Enum):
@@ -78,15 +81,15 @@ class InternalStripeService:
         event_type = event["type"]
 
         if event_type == StripeWebhookEvent.CHECKOUT_SESSION_COMPLETED.value:
-            print("Processing checkout session completed event")
+            log.info("Processing checkout session completed event")
             self.process_checkout_session_completed(event["data"]["object"])
 
         elif event_type == StripeWebhookEvent.CHECKOUT_SESSION_EXPIRED.value:
-            print("Processing checkout session expired event")
+            log.info("Processing checkout session expired event")
             self.process_checkout_session_expired(event["data"]["object"])
 
         else:
-            print(f"Unhandled event type: {event_type}")
+            log.warning(f"Unhandled event type: {event_type}")
 
     def process_checkout_session_completed(self, event_data: dict):
         order_id = event_data["metadata"]["order_id"]
@@ -94,13 +97,15 @@ class InternalStripeService:
         order = Order.objects.get(id=order_id)
         order.status = Order.Status.COMPLETED
 
-        print(f"Order {order_id} has been completed")
         order.save()
+        log.info(f"Order {order_id} has been marked as completed.")
 
         try:
             self.mailer.send_thank_you_email(order.information.email, order)
         except Exception as e:
-            print(f"Error sending thank you email: {e}")
+            log.error(
+                f"Failed to send thank you email to {order.information.email}: {e}"
+            )
         return order
 
     def process_checkout_session_expired(self, event_data: dict):

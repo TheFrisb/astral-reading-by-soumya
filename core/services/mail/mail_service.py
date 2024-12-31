@@ -1,8 +1,12 @@
+import logging
+
 from django.conf import settings
 from django.urls import reverse
 from sendgrid import SendGridAPIClient
 
 from core.models import Order, ReadingType, SiteSettings
+
+log = logging.getLogger(__name__)
 
 
 class MailService:
@@ -24,9 +28,7 @@ class MailService:
         }
 
         result = self.client.send(message)
-        print(result.status_code)
-        print(result.body)
-        print(result.headers)
+        log.info(f"Sent thank you email to {to_email}, with result: {result}")
 
         return result
 
@@ -43,6 +45,7 @@ class MailService:
         }
 
         result = self.client.send(message)
+        log.info(f"Sent leave a review email to {to_email}, with result: {result}")
         return result
 
     def get_thank_you_params(self, order: Order):

@@ -36,4 +36,3 @@ class ScheduledAppointmentSerializer(serializers.ModelSerializer):
             )
 
         return data
-    

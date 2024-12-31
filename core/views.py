@@ -241,7 +241,6 @@ def stripe_webhook(request):
     stripe_service = InternalStripeService()
     payload = request.body
     sig_header = request.META.get("HTTP_STRIPE_SIGNATURE", "")
-    print("Received webhook")
 
     try:
         event = stripe_service.process_stripe_event(payload, sig_header)
