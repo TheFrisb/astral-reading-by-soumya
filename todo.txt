@@ -1,4 +1,0 @@
-1. CKEditor CSS in admin
-2. Leave a review page
-3. Fix Calendar Picker
-4. Show scheduled slots neatly in the admin
