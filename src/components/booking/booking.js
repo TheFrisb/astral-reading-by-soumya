@@ -50,7 +50,8 @@ export function initBooking() {
       })
       .catch((err) => {
         console.error('Error fetching time slots:', err);
-        timeSlotsContainer.innerHTML = '<p class="error">No time slots available for the selected date</p>';
+        timeSlotsContainer.innerHTML = '<p class="error col-span-3">No time slots available for the selected date</p>';
+        timeSlotsParent.classList.remove('hidden');
       });
   });
 
@@ -95,7 +96,7 @@ export function initBooking() {
     chosenDayContainer.innerText = chosenDate;
 
     if (!timeSlots || timeSlots.length === 0) {
-      container.innerHTML = '<p>No available time slots for this day.</p>';
+      container.innerHTML = '<p class="error col-span-3">No time slots available for the selected date</p>';
       return;
     }
 

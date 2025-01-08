@@ -45,6 +45,9 @@ class HoroscopeAdmin(InternalBaseAdmin):
 
     autocomplete_fields = ["sign"]
 
+    class Media:
+        css = {"all": ("css/admin/custom_admin.css",)}
+
 
 @admin.register(FrequentlyAskedQuestion)
 class FrequentlyAskedQuestionAdmin(SortableAdminMixin, InternalBaseAdmin):
@@ -281,9 +284,9 @@ class OrderAdmin(InternalBaseAdmin):
         """
         # Ensure the order has an item, reading_type, and an appointment.
         if (
-            hasattr(obj, "item")
-            and hasattr(obj, "appointment")
-            and obj.item.reading_type.type == ReadingType.Type.CALL
+                hasattr(obj, "item")
+                and hasattr(obj, "appointment")
+                and obj.item.reading_type.type == ReadingType.Type.CALL
         ):
             local_start = timezone.localtime(obj.appointment.start_time)
             local_end = timezone.localtime(obj.appointment.end_time)
@@ -295,12 +298,18 @@ class OrderAdmin(InternalBaseAdmin):
         return obj.created_at
 
 
+@admin.register(OrderItem)
+class OrderItem(admin.ModelAdmin):
+    search_fields = ["reading_type__reading__name", "reading_type__type"]
+
+
 @admin.register(Testimonial)
 class TestimonialAdmin(admin.ModelAdmin):
     list_display = ("full_name", "is_active")
     list_filter = ("is_active",)
     search_fields = ("full_name", "content")
-    readonly_fields = ["order_item"]
+
+    autocomplete_fields = ["order_item"]
 
 
 @admin.register(SiteSettings)

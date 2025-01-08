@@ -32,14 +32,24 @@ class Command(BaseCommand):
                         )
                         continue
 
+                    country_code = row[0]
+                    postal_code = row[1]
+                    town = row[2]
+                    state_name = row[3]
+                    latitude = row[9]
+                    longitude = row[10]
+
+                    string_repr = f"{town} {state_name} {postal_code} {country_code}"
+
                     locations.append(
                         Location(
-                            country_code=row[0],
-                            postal_code=row[1],
-                            town=row[2],
-                            state_name=row[3],
-                            latitude=float(row[9]),
-                            longitude=float(row[10]),
+                            country_code=country_code,
+                            postal_code=postal_code,
+                            town=town,
+                            state_name=state_name,
+                            latitude=float(latitude),
+                            longitude=float(longitude),
+                            full_address=string_repr,
                         )
                     )
 

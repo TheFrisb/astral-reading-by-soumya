@@ -10,10 +10,8 @@ export function initCheckout() {
   let lastValidValue = "";
 
   timeInput.addEventListener("input", () => {
-    // Remove non-digit characters
     let raw = timeInput.value.replace(/\D/g, "");
 
-    // Build a tentative formatted string
     let formatted = raw;
 
     // Insert ':' if there are more than 2 digits
@@ -122,7 +120,7 @@ export function initCheckout() {
           return error;
         }
       },
-      keys: ["town", "state_name", "country_code", "postal_code"],
+      keys: ["town", "state_name", "country_code", "postal_code", "latitude", "longitude", "full_address"],
     },
 
     resultItem: {
@@ -130,7 +128,7 @@ export function initCheckout() {
         element.innerHTML = `
           <div class="autocomplete-suggestion">
             <span>${suggestion.value.town} ${suggestion.value.state_name}, ${suggestion.value.country_code}, ${suggestion.value.postal_code}</span>
-          </div> 
+          </div>  
         `;
       },
 
@@ -143,11 +141,12 @@ export function initCheckout() {
 
     searchEngine: "loose",
 
+
     events: {
       input: {
         selection(event) {
           const selection = event.detail.selection.value;
-          document.querySelector("#place_of_birth").value = selection.town + ", " + selection.state_name + ", " + selection.country_code + ", " + selection.postal_code;
+          document.querySelector("#place_of_birth").value = selection.town + ", " + selection.state_name + ", " + selection.country_code + ", " + selection.postal_code + " | " + "Latitude: " + selection.latitude + ", Longitude: " + selection.longitude;
         }
       }
     }

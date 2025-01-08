@@ -265,6 +265,7 @@ class LocationSearchView(APIView):
                 "state_name",
                 "latitude",
                 "longitude",
+                "full_address",
             ]
 
     def get(self, request):
@@ -273,7 +274,7 @@ class LocationSearchView(APIView):
         if not query:
             raise ValidationError({"error": "The 'town' parameter is required."})
 
-        locations = Location.objects.filter(Q(town__icontains=query))[:10]
+        locations = Location.objects.filter(Q(full_address__icontains=query))[:5]
         serializer = self.LocationSerializer(locations, many=True)
         return Response(serializer.data)
 
@@ -297,7 +298,7 @@ class LeaveReviewView(PageTagsMixin, FormView):
                 "item__testimonial",
                 "item__reading_type__reading",
             )
-            .filter(id=order_id)
+            .filter(id=order_id, status=Order.Status.COMPLETED)
             .first()
         )
         if not order:

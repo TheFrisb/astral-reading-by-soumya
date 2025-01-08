@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from core.models import Order
+from core.services.mail.mail_service import MailService
 from .models import WorkDay, ScheduledAppointment
 from .serializers import ScheduledAppointmentSerializer
 
@@ -31,7 +32,7 @@ class AvailableTimeSlotsView(APIView):
             raise ValidationError({"date": "Invalid date format. Use YYYY-MM-DD."})
 
         try:
-            order = Order.objects.get(id=order_id)
+            order = Order.objects.get(id=order_id, status=Order.Status.COMPLETED)
             reading_type = order.item.reading_type
             call_duration_minutes = reading_type.call_duration
             if not call_duration_minutes or call_duration_minutes <= 0:
@@ -94,7 +95,9 @@ class ScheduledAppointmentCreateView(APIView):
         serializer = ScheduledAppointmentSerializer(data=request.data)
 
         if serializer.is_valid():
-            serializer.save()
+            scheduled_appointment = serializer.save()
+            mailer = MailService()
+            mailer.send_booking_notification_email(scheduled_appointment)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

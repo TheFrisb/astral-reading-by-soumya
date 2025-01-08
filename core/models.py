@@ -324,6 +324,8 @@ class Location(InternalBaseModel):
     latitude = models.FloatField(verbose_name="Latitude")
     longitude = models.FloatField(verbose_name="Longitude")
 
+    full_address = models.TextField(db_index=True)
+
     def __str__(self):
         return f"{self.town}, {self.state_name}, {self.country_code}"
 

@@ -19,7 +19,9 @@ class ScheduledAppointmentSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("End time must be after start time.")
 
         # Ensure the order exists
-        if not Order.objects.filter(id=order.id).exists():
+        if not Order.objects.filter(
+                id=order.id, status=Order.Status.COMPLETED
+        ).exists():
             raise serializers.ValidationError("The provided order does not exist.")
 
         # Ensure the order does not already have an appointment
