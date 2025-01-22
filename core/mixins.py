@@ -1,8 +1,7 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 
-class PageTagsMixin(LoginRequiredMixin):
+class PageTagsMixin:
     """
     Mixin to add page tags to the context and require login.
     """
