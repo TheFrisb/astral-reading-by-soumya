@@ -116,7 +116,7 @@ class HoroscopeService:
             current_monthly_horoscope_id=Subquery(monthly_horoscope_subquery),
         )
 
-        signs = signs.order_by('sortable_order')
+        signs = signs.order_by("sortable_order")
 
         # Collect all horoscope IDs
         horoscope_ids = set()

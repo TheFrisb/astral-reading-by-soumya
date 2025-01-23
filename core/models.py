@@ -323,8 +323,14 @@ class SiteSettings(SingletonModel):
             "show_video_section": self.show_video_section,
             "video_section_header": self.video_section_header,
             "video_section_header_subtitle": self.video_section_header_subtitle,
-            "video_section_video_url": self.video_section_video.url if self.video_section_video else "",
-            "video_section_video_thumbnail_url": self.video_section_video_thumbnail.url if self.video_section_video_thumbnail else "",
+            "video_section_video_url": (
+                self.video_section_video.url if self.video_section_video else ""
+            ),
+            "video_section_video_thumbnail_url": (
+                self.video_section_video_thumbnail.url
+                if self.video_section_video_thumbnail
+                else ""
+            ),
             "video_section_description_header": self.video_section_description_header,
             "video_section_description_header_subtitle": self.video_section_description_header_subtitle,
         }
