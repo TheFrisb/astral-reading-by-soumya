@@ -27,6 +27,8 @@ class ZodiacSigns(InternalBaseModel):
     element = models.CharField(max_length=20)
     ruling_planet = models.CharField(max_length=20)
 
+    sortable_order = models.PositiveIntegerField(default=0)
+
     def get_absolute_url(self):
         return reverse("core:horoscope_detail", kwargs={"sign_name": self.name})
 
@@ -36,7 +38,7 @@ class ZodiacSigns(InternalBaseModel):
     class Meta:
         verbose_name = "Zodiac Sign"
         verbose_name_plural = "Zodiac Signs"
-        ordering = ["name"]
+        ordering = ["sortable_order"]
 
 
 class Horoscope(InternalBaseModel):
@@ -299,11 +301,32 @@ class SiteSettings(SingletonModel):
         upload_to="hero/", verbose_name="Hero Background Image"
     )
 
+    show_video_section = models.BooleanField(default=False)
+    video_section_header = models.CharField(max_length=255, blank=True)
+    video_section_header_subtitle = models.TextField(blank=True)
+    video_section_video = models.FileField(upload_to="videos/", blank=True)
+    video_section_video_thumbnail = models.ImageField(
+        upload_to="videos/", blank=True, verbose_name="Video Thumbnail"
+    )
+    video_section_description_header = models.CharField(max_length=255, blank=True)
+    video_section_description_header_subtitle = models.TextField(blank=True)
+
     def get_hero_section_details(self):
         return {
             "title": self.hero_title,
             "subtitle": self.hero_subtitle,
             "background_image_url": self.hero_background_image.url,
+        }
+
+    def get_video_section_details(self):
+        return {
+            "show_video_section": self.show_video_section,
+            "video_section_header": self.video_section_header,
+            "video_section_header_subtitle": self.video_section_header_subtitle,
+            "video_section_video_url": self.video_section_video.url if self.video_section_video else "",
+            "video_section_video_thumbnail_url": self.video_section_video_thumbnail.url if self.video_section_video_thumbnail else "",
+            "video_section_description_header": self.video_section_description_header,
+            "video_section_description_header_subtitle": self.video_section_description_header_subtitle,
         }
 
     def __str__(self):

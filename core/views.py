@@ -40,14 +40,20 @@ class HomeView(PageTagsMixin, TemplateView):
         horoscope_service = HoroscopeService()
         testimonial_service = TestimonialService()
 
+        site_settings = SiteSettings.get_solo()
+
         context.update(
             {
                 "horoscope_signs": horoscope_service.get_horoscope_signs_with_current_horoscopes(),
                 "testimonials": testimonial_service.get_active_testimonials(),
                 "readings": Reading.objects.prefetch_related("variants"),
-                "hero_section": SiteSettings.get_solo().get_hero_section_details(),
+                "hero_section": site_settings.get_hero_section_details(),
+                "video_section": site_settings.get_video_section_details(),
             }
         )
+
+        for sign in context["horoscope_signs"]:
+            print(sign.name)
 
         return context
 

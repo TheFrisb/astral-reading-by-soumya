@@ -80,33 +80,26 @@
             {% include 'core/includes/horoscope_list.html' %}
         </div>
     </div>
-    <div class="bg-white py-24 sm:py-32">
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
-            <div class="mx-auto max-w-2xl text-center"><h2
-                    class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Why Choose Astrology
-                Consultation?</h2>
-                <p class="mt-4 text-lg leading-8 text-gray-600">Discover how astrology can illuminate your path and
-                    guide your decisions.</p></div>
-            <div class="mx-auto mt-16 max-w-4xl">
-                <div class="relative aspect-video overflow-hidden rounded-xl bg-gray-900 shadow-lg"><img
-                        src="https://images.unsplash.com/photo-1532012197267-da84d127e765?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"
-                        alt="Video thumbnail" class="absolute inset-0 h-full w-full object-cover opacity-75">
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <button type="button"
-                                class="flex h-20 w-20 items-center justify-center rounded-full bg-white/30 backdrop-blur-sm transition hover:bg-white/40">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round" class="lucide lucide-play h-8 w-8 text-white">
-                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                            </svg>
-                            <span class="sr-only">Play video</span></button>
+    {% if video_section.show_video_section %}
+        <div class="bg-white py-24 sm:py-32">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                <div class="mx-auto max-w-2xl text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{{ video_section.video_section_header }}</h2>
+                    <p class="mt-4 text-lg leading-8 text-gray-600">{{ video_section.video_section_header_subtitle }}</p>
+                </div>
+                <div class="mx-auto mt-16 max-w-4xl">
+                    <div class="relative aspect-video overflow-hidden rounded-xl bg-gray-900 shadow-lg">
+                        <video src="{{ video_section.video_section_video_url }}" controls
+                               poster="{{ video_section.video_section_video_thumbnail_url }}"
+                               class="absolute inset-0 h-full w-full object-cover"></video>
+
+                    </div>
+                    <div class="mt-8 text-center"><h3
+                            class="text-lg font-semibold text-gray-900">{{ video_section.video_section_description_header }}</h3>
+                        <p class="mt-2 text-sm text-gray-600">{{ video_section.video_section_description_header_subtitle }}</p>
                     </div>
                 </div>
-                <div class="mt-8 text-center"><h3 class="text-lg font-semibold text-gray-900">Understanding Your
-                    Cosmic Blueprint</h3>
-                    <p class="mt-2 text-sm text-gray-600">Learn how astrology can provide insights into your
-                        personality, relationships, and life path.</p></div>
             </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock content %}

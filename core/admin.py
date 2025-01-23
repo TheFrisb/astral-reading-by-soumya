@@ -29,9 +29,10 @@ class InternalBaseAdmin(admin.ModelAdmin):
 
 # Register your models here.
 @admin.register(ZodiacSigns)
-class HoroscopeSignAdmin(InternalBaseAdmin):
-    list_display = ["name"]
+class HoroscopeSignAdmin(SortableAdminMixin, InternalBaseAdmin):
+    list_display = ["name", "sortable_order"]
     search_fields = ["name"]
+    ordering = ["sortable_order"]
 
 
 @admin.register(Horoscope)
@@ -314,17 +315,33 @@ class TestimonialAdmin(admin.ModelAdmin):
 
 @admin.register(SiteSettings)
 class SiteSettingsAdmin(SingletonModelAdmin):
+    model = SiteSettings
+
     fieldsets = (
         (
-            "Email Templates",
+            "Email Configuration",
             {
                 "fields": ("thank_you_template_id", "leave_a_review_template_id"),
             },
         ),
         (
-            "Hero Section",
+            "Hero Section Configuration",
             {
                 "fields": ("hero_title", "hero_subtitle", "hero_background_image"),
+            },
+        ),
+        (
+            "Video Section Configuration",
+            {
+                "fields": (
+                    "show_video_section",
+                    "video_section_header",
+                    "video_section_header_subtitle",
+                    "video_section_video",
+                    "video_section_video_thumbnail",
+                    "video_section_description_header",
+                    "video_section_description_header_subtitle",
+                ),
             },
         ),
     )
