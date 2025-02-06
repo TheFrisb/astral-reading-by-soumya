@@ -32,7 +32,6 @@ class InternalBaseAdmin(admin.ModelAdmin):
 class ZodiacSignAdmin(SortableAdminMixin, InternalBaseAdmin):
     list_display = ["name", "sortable_order"]
     search_fields = ["name"]
-    ordering = ["sortable_order"]
 
 
 @admin.register(Horoscope)
