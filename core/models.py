@@ -27,7 +27,7 @@ class ZodiacSigns(InternalBaseModel):
     element = models.CharField(max_length=20)
     ruling_planet = models.CharField(max_length=20)
 
-    sortable_order = models.PositiveIntegerField(default=0, db_index=True)
+    sortable_order = models.IntegerField(default=0, db_index=True)
 
     def get_absolute_url(self):
         return reverse("core:horoscope_detail", kwargs={"sign_name": self.name})
