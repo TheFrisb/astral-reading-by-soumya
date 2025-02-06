@@ -29,7 +29,7 @@ class InternalBaseAdmin(admin.ModelAdmin):
 
 # Register your models here.
 @admin.register(ZodiacSigns)
-class HoroscopeSignAdmin(SortableAdminMixin, InternalBaseAdmin):
+class ZodiacSignAdmin(SortableAdminMixin, InternalBaseAdmin):
     list_display = ["name", "sortable_order"]
     search_fields = ["name"]
     ordering = ["sortable_order"]
