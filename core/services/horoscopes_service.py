@@ -63,7 +63,7 @@ class HoroscopeService:
         Get all horoscope signs.
         :return: QuerySet of ZodiacSigns objects.
         """
-        return ZodiacSigns.objects.all()
+        return ZodiacSigns.objects.all().order_by("sortable_order")
 
     def get_horoscope_signs_with_current_horoscopes(self) -> QuerySet:
         """
@@ -114,7 +114,7 @@ class HoroscopeService:
         signs = ZodiacSigns.objects.annotate(
             current_yearly_horoscope_id=Subquery(yearly_horoscope_subquery),
             current_monthly_horoscope_id=Subquery(monthly_horoscope_subquery),
-        )
+        ).order_by("sortable_order")
 
         signs = signs.order_by("sortable_order")
 
