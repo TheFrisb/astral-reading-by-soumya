@@ -305,8 +305,8 @@ class OrderItem(admin.ModelAdmin):
 
 @admin.register(Testimonial)
 class TestimonialAdmin(admin.ModelAdmin):
-    list_display = ("full_name", "is_active")
-    list_filter = ("is_active",)
+    list_display = ("full_name", "reading_type", "is_active")
+    list_filter = ("is_active", "reading_type")
     search_fields = ("full_name", "content")
 
     autocomplete_fields = ["order_item"]

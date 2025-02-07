@@ -324,6 +324,7 @@ class LeaveReviewView(PageTagsMixin, FormView):
             return self.form_invalid(form)
 
         form.instance.order_item = order.item
+        form.instance.reading_type = order.item.reading_type
         form.save()
         return super().form_valid(form)
 

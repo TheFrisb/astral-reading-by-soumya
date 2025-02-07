@@ -201,6 +201,12 @@ class Testimonial(InternalBaseModel):
         related_name="testimonial",
         help_text="The order item this testimonial is for.",
     )
+    reading_type = models.ForeignKey(
+        ReadingType,
+        on_delete=models.SET_NULL,
+        related_name="testimonials",
+        help_text="The reading type this testimonial is for.",
+    )
     full_name = models.CharField(max_length=100)
 
     rating = models.PositiveIntegerField(
