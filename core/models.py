@@ -203,7 +203,7 @@ class Testimonial(InternalBaseModel):
     )
     reading_type = models.ForeignKey(
         ReadingType,
-        on_delete=models.SET_NULL,
+        on_delete=models.DO_NOTHING,
         related_name="testimonials",
         help_text="The reading type this testimonial is for.",
     )
