@@ -211,6 +211,7 @@ class OrderAdmin(InternalBaseAdmin):
     )
     list_filter = (ConsultationTypeFilter, FutureAppointmentFilter)
     inlines = [OrderInformationInline, OrderItemInline, ScheduledAppointmentInline]
+    ordering = ("-created_at",)
 
     search_fields = (
         "id",
