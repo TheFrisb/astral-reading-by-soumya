@@ -318,6 +318,8 @@ class SiteSettings(SingletonModel):
     video_section_description_header = models.CharField(max_length=255, blank=True)
     video_section_description_header_subtitle = models.TextField(blank=True)
 
+    about_us_picture = models.ImageField(upload_to="about_us/", blank=True)
+
     def get_hero_section_details(self):
         return {
             "title": self.hero_title,
@@ -372,3 +374,182 @@ class Location(InternalBaseModel):
             models.Index(fields=["town"]),
             models.Index(fields=["country_code", "state_name", "town"]),
         ]
+
+
+class AboutUsSettings(SingletonModel):
+    header_1 = models.CharField(
+        max_length=255, verbose_name="First Header", default="Meet Soumya"
+    )
+    header_1_subtitle = models.TextField(
+        verbose_name="First Header Subtitle",
+        default="With over 15 years of experience in astrology, I've dedicated my life to helping others understand their cosmic blueprint and navigate their life path with confidence and clarity.",
+    )
+
+    number_1 = models.CharField(
+        max_length=255, verbose_name="First Number", default="15+"
+    )
+    number_1_subtitle = models.TextField(
+        verbose_name="First Number Subtitle", default="Years of Experience"
+    )
+    number_2 = models.CharField(
+        max_length=255, verbose_name="Second Number", default="10,000+"
+    )
+    number_2_subtitle = models.TextField(
+        verbose_name="Second Number Subtitle", default="Satisfied Clients"
+    )
+    number_3 = models.CharField(
+        max_length=255, verbose_name="Third Number", default="98%"
+    )
+    number_3_subtitle = models.TextField(
+        verbose_name="Third Number Subtitle", default="Accurate Readings"
+    )
+    number_4 = models.CharField(
+        max_length=255, verbose_name="Fourth Number", default="12"
+    )
+    number_4_subtitle = models.TextField(
+        verbose_name="Fourth Number Subtitle", default="Certifications"
+    )
+
+    header_2 = models.CharField(
+        max_length=255, verbose_name="Second Header", default="My Journey"
+    )
+    header_2_subtitle = models.TextField(
+        verbose_name="Second Header Subtitle",
+        default="My path in astrology began during my early twenties when I discovered the profound impact planetary alignments had on our lives. This revelation led me to study under renowned astrologers across India and the West, mastering both Vedic and Western traditions. Through years of dedicated study and practice, I've developed a unique approach that combines ancient wisdom with modern psychological insights, helping thousands of clients worldwide find clarity and purpose in their lives.",
+    )
+
+    card_1_title = models.CharField(
+        max_length=255, verbose_name="First Card Title", default="Vedic Astrology"
+    )
+    card_1_subtitle = models.TextField(
+        verbose_name="First Card Subtitle",
+        default="Ancient Indian system of astrology that focuses on karma and spiritual growth.",
+    )
+
+    card_2_title = models.CharField(
+        max_length=255, verbose_name="Second Card Title", default="Western Astrology"
+    )
+    card_2_subtitle = models.TextField(
+        verbose_name="Second Card Subtitle",
+        default="Modern psychological approach to celestial interpretation and life path analysis.",
+    )
+
+    card_3_title = models.CharField(
+        max_length=255,
+        verbose_name="Third Card Title",
+        default="Relationship Astrology",
+    )
+    card_3_subtitle = models.TextField(
+        verbose_name="Third Card Subtitle",
+        default="Synastry and composite chart analysis for understanding relationships.",
+    )
+
+    card_4_title = models.CharField(
+        max_length=255, verbose_name="Fourth Card Title", default="Career Astrology"
+    )
+    card_4_subtitle = models.TextField(
+        verbose_name="Fourth Card Subtitle",
+        default="Professional path analysis using planetary positions and aspects.",
+    )
+
+    header_3 = models.CharField(
+        max_length=255,
+        verbose_name="Third Header",
+        default="A Modern Approach to Ancient Wisdom",
+    )
+    header_3_subtitle = models.TextField(
+        verbose_name="Third Header Subtitle",
+        default="I combine traditional astrological knowledge with modern psychological insights to provide readings that are both profound and practical.",
+    )
+
+    list_item_1 = models.CharField(
+        max_length=255, verbose_name="First List Item", default="Holistic Approach"
+    )
+    list_item_1_subtitle = models.TextField(
+        verbose_name="First List Item Subtitle",
+        default="I believe in examining the complete celestial picture, understanding how different aspects of your chart interact to create your unique life path.",
+    )
+    list_item_2 = models.CharField(
+        max_length=255, verbose_name="Second List Item", default="Empowerment Focus"
+    )
+    list_item_2_subtitle = models.TextField(
+        verbose_name="Second List Item Subtitle",
+        default="My readings aim to empower you with knowledge and understanding, helping you make informed decisions about your life journey.",
+    )
+    list_item_3 = models.CharField(
+        max_length=255, verbose_name="Third List Item", default="Practical Guidance"
+    )
+    list_item_3_subtitle = models.TextField(
+        verbose_name="Third List Item Subtitle",
+        default="While honoring the spiritual nature of astrology, I provide practical, actionable insights you can apply to your daily life.",
+    )
+    list_item_4 = models.CharField(
+        max_length=255, verbose_name="Fourth List Item", default="Continuous Growth"
+    )
+    list_item_4_subtitle = models.TextField(
+        verbose_name="Fourth List Item Subtitle",
+        default="I view astrology as a tool for personal growth and transformation, helping you evolve and reach your highest potential.",
+    )
+
+    header_4 = models.CharField(
+        max_length=255,
+        verbose_name="Fourth Header",
+        default="Professional Certifications",
+    )
+    header_4_subtitle = models.TextField(
+        verbose_name="Fourth Header Subtitle",
+        default="My commitment to excellence is reflected in continuous learning and professional development.",
+    )
+
+    card_5_title = models.CharField(
+        max_length=255,
+        verbose_name="Fifth Card Title",
+        default="Vedic Astrology Master Certification",
+    )
+    card_5_subtitle = models.TextField(
+        verbose_name="Fifth Card Subtitle", default="International Academy of Astrology"
+    )
+    card_5_date = models.CharField(
+        max_length=255, verbose_name="Sixth Card Date", default="2015"
+    )
+
+    card_6_title = models.CharField(
+        max_length=255,
+        verbose_name="Sixth Card Title",
+        default="Advanced Western Astrology Diploma",
+    )
+    card_6_subtitle = models.TextField(
+        verbose_name="Sixth Card Subtitle", default="Faculty of Astrological Studies"
+    )
+    card_6_date = models.CharField(
+        max_length=255, verbose_name="Sixth Card Date", default="2012"
+    )
+
+    card_7_title = models.CharField(
+        max_length=255,
+        verbose_name="Seventh Card Title",
+        default="Relationship Astrology Specialist",
+    )
+    card_7_subtitle = models.TextField(
+        verbose_name="Seventh Card Subtitle",
+        default="American Federation of Astrologers",
+    )
+    card_7_date = models.CharField(
+        max_length=255, verbose_name="Seventh Card Date", default="2018  "
+    )
+
+    card_8_title = models.CharField(
+        max_length=255,
+        verbose_name="Eighth Card Title",
+        default="Psychological Astrology Certification",
+    )
+    card_8_subtitle = models.TextField(
+        verbose_name="Eighth Card Subtitle",
+        default="Centre for Psychological Astrology",
+    )
+    card_8_date = models.CharField(
+        max_length=255, verbose_name="Eighth Card Date", default="2016"
+    )
+
+    def __str__(self):
+        return "About Us Settings"

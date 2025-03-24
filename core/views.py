@@ -23,6 +23,7 @@ from .models import (
     Reading,
     Location,
     SiteSettings,
+    AboutUsSettings,
 )
 from .services.checkout.checkout_service import InternalCheckoutService
 from .services.checkout.stripe_service import InternalStripeService
@@ -117,6 +118,14 @@ class CheckoutView(PageTagsMixin, FormView):
 class AboutView(PageTagsMixin, TemplateView):
     template_name = "core/pages/about.html"
     page_title = "About"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["site_settings"] = SiteSettings.get_solo()
+        context["about_us_settings"] = AboutUsSettings.get_solo()
+
+        return context
 
 
 class ReadingsView(PageTagsMixin, TemplateView):
