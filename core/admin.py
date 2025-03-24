@@ -19,6 +19,7 @@ from core.models import (
     Testimonial,
     Location,
     SiteSettings,
+    AboutUsSettings,
 )
 from core.services.mail.mail_service import MailService
 
@@ -351,6 +352,11 @@ class SiteSettingsAdmin(SingletonModelAdmin):
             },
         ),
     )
+
+
+@admin.register(AboutUsSettings)
+class AboutUsSettingsAdmin(SingletonModelAdmin):
+    model = AboutUsSettings
 
 
 admin.site.site_header = "Astrology Admin"
