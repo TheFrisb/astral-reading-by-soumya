@@ -11,7 +11,7 @@
                     <div><p class="text-sm text-gray-400">{{ sign.current_monthly_horoscope.start_date|date:"F d" }}
                         - {{ sign.current_monthly_horoscope.end_date|date:"F d" }}</p></div>
                 </div>
-                <p class="mt-6 text-gray-300 group-hover:text-gray-200 transition-all duration-700 group-hover:translate-x-2">
+                <p class="mt-6 text-gray-300 group-hover:text-gray-200 transition-all duration-700 group-hover:translate-x-2 line-clamp-3">
                     {% if sign.current_monthly_horoscope %}
                         {{ sign.current_monthly_horoscope.get_preview }}
                     {% else %}
@@ -47,7 +47,7 @@
                     <div><p class="text-sm text-gray-400">{{ sign.current_yearly_horoscope.start_date|date:"F d" }}
                         - {{ sign.current_yearly_horoscope.end_date|date:"F d" }}</p></div>
                 </div>
-                <p class="mt-6 text-gray-300 group-hover:text-gray-200 transition-all duration-700 group-hover:translate-x-2">
+                <p class="mt-6 text-gray-300 group-hover:text-gray-200 transition-all duration-700 group-hover:translate-x-2 line-clamp-3">
                     {% if sign.current_yearly_horoscope %}
                         {{ sign.current_yearly_horoscope.get_preview }}
                     {% else %}
