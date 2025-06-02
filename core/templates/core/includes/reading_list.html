@@ -2,7 +2,7 @@
 
     {% for reading in readings %}
         <div data-aos="fade-up" data-aos-delay="0" class=" ">
-            <div class="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-black to-black/90 ring-1 ring-yellow-400/20 hover:ring-yellow-400/40 transition-all duration-700 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(251,191,36,0.15)] h-[600px] flex flex-col">
+            <div class="group relative overflow-y-scroll rounded-3xl bg-gradient-to-br from-black to-black/90 ring-1 ring-yellow-400/20 hover:ring-yellow-400/40 transition-all duration-700 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(251,191,36,0.15)] h-[600px] flex flex-col">
                 <div class="aspect-[4/3] relative overflow-hidden reading-image">
                     <img
                             src="{{ reading.image.url }}"
@@ -16,7 +16,7 @@
                         <h3 class="text-xl font-semibold leading-8 text-white group-hover:text-yellow-400 transition-colors">
                             {{ reading.name }}</h3>
                     </div>
-                    <p class="text-base leading-6 text-gray-300 group-hover:text-gray-200 transition-colors line-clamp-3 reading-description" 
+                    <p class="text-base leading-6 text-gray-300 group-hover:text-gray-200 transition-colors line-clamp-3 reading-description"
                        data-full-description="{{ reading.description|linebreaksbr }}">
                         {{ reading.description|linebreaksbr }}</p>
                     <div class="mb-6 flex justify-center read-more-container !hidden">
@@ -52,43 +52,43 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function () {
     const descriptions = document.querySelectorAll('.reading-description');
-    
-    descriptions.forEach(description => {
-        const container = description.closest('.group');
-        const readMoreContainer = container.querySelector('.read-more-container');
-        const readMoreBtn = container.querySelector('.read-more-btn');
-        const imageContainer = container.querySelector('.reading-image');
-        const originalImageHeight = imageContainer.style.height;
-        
-        // Check if the text is truncated
-        if (description.scrollHeight > description.clientHeight) {
-            readMoreContainer.classList.remove('!hidden');
-        }
 
-        // Handle read more click
-        readMoreBtn?.addEventListener('click', function() {
-            const isExpanded = description.classList.contains('line-clamp-3');
-            
-            if (isExpanded) {
-                // Expand text
-                description.classList.remove('line-clamp-3');
-                description.innerHTML = description.dataset.fullDescription;
-                readMoreContainer.classList.add('!hidden');
-                
-                // Adjust image height to maintain card height
-                imageContainer.style.height = '200px';
-            } else {
-                // Collapse text
-                description.classList.add('line-clamp-3');
-                description.innerHTML = description.dataset.fullDescription;
-                readMoreContainer.classList.remove('!hidden');
-                
-                // Restore original image height
-                imageContainer.style.height = originalImageHeight;
-            }
-        });
+    descriptions.forEach(description => {
+      const container = description.closest('.group');
+      const readMoreContainer = container.querySelector('.read-more-container');
+      const readMoreBtn = container.querySelector('.read-more-btn');
+      const imageContainer = container.querySelector('.reading-image');
+      const originalImageHeight = imageContainer.style.height;
+
+      // Check if the text is truncated
+      if (description.scrollHeight > description.clientHeight) {
+        readMoreContainer.classList.remove('!hidden');
+      }
+
+      // Handle read more click
+      readMoreBtn?.addEventListener('click', function () {
+        const isExpanded = description.classList.contains('line-clamp-3');
+
+        if (isExpanded) {
+          // Expand text
+          description.classList.remove('line-clamp-3');
+          description.innerHTML = description.dataset.fullDescription;
+          readMoreContainer.classList.add('!hidden');
+
+          // Adjust image height to maintain card height
+          imageContainer.style.height = '200px';
+        } else {
+          // Collapse text
+          description.classList.add('line-clamp-3');
+          description.innerHTML = description.dataset.fullDescription;
+          readMoreContainer.classList.remove('!hidden');
+
+          // Restore original image height
+          imageContainer.style.height = originalImageHeight;
+        }
+      });
     });
-});
+  });
 </script>
