@@ -293,9 +293,9 @@ class OrderAdmin(InternalBaseAdmin):
         """
         # Ensure the order has an item, reading_type, and an appointment.
         if (
-                hasattr(obj, "item")
-                and hasattr(obj, "appointment")
-                and obj.item.reading_type.type == ReadingType.Type.CALL
+            hasattr(obj, "item")
+            and hasattr(obj, "appointment")
+            and obj.item.reading_type.type == ReadingType.Type.CALL
         ):
             local_start = timezone.localtime(obj.appointment.start_time)
             local_end = timezone.localtime(obj.appointment.end_time)
