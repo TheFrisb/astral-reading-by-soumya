@@ -352,12 +352,6 @@ class SiteSettingsAdmin(SingletonModelAdmin):
                 ),
             },
         ),
-        (
-            "About us Section Configuration",
-            {
-                "fields": ("about_us_picture",),
-            },
-        ),
     )
 
 
