@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "adminsortable2",
     "django_ckeditor_5",
     "solo",
+    "nested_inline",
     # Internal apps
     "core",
     "blog",

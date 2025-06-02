@@ -1,8 +1,5 @@
-1. Read more should expand the content in the card
-2. On read more -> readings, kontento da ga bute slikata nagore, i da ne se mene goleminata na kartata
 
 
 
 Testimonials:
 1. Show city and location in testimonials
-2. Allow anonymous reviews. If no review name is provided, no image should be shown

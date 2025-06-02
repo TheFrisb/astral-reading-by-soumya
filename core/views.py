@@ -109,6 +109,7 @@ class CheckoutView(PageTagsMixin, FormView):
         try:
             checkout_url = checkout_service.get_checkout_url(form)
         except ReadingType.DoesNotExist:
+            print("Invalid consultation type selected.")
             form.add_error(
                 "consultation_call_type", "Invalid consultation type selected."
             )

@@ -231,6 +231,11 @@ class OrderAdmin(InternalBaseAdmin):
                 mailer.send_leave_a_review_email(order.information.email, order)
                 messages.success(request, f"Review request sent for Order {order.id}.")
             except Exception as e:
+                print(f"Error sending review request: {e}")
+                # print stack trace for debugging
+                import traceback
+
+                traceback.print_exc()
                 messages.error(request, f"Error sending review request: {e}")
         else:
             messages.error(request, "Order not found.")
@@ -260,7 +265,7 @@ class OrderAdmin(InternalBaseAdmin):
         Override the default queryset to show only CONFIRMED orders.
         """
         qs = super().get_queryset(request)
-        return qs.filter(status=Order.Status.PENDING)
+        return qs.filter(status=Order.Status.COMPLETED)
 
     @admin.display(description="Full Name")
     def order_full_name(self, obj):

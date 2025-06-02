@@ -90,7 +90,12 @@ class MailService:
         """
         # 1) Activate PST timezone
         activate("America/Los_Angeles")
-
+        start_time_formatted = scheduled_appointment.start_time.strftime(
+            "%B %d, %Y, %I:%M %p (PST)"
+        )
+        end_time_formatted = scheduled_appointment.end_time.strftime(
+            "%B %d, %Y, %I:%M %p (PST)"
+        )
         # 2) Gather required data
         order = scheduled_appointment.order
         order_item = order.item
@@ -127,8 +132,8 @@ class MailService:
             <p><strong>Comment:</strong> {order_info.comment}</p>
 
             <h2>Scheduled Appointment</h2>
-            <p><strong>Start Time (PST):</strong> {scheduled_appointment.start_time}</p>
-            <p><strong>End Time (PST):</strong> {scheduled_appointment.end_time}</p>
+            <p><strong>Start Time (PST):</strong> {start_time_formatted}</p>
+            <p><strong>End Time (PST):</strong> {end_time_formatted}</p>
         </body>
         </html>
         """
@@ -150,5 +155,5 @@ class MailService:
         except Exception as e:
             log.error(f"Failed to send booking notification email: {e}")
             raise e
-
-        deactivate()
+        finally:
+            deactivate()

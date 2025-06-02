@@ -5,125 +5,150 @@
             <div class="mx-auto max-w-xl px-6 lg:px-8">
 
                 {% if has_testimonial %}
-                    <div class="mx-auto max-w-md px-6 lg:px-8">
-                        <div class="rounded-lg bg-white p-8 shadow-lg">
-                            <div class="flex flex-col items-center">
-                                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                         stroke-linejoin="round"
-                                         class="lucide lucide-check-circle h-6 w-6 text-green-600">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <path d="m9 11 3 3L22 4"></path>
-                                    </svg>
+                    <div class="mx-auto max-w-4xl px-6 lg:px-8">
+                        <div class="group relative overflow-hidden rounded-3xl bg-white p-8 ring-1 ring-yellow-200 hover:ring-yellow-300 transition-all duration-700  "
+                             data-aos="fade-up">
+                            <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.1)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                            <div class="absolute pointer-events-none -inset-px bg-gradient-to-r from-yellow-400/0 via-yellow-400/10 to-yellow-400/0 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-1000"></div>
+                            <div class="relative text-center">
+                                <div class="flex justify-center">
+                                    <div class="flex h-16 w-16 items-center justify-center rounded-full bg-yellow-100 ring-4 ring-yellow-50">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                             stroke-linejoin="round"
+                                             class="lucide lucide-check-circle h-8 w-8 text-yellow-600">
+                                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                            <path d="m9 11 3 3L22 4"></path>
+                                        </svg>
+                                    </div>
                                 </div>
-                                <h2 class="mt-4 text-2xl font-semibold text-gray-900">Thank You!</h2>
-                                <p class="mt-2 text-center text-gray-600">Your review has been submitted successfully.
-                                    We appreciate your feedback!</p>
-                                <a href="{% url 'core:home' %}"
-                                   class="mt-6 rounded-md bg-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500">
-                                    Return Home
-                                </a>
+                                <h2 class="mt-6 text-4xl mystical-header bg-clip-text text-transparent bg-gradient-to-r from-yellow-600 to-yellow-500">
+                                    Thank You!</h2>
+                                <p class="mt-4 text-lg text-gray-600">Your review has been submitted
+                                    successfully.<br
+                                            class="sm:hidden">
+                                    <span
+                                            class="font-bold break-all sm:break-normal">We appreciate your feedback!</span>
+                                </p>
+                                <div class="mt-12 flex justify-center gap-4"><a
+                                        class="inline-flex items-center rounded-full bg-yellow-400 px-8 py-3 text-sm font-semibold text-black shadow-xl transition-all duration-500 hover:bg-yellow-300 hover:shadow-yellow-400/25 hover:scale-[1.02] relative overflow-hidden group"
+                                        href="/"><span
+                                        class="absolute inset-0 pointer-events-none bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span><span
+                                        class="relative">Return Home</span></a></div>
                             </div>
                         </div>
                     </div>
+
+
                 {% else %}
-                    <div class="mx-auto max-w-2xl text-center">
-                        <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Leave a Review</h1>
-                        <p class="mt-2 text-lg leading-8 text-gray-600">Share your experience to help others on their
-                            astrological journey</p>
-                    </div>
-                    <div class="mt-16">
-                        <form method="POST" class="space-y-6">
-                            {% csrf_token %}
+                    <div class="mx-auto max-w-xl px-6 lg:px-8">
+                        <div class="mx-auto max-w-2xl text-center">
+                            <h1 class="text-4xl sm:text-5xl mystical-header bg-clip-text text-transparent bg-gradient-to-r from-yellow-600 to-yellow-500">
+                                Leave a Review</h1>
+                            <p class="mt-2 text-lg leading-8 text-gray-600">Share your experience to help others on
+                                their astrological journey</p></div>
+                        <div class="mt-16 group relative overflow-hidden rounded-3xl bg-white p-8 ring-1 ring-yellow-200 hover:ring-yellow-300 transition-all duration-700">
+                            <form method="POST" class="space-y-6" id="leaveAReviewForm">
+                                {% csrf_token %}
 
-                            {% if form.errors %}
-                                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-                                     role="alert">
-                                    <strong class="font-bold">Oops!</strong>
-                                    {% for field, errors in form.errors.items %}
-                                        {% for error in errors %}
-                                            <span class="block"><span class="capitalize">{{ field }}</span>: <span
-                                                    class="lowercase">{{ error }}</span></span>
+                                {% if form.errors %}
+                                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                                         role="alert">
+                                        <strong class="font-bold">Oops!</strong>
+                                        {% for field, errors in form.errors.items %}
+                                            {% for error in errors %}
+                                                <span class="block"><span class="capitalize">{{ field }}</span>: <span
+                                                        class="lowercase">{{ error }}</span></span>
+                                            {% endfor %}
                                         {% endfor %}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
+                                    </div>
+                                {% endif %}
 
-                            <div>
-                                <h2 class="text-xl font-semibold text-gray-900">Review for Birth Chart Reading</h2>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Full Name</label>
-                                {{ form.full_name }}
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Rating</label>
-                                <input type="hidden" id="rating" name="rating">
-
-                                <div class="mt-1 flex" id="starRatingContainer">
-                                    <button type="button"
-                                            class="p-1 leaveAReviewStarRatingButton">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24"
-                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                             stroke-linejoin="round"
-                                             class="h-8 w-8 transition-colors text-gray-300">
-                                            <polygon
-                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                        </svg>
-                                    </button>
-                                    <button type="button" class="p-1 leaveAReviewStarRatingButton">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24"
-                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                             stroke-linejoin="round"
-                                             class="h-8 w-8 transition-colors text-gray-300">
-                                            <polygon
-                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                        </svg>
-                                    </button>
-                                    <button type="button" class="p-1 leaveAReviewStarRatingButton">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24"
-                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                             stroke-linejoin="round"
-                                             class="h-8 w-8 transition-colors text-gray-300">
-                                            <polygon
-                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                        </svg>
-                                    </button>
-                                    <button type="button" class="p-1 leaveAReviewStarRatingButton">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24"
-                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                             stroke-linejoin="round"
-                                             class="h-8 w-8 transition-colors text-gray-300">
-                                            <polygon
-                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                        </svg>
-                                    </button>
-                                    <button type="button" class="p-1 leaveAReviewStarRatingButton">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24"
-                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                             stroke-linejoin="round"
-                                             class="h-8 w-8 transition-colors text-gray-300">
-                                            <polygon
-                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                        </svg>
-                                    </button>
+                                <div>
+                                    <h2 class="text-2xl bg-clip-text text-transparent bg-gradient-to-r from-yellow-600 to-yellow-500">
+                                        Review for Birth Chart Reading</h2>
                                 </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Your Review</label>
-                                {{ form.content }}
-                            </div>
-                            <button type="submit"
-                                    class="w-full rounded-md bg-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
-                                Submit Review
-                            </button>
-                        </form>
+                                <div>
+                                    <label class="block text-base text-gray-600 group-focus-within:text-yellow-600 transition-colors">Full
+                                        Name (optional)</label>
+                                    {{ form.full_name }}
+                                </div>
+                                <div>
+                                    <label class="block text-base text-gray-600 group-focus-within:text-yellow-600 transition-colors">Rating</label>
+                                    <input type="hidden" id="rating" name="rating">
+
+                                    <div class="mt-1 flex" id="starRatingContainer">
+                                        <button type="button"
+                                                class="p-1 leaveAReviewStarRatingButton">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 viewBox="0 0 24 24"
+                                                 fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round"
+                                                 stroke-linejoin="round"
+                                                 class="h-8 w-8 transition-colors text-gray-300">
+                                                <polygon
+                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                            </svg>
+                                        </button>
+                                        <button type="button" class="p-1 leaveAReviewStarRatingButton">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 viewBox="0 0 24 24"
+                                                 fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round"
+                                                 stroke-linejoin="round"
+                                                 class="h-8 w-8 transition-colors text-gray-300">
+                                                <polygon
+                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                            </svg>
+                                        </button>
+                                        <button type="button" class="p-1 leaveAReviewStarRatingButton">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 viewBox="0 0 24 24"
+                                                 fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round"
+                                                 stroke-linejoin="round"
+                                                 class="h-8 w-8 transition-colors text-gray-300">
+                                                <polygon
+                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                            </svg>
+                                        </button>
+                                        <button type="button" class="p-1 leaveAReviewStarRatingButton">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 viewBox="0 0 24 24"
+                                                 fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round"
+                                                 stroke-linejoin="round"
+                                                 class="h-8 w-8 transition-colors text-gray-300">
+                                                <polygon
+                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                            </svg>
+                                        </button>
+                                        <button type="button" class="p-1 leaveAReviewStarRatingButton">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 viewBox="0 0 24 24"
+                                                 fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round"
+                                                 stroke-linejoin="round"
+                                                 class="h-8 w-8 transition-colors text-gray-300">
+                                                <polygon
+                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-base text-gray-600 group-focus-within:text-yellow-600 transition-colors">Your
+                                        Review</label>
+                                    {{ form.content }}
+                                </div>
+                                <button type="submit"
+                                        class="w-full rounded-full bg-yellow-400 px-6 py-4 text-base font-semibold text-black shadow-xl transition-all duration-500 hover:bg-yellow-300 hover:shadow-yellow-400/25 hover:scale-[1.02] relative overflow-hidden group">
+                                    <span class="absolute inset-0 bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span><span
+                                        class="relative">Submit Review</span></button>
+                            </form>
+                        </div>
+
                     </div>
                 {% endif %}
 

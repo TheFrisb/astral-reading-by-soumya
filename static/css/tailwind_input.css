@@ -286,3 +286,7 @@ textarea {
 #checkoutForm label {
     @apply block text-base text-gray-600 group-focus-within:text-yellow-600 transition-colors mb-1;
 }
+
+#leaveAReviewForm input, #leaveAReviewForm textarea, #leaveAReviewForm select {
+    @apply block w-full rounded-lg px-4 py-3 bg-white ring-1 ring-gray-200 focus:ring-2 focus:ring-yellow-200 focus:outline-none placeholder:text-gray-400 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 transition-colors duration-300;
+}

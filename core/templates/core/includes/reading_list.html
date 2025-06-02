@@ -2,7 +2,7 @@
 
     {% for reading in readings %}
         <div data-aos="fade-up" data-aos-delay="0" class=" ">
-            <div class="group relative overflow-y-scroll rounded-3xl bg-gradient-to-br from-black to-black/90 ring-1 ring-yellow-400/20 hover:ring-yellow-400/40 transition-all duration-700 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(251,191,36,0.15)] h-[600px] flex flex-col">
+            <div class="group relative overflow-y-auto rounded-3xl bg-gradient-to-br from-black to-black/90 ring-1 ring-yellow-400/20 hover:ring-yellow-400/40 transition-all duration-700 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(251,191,36,0.15)] h-[600px] flex flex-col">
                 <div class="aspect-[4/3] relative overflow-hidden reading-image">
                     <img
                             src="{{ reading.image.url }}"

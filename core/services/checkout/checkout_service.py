@@ -35,7 +35,6 @@ class InternalCheckoutService:
             email=form["email"],
             phone_number=form["phone_number"],
             date_of_birth=form["date_of_birth"],
-            place_of_birth=form["place_of_birth"],
             time_of_birth=form["time_of_birth"],
             gender=form["gender"],
             birth_city=["birth_city"],
