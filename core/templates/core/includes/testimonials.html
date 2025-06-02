@@ -19,7 +19,7 @@
                         <div class=" group swiper-slide" data-aos="fade-up"
                              data-aos-delay="200">
                             <div class="absolute pointer-events-none -inset-px rounded-3xl bg-gradient-to-r from-yellow-400/10 via-yellow-400/5 to-yellow-400/10 opacity-0 group-hover:opacity-100 blur-lg transition-all duration-700"></div>
-                            <div class="relative rounded-3xl bg-gradient-to-br from-black to-black/90 p-8 shadow-lg ring-1 ring-yellow-400/20 hover:ring-yellow-400/40 transition-all duration-700 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(251,191,36,0.15)] flex flex-col h-[600px]">
+                            <div class="relative rounded-3xl bg-gradient-to-br from-black to-black/90 p-8 shadow-lg ring-1 ring-yellow-400/20 hover:ring-yellow-400/40 transition-all duration-700 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(251,191,36,0.15)] flex flex-col h-[600px] overflow-y-auto">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                      fill="none"
                                      stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -53,13 +53,16 @@
                                         {% endif %}
                                     {% endfor %}
                                 </div>
-                                <blockquote class="relative flex-1 flex flex-col"><p
-                                        class="text-lg font-medium leading-8 text-gray-300 group-hover:text-gray-200 transition-colors duration-500 line-clamp-6">
-                                    "{{ testimonial.content }}"</p>
-                                    <div class="mt-6 flex justify-center">
-                                        <button class="rounded-full bg-yellow-400 px-6 py-2 text-sm font-semibold text-black shadow-xl transition-all duration-500 hover:bg-yellow-300 hover:shadow-yellow-400/25 hover:scale-105 relative overflow-hidden group/btn">
-                                            <span class="absolute inset-0 pointer-events-none bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-300 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500"></span><span
-                                                class="relative">Read more</span></button>
+                                <blockquote class="relative flex-1 flex flex-col">
+                                    <p class="text-lg font-medium leading-8 text-gray-300 group-hover:text-gray-200 transition-colors duration-500 line-clamp-6 testimonial-content" 
+                                       data-full-content="{{ testimonial.content }}">
+                                        "{{ testimonial.content }}"
+                                    </p>
+                                    <div class="mt-6 flex justify-center read-more-container !hidden">
+                                        <button class="rounded-full bg-yellow-400 px-6 py-2 text-sm font-semibold text-black shadow-xl transition-all duration-500 hover:bg-yellow-300 hover:shadow-yellow-400/25 hover:scale-105 relative overflow-hidden group/btn read-more-btn">
+                                            <span class="absolute inset-0 pointer-events-none bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-300 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500"></span>
+                                            <span class="relative">Read more</span>
+                                        </button>
                                     </div>
                                     {% if testimonial.full_name %}
                                         <div class="mt-auto pt-8 flex flex-col items-start gap-y-4 border-t border-yellow-400/20">
@@ -87,6 +90,35 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const testimonialContents = document.querySelectorAll('.testimonial-content');
+    
+    testimonialContents.forEach(content => {
+        const container = content.closest('.group');
+        const readMoreContainer = container.querySelector('.read-more-container');
+        const readMoreBtn = container.querySelector('.read-more-btn');
+        
+        // Check if the text is truncated
+        if (content.scrollHeight > content.clientHeight) {
+            readMoreContainer.classList.remove('!hidden');
+        }
+
+        // Handle read more click
+        readMoreBtn?.addEventListener('click', function() {
+            const isExpanded = content.classList.contains('line-clamp-6');
+            
+            if (isExpanded) {
+                // Expand text
+                content.classList.remove('line-clamp-6');
+                content.innerHTML = `"${content.dataset.fullContent}"`;
+                readMoreContainer.classList.add('!hidden');
+            }
+        });
+    });
+});
+</script>
 
 
 {#<div class="bg-purple-50 py-24 sm:py-32">#}
