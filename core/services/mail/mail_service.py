@@ -82,7 +82,7 @@ class MailService:
         }
 
     def send_booking_notification_email(
-            self, scheduled_appointment: ScheduledAppointment
+        self, scheduled_appointment: ScheduledAppointment
     ):
         """
         Sends a booking notification email with details about
