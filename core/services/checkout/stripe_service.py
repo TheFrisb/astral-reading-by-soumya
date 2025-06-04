@@ -102,6 +102,10 @@ class InternalStripeService:
 
         try:
             self.mailer.send_thank_you_email(order.information.email, order)
+
+            notification_email = settings.SENDGRID_NOTIFICATION_EMAIL_SINGLE_RECIPIENT
+            if notification_email:
+                self.mailer.send_thank_you_email(notification_email, order)
         except Exception as e:
             log.error(
                 f"Failed to send thank you email to {order.information.email}: {e}"

@@ -54,11 +54,11 @@
                                     {% endfor %}
                                 </div>
                                 <blockquote class="relative flex-1 flex flex-col">
-                                    <p class="text-lg font-medium leading-8 text-gray-300 group-hover:text-gray-200 transition-colors duration-500 line-clamp-6 testimonial-content" 
+                                    <p class="mb-6 text-lg font-medium leading-8 text-gray-300 group-hover:text-gray-200 transition-colors duration-500 line-clamp-6 testimonial-content"
                                        data-full-content="{{ testimonial.content }}">
                                         "{{ testimonial.content }}"
                                     </p>
-                                    <div class="mt-6 flex justify-center read-more-container !hidden">
+                                    <div class="flex justify-center read-more-container !hidden">
                                         <button class="rounded-full bg-yellow-400 px-6 py-2 text-sm font-semibold text-black shadow-xl transition-all duration-500 hover:bg-yellow-300 hover:shadow-yellow-400/25 hover:scale-105 relative overflow-hidden group/btn read-more-btn">
                                             <span class="absolute inset-0 pointer-events-none bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-300 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500"></span>
                                             <span class="relative">Read more</span>
@@ -92,32 +92,42 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     const testimonialContents = document.querySelectorAll('.testimonial-content');
-    
-    testimonialContents.forEach(content => {
+
+    // Add a small delay to ensure content is rendered
+    setTimeout(() => {
+      testimonialContents.forEach(content => {
         const container = content.closest('.group');
         const readMoreContainer = container.querySelector('.read-more-container');
         const readMoreBtn = container.querySelector('.read-more-btn');
-        
+
+        // Force a reflow to ensure accurate height calculation
+        content.style.display = 'none';
+        content.offsetHeight; // Force reflow
+        content.style.display = '';
+
         // Check if the text is truncated
-        if (content.scrollHeight > content.clientHeight) {
-            readMoreContainer.classList.remove('!hidden');
+        const isTruncated = content.scrollHeight > content.clientHeight + 5; // Add small buffer
+
+        if (isTruncated) {
+          readMoreContainer.classList.remove('!hidden');
         }
 
         // Handle read more click
-        readMoreBtn?.addEventListener('click', function() {
-            const isExpanded = content.classList.contains('line-clamp-6');
-            
-            if (isExpanded) {
-                // Expand text
-                content.classList.remove('line-clamp-6');
-                content.innerHTML = `"${content.dataset.fullContent}"`;
-                readMoreContainer.classList.add('!hidden');
-            }
+        readMoreBtn?.addEventListener('click', function () {
+          const isExpanded = content.classList.contains('line-clamp-6');
+
+          if (isExpanded) {
+            // Expand text
+            content.classList.remove('line-clamp-6');
+            content.textContent = `"${content.dataset.fullContent}"`;
+            readMoreContainer.classList.add('!hidden');
+          }
         });
-    });
-});
+      });
+    }, 100); // Small delay to ensure content is rendered
+  });
 </script>
 
 
