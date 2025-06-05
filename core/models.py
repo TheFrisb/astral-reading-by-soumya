@@ -390,18 +390,19 @@ class AboutUsSettings(SingletonModel):
         upload_to="about_us/",
         verbose_name="Personal Picture",
         help_text="Image representing the person or team behind the service.",
+        blank=True
     )
 
-    section_1_header = models.CharField(max_length=255)
-    section_1_description = models.TextField()
-    section_2_header = models.CharField(max_length=255)
-    section_2_description = models.TextField()
-    inspirational_quote = models.TextField()
-    section_3_header = models.CharField(max_length=255)
-    section_3_description = models.TextField()
-    email = models.EmailField()
-    instagram = models.CharField(max_length=255)
-    phone_number = models.CharField(max_length=255)
+    section_1_header = models.CharField(max_length=255, blank=True)
+    section_1_description = models.TextField(blank=True)
+    section_2_header = models.CharField(max_length=255, blank=True)
+    section_2_description = models.TextField(blank=True)
+    inspirational_quote = models.TextField(blank=True)
+    section_3_header = models.CharField(max_length=255, blank=True)
+    section_3_description = models.TextField(blank=True)
+    email = models.EmailField(blank=True)
+    instagram = models.CharField(max_length=255, blank=True)
+    phone_number = models.CharField(max_length=255, blank=True)
 
     @property
     def cleaned_phone_number(self):
