@@ -1,4 +1,4 @@
-from adminsortable2.admin import SortableAdminMixin
+from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from django.contrib import admin, messages
 from django.shortcuts import redirect
 from django.urls import path
@@ -19,7 +19,7 @@ from core.models import (
     Testimonial,
     Location,
     SiteSettings,
-    AboutUsSettings,
+    AboutUsSettings, AboutUsSectionCard, AboutUsSection,
 )
 from core.services.mail.mail_service import MailService
 
@@ -355,10 +355,58 @@ class SiteSettingsAdmin(SingletonModelAdmin):
     )
 
 
+class AboutUsSectionCardInline(SortableInlineAdminMixin, admin.StackedInline):
+    model = AboutUsSectionCard
+    extra = 1
+    ordering = ['sortable_order']
+    fieldsets = (
+        ('Card Content', {
+            'fields': ('title', 'description', 'image'),
+        }),
+        ('Order', {
+            'fields': ('sortable_order',),
+        }),
+    )
+
+
 @admin.register(AboutUsSettings)
 class AboutUsSettingsAdmin(SingletonModelAdmin):
-    model = AboutUsSettings
+    fieldsets = (
+        ('Header Image', {
+            'fields': ('personal_picture',),
+        }),
+        ('Section 1', {
+            'fields': ('section_1_header', 'section_1_description'),
+        }),
+        ('Section 2', {
+            'fields': ('section_2_header', 'section_2_description'),
+        }),
+        ('Inspirational Quote', {
+            'fields': ('inspirational_quote',),
+        }),
+        ('Section 3', {
+            'fields': ('section_3_header', 'section_3_description'),
+        }),
+        ('Contact Information', {
+            'fields': ('email', 'instagram', 'phone_number'),
+        }),
+    )
 
+
+@admin.register(AboutUsSection)
+class AboutUsSectionAdmin(SortableAdminMixin, InternalBaseAdmin):
+    list_display = ('title', 'sortable_order')
+    ordering = ['sortable_order']
+    fieldsets = (
+        ('Section Details', {
+            'fields': ('title',),
+        }),
+        ('Order', {
+            'fields': ('sortable_order',),
+        }),
+    )
+    readonly_fields = ["sortable_order"]
+    inlines = [AboutUsSectionCardInline]
 
 admin.site.site_header = "Astrology Admin"
 admin.site.register(Location, InternalBaseAdmin)

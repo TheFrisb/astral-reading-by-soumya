@@ -392,5 +392,40 @@ class AboutUsSettings(SingletonModel):
         help_text="Image representing the person or team behind the service.",
     )
 
+    section_1_header = models.CharField(max_length=255)
+    section_1_description = models.TextField()
+    section_2_header = models.CharField(max_length=255)
+    section_2_description = models.TextField()
+    inspirational_quote = models.TextField()
+    section_3_header = models.CharField(max_length=255)
+    section_3_description = models.TextField()
+    email = models.EmailField()
+    instagram = models.CharField(max_length=255)
+    phone_number = models.CharField(max_length=255)
+
+    @property
+    def cleaned_phone_number(self):
+        # return phone number without whitespace, '-', '+', and parantheses
+        return
+
     def __str__(self):
         return "About Us Settings"
+
+
+class AboutUsSection(InternalBaseModel):
+    title = models.CharField(max_length=255)
+    sortable_order = models.IntegerField(default=0, db_index=True)
+
+    def __str__(self):
+        return self.title
+
+
+class AboutUsSectionCard(InternalBaseModel):
+    section = models.ForeignKey(AboutUsSection, on_delete=models.CASCADE, related_name="cards")
+    image = models.ImageField(upload_to="about_us/", verbose_name="Image")
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    sortable_order = models.IntegerField(default=0, db_index=True)
+
+    def __str__(self):
+        return self.title

@@ -23,7 +23,7 @@ from .models import (
     Reading,
     Location,
     SiteSettings,
-    AboutUsSettings,
+    AboutUsSettings, AboutUsSection,
 )
 from .services.checkout.checkout_service import InternalCheckoutService
 from .services.checkout.stripe_service import InternalStripeService
@@ -127,6 +127,7 @@ class AboutView(PageTagsMixin, TemplateView):
 
         context["site_settings"] = SiteSettings.get_solo()
         context["about_us_settings"] = AboutUsSettings.get_solo()
+        context["about_us_sections"] = AboutUsSection.objects.all().prefetch_related("cards").order_by("sortable_order")
 
         return context
 
