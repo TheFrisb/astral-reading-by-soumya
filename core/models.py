@@ -406,8 +406,13 @@ class AboutUsSettings(SingletonModel):
 
     @property
     def cleaned_phone_number(self):
-        # return phone number without whitespace, '-', '+', and parantheses
-        return
+        # Remove whitespace, '-', '+', and parentheses from phone number
+        chars_to_remove = [' ', '-', '+', '(', ')']
+        cleaned_number = self.phone_number
+        for char in chars_to_remove:
+            cleaned_number = cleaned_number.replace(char, '')
+
+        return cleaned_number.strip()
 
     def __str__(self):
         return "About Us Settings"
