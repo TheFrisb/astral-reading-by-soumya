@@ -403,6 +403,13 @@ class AboutUsSettings(SingletonModel):
     email = models.EmailField(blank=True)
     instagram = models.CharField(max_length=255, blank=True)
     phone_number = models.CharField(max_length=255, blank=True)
+    card_info_1_title = models.CharField(max_length=255, blank=True)
+    card_info_1_description = models.CharField(max_length=255, blank=True)
+    card_info_2_title = models.CharField(max_length=255, blank=True)
+    card_info_2_description=models.CharField(max_length=255, blank=True)
+    card_info_3_title = models.CharField(max_length=255, blank=True)
+    card_info_3_description=models.CharField(max_length=255, blank=True)
+
 
     @property
     def cleaned_phone_number(self):
