@@ -375,6 +375,16 @@ class AboutUsSettingsAdmin(SingletonModelAdmin):
         ('Header Image', {
             'fields': ('personal_picture',),
         }),
+        ('Info Cards', {
+            'fields': (
+                'card_info_1_title',
+                'card_info_1_description',
+                'card_info_2_title',
+                'card_info_2_description',
+                'card_info_3_title',
+                'card_info_3_description',
+            )
+        }),
         ('Section 1', {
             'fields': ('section_1_header', 'section_1_description'),
         }),
