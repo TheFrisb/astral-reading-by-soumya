@@ -12,8 +12,9 @@ export function initTestimonialSwiper() {
       prevEl: '.swiper-button-prev',
     },
     autoplay: {
-      delay: 5000,
+      delay: 3000,
       disableOnInteraction: false,
+      pauseOnMouseEnter: true
     },
     loop: true,
     breakpoints: {
