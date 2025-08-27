@@ -22,5 +22,5 @@ class TestimonialService:
                 "reading_type",
                 "reading_type__reading",
             )
-            .order_by("created_at")[0:12]
+            .order_by("created_at")
         )
